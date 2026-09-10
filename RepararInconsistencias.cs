@@ -1,6 +1,6 @@
 ﻿using BLL;
 using Services.Modelos.Idioma;
-using Services_55CA;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,18 +20,18 @@ namespace Servicios
 
         private void btnRecalcular_Click(object sender, EventArgs e)
         {
-            var idioma = ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
             try
             {
-                if (!usuarioOk) DigitoVerificador55CA.RepararUsuario();
-                if (!rolOk) DigitoVerificador55CA.RepararRol();
-                if (!familiaOk) DigitoVerificador55CA.RepararFamilia();
-                if (!patenteOk) DigitoVerificador55CA.RepararPatente();
+                if (!usuarioOk) DigitoVerificador530BA.RepararUsuario();
+                if (!rolOk) DigitoVerificador530BA.RepararRol();
+                if (!familiaOk) DigitoVerificador530BA.RepararFamilia();
+                if (!patenteOk) DigitoVerificador530BA.RepararPatente();
 
                 MessageBox.Show(idioma.Translate("MsgReparacionExitosa"));
 
-                ServiceSessionManager55CA.getIntancia().Logout();
+                ServiceSessionManager530BA.getIntancia().Logout();
 
                 this.Hide();
                 Login login = new Login();
@@ -51,7 +51,7 @@ namespace Servicios
 
         private void btnRestore_Click(object sender, EventArgs e)
         {
-            var idioma = ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -60,7 +60,7 @@ namespace Servicios
                 {
                     try
                     {
-                        DigitoVerificador55CA.RealizarRestore(ofd.FileName);
+                        DigitoVerificador530BA.RealizarRestore(ofd.FileName);
 
                         MessageBox.Show(idioma.Translate("MsgRestoreExitoso"));
                         Application.Exit();
@@ -82,7 +82,7 @@ namespace Servicios
             this.familiaOk = familiaOk;
             this.patenteOk = patenteOk;
 
-            ServiceSessionManager55CA.getIntancia().Idioma.Suscribir(this);
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
 
             actualizarIdioma();
 
@@ -91,7 +91,7 @@ namespace Servicios
 
         public void actualizarIdioma()
         {
-            var idioma = ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
             this.Text = idioma.Translate("TituloRepararInconsistencias");
             btnRecalcular.Text = idioma.Translate("BtnRecalcular");
@@ -103,7 +103,7 @@ namespace Servicios
 
         private void MostrarTablasConError()
         {
-            var idioma = ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
             string mensaje = idioma.Translate("MensajeInconsistenciasDetectadas") + "\n";
 

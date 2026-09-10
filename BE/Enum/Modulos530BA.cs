@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE.Enum
 {
-    public enum Modulos55CA
+    public enum Modulos530BA
     {
         Usuario = 1,
         Seguridad = 2,

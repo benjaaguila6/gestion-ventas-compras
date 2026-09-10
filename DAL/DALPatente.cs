@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALPatente
     {
-        DALAcceso55CA _dal = new DALAcceso55CA();
+        DALAcceso530BA _dal = new DALAcceso530BA();
 
         public DataTable obtenerTodos()
         {

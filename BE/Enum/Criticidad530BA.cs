@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE.Enum
 {
-    public enum Criticidad55CA
+    public enum Criticidad530BA
     {
         Bajo = 1,
         Medio = 2,

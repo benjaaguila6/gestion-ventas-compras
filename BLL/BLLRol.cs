@@ -18,15 +18,15 @@ namespace BLL
         BitacoraEventosService bllBitacora = new BitacoraEventosService();
         BLLFamilia bllFamilia = new BLLFamilia();
         BLLPatente bllPatente = new BLLPatente();
-        public List<RolModelo55CA> obtenerTodos()
+        public List<RolModelo530BA> obtenerTodos()
         {
-            List<RolModelo55CA> lista = new List<RolModelo55CA>();
+            List<RolModelo530BA> lista = new List<RolModelo530BA>();
 
             DataTable dt = _dal.obtenerTodos();
 
             foreach(DataRow r in dt.Rows)
             {
-                lista.Add(new RolModelo55CA
+                lista.Add(new RolModelo530BA
                 {
                     Id = Convert.ToInt32(r["Id"]),
                     Nombre = r["Nombre"].ToString()
@@ -36,9 +36,9 @@ namespace BLL
             return lista;
         }
 
-        public List<RolModelo55CA> ObtenerRolesConJerarquia()
+        public List<RolModelo530BA> ObtenerRolesConJerarquia()
         {
-            List<RolModelo55CA> roles = obtenerTodos();
+            List<RolModelo530BA> roles = obtenerTodos();
             var dictRoles = roles.ToDictionary(r => r.Id);
 
             DataTable dtRelacionRolPatente = _dal.obtenerRelacionesRolPatente();
@@ -54,9 +54,9 @@ namespace BLL
         }
 
 
-        public void crearRol(string nombre, List<Componente55CA> componentes)
+        public void crearRol(string nombre, List<Componente530BA> componentes)
         {
-            var idioma = Services_55CA.ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
             DataTable dt = _dal.obtenerPorNombre(nombre);
 
@@ -65,13 +65,13 @@ namespace BLL
                 throw new Exception(string.Format(idioma.Translate("ExcNombreYaExiste"), idioma.Translate("TablaRol"), nombre));
             }
 
-            RolModelo55CA rol = new RolModelo55CA { Nombre =  nombre };
+            RolModelo530BA rol = new RolModelo530BA { Nombre =  nombre };
 
-            foreach (Componente55CA comp in componentes)
+            foreach (Componente530BA comp in componentes)
             {
                 var permisosActuales = rol.ObtenerPermisos();
 
-                if (comp is PermisoModelo55CA patente)
+                if (comp is PermisoModelo530BA patente)
                 {
                     if (permisosActuales.Any(p => p.Id == patente.Id))
                     {
@@ -79,7 +79,7 @@ namespace BLL
                     }
                 }
 
-                else if (comp is FamiliaModelo55CA familia)
+                else if (comp is FamiliaModelo530BA familia)
                 {
                     var permisosHija = familia.obtenerPermisos();
 
@@ -97,34 +97,34 @@ namespace BLL
 
             int nuevoRolId = _dal.insertarRol(nombre);
 
-            long dvhInicial = Services.DigitoVerificador55CA.CalcularDVH(nuevoRolId.ToString() + nombre);
+            long dvhInicial = Services.DigitoVerificador530BA.CalcularDVH(nuevoRolId.ToString() + nombre);
             _dal.ActualizarDVH(nuevoRolId, dvhInicial);
-            Services.DigitoVerificador55CA.ActualizarDVVRol();
+            Services.DigitoVerificador530BA.ActualizarDVVRol();
 
-            string dniAutor = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo.DNI;
+            string dniAutor = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
 
 
-            foreach (Componente55CA comp in componentes)
+            foreach (Componente530BA comp in componentes)
             {
-                if (comp is PermisoModelo55CA patente)
+                if (comp is PermisoModelo530BA patente)
                 {
                     _dal.asignarPatenteARol(patente.Id, nuevoRolId);
-                    bllBitacora.registrarEvento(dniAutor, $"Asignó la patente {patente.Nombre} a el rol {nombre}.", Criticidad55CA.Alto, Modulos55CA.Perfil);
+                    bllBitacora.registrarEvento(dniAutor, $"Asignó la patente {patente.Nombre} a el rol {nombre}.", Criticidad530BA.Alto, Modulos530BA.Perfil);
                 }
-                else if (comp is FamiliaModelo55CA familiaHija)
+                else if (comp is FamiliaModelo530BA familiaHija)
                 {
                     _dal.asignarFamiliaARol(familiaHija.Id, nuevoRolId);
-                    bllBitacora.registrarEvento(dniAutor, $"Asignó la familia {familiaHija.Nombre} a el rol {nombre}.", Criticidad55CA.Alto, Modulos55CA.Perfil);
+                    bllBitacora.registrarEvento(dniAutor, $"Asignó la familia {familiaHija.Nombre} a el rol {nombre}.", Criticidad530BA.Alto, Modulos530BA.Perfil);
                 }
             }
 
-            bllBitacora.registrarEvento(dniAutor, $"Creo un nuevo rol", Criticidad55CA.Alto, Modulos55CA.Perfil);
+            bllBitacora.registrarEvento(dniAutor, $"Creo un nuevo rol", Criticidad530BA.Alto, Modulos530BA.Perfil);
 
         }
 
-        public void AsignarPatente(RolModelo55CA rol, PermisoModelo55CA patente)
+        public void AsignarPatente(RolModelo530BA rol, PermisoModelo530BA patente)
         {
-            var idioma = Services_55CA.ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
             var permisosAplanados = rol.ObtenerPermisos();
 
@@ -133,17 +133,17 @@ namespace BLL
                 throw new Exception(string.Format(idioma.Translate("ExcRolYaContienePermiso"), rol.Nombre, patente.Nombre));
             }
 
-            string dniAutor = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo.DNI;
-            bllBitacora.registrarEvento(dniAutor, $"Asigno la patente {patente.Nombre} a el rol {rol.Nombre}.", Criticidad55CA.Alto, Modulos55CA.Perfil);
+            string dniAutor = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bllBitacora.registrarEvento(dniAutor, $"Asigno la patente {patente.Nombre} a el rol {rol.Nombre}.", Criticidad530BA.Alto, Modulos530BA.Perfil);
 
             _dal.asignarPatenteARol(patente.Id, rol.Id);
         }
 
-        public void AsignarFamilia(RolModelo55CA rol, FamiliaModelo55CA familia)
+        public void AsignarFamilia(RolModelo530BA rol, FamiliaModelo530BA familia)
         {
-            var idioma = Services_55CA.ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
-            if (rol.Permisos.Any(c => c.Id == familia.Id && c is FamiliaModelo55CA))
+            if (rol.Permisos.Any(c => c.Id == familia.Id && c is FamiliaModelo530BA))
             {
                 throw new Exception(string.Format(idioma.Translate("ExcRolYaTieneFamilia"), rol.Nombre, familia.Nombre));
             }
@@ -159,26 +159,26 @@ namespace BLL
                 }
             }
 
-            string dniAutor = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo.DNI;
-            bllBitacora.registrarEvento(dniAutor, $"Asigno la familia {familia.Nombre} a el rol {rol.Nombre}.", Criticidad55CA.Alto, Modulos55CA.Perfil);
+            string dniAutor = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bllBitacora.registrarEvento(dniAutor, $"Asigno la familia {familia.Nombre} a el rol {rol.Nombre}.", Criticidad530BA.Alto, Modulos530BA.Perfil);
 
             _dal.asignarFamiliaARol(familia.Id, rol.Id);
         }
 
         public void EliminarRol(int idRol)
         {
-            var idioma = Services_55CA.ServiceSessionManager55CA.getIntancia().Idioma;
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
             if (_dal.tieneUsuariosAsignados(idRol))
             {
                 throw new Exception(idioma.Translate("ExcRolConUsuariosAsignados"));
             }
 
-            string dniAutor = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo.DNI;
-            bllBitacora.registrarEvento(dniAutor, $"Elimino un rol.", Criticidad55CA.Alto, Modulos55CA.Perfil);
+            string dniAutor = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bllBitacora.registrarEvento(dniAutor, $"Elimino un rol.", Criticidad530BA.Alto, Modulos530BA.Perfil);
 
             _dal.eliminarRol(idRol);
-            Services.DigitoVerificador55CA.ActualizarDVVRol();
+            Services.DigitoVerificador530BA.ActualizarDVVRol();
 
         }
 
@@ -200,7 +200,7 @@ namespace BLL
 
         #region Métodos de Ensamblaje
 
-        private void EnsamblarPatentesEnRoles(Dictionary<int, RolModelo55CA> dictRoles, Dictionary<int, PermisoModelo55CA> dictPatentes, DataTable dtRelaciones)
+        private void EnsamblarPatentesEnRoles(Dictionary<int, RolModelo530BA> dictRoles, Dictionary<int, PermisoModelo530BA> dictPatentes, DataTable dtRelaciones)
         {
             foreach (DataRow row in dtRelaciones.Rows)
             {
@@ -215,7 +215,7 @@ namespace BLL
             }
         }
 
-        private void EnsamblarFamiliasEnRoles(Dictionary<int, RolModelo55CA> dictRoles, Dictionary<int, FamiliaModelo55CA> dictFamilias, DataTable dtRelaciones)
+        private void EnsamblarFamiliasEnRoles(Dictionary<int, RolModelo530BA> dictRoles, Dictionary<int, FamiliaModelo530BA> dictFamilias, DataTable dtRelaciones)
         {
             foreach (DataRow row in dtRelaciones.Rows)
             {

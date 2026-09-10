@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class DALDigitoVerificador55CA
+    public class DALDigitoVerificador530BA
     {
-        DALAcceso55CA acceso = new DALAcceso55CA();
+        DALAcceso530BA acceso = new DALAcceso530BA();
 
         
 

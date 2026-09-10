@@ -43,24 +43,24 @@
   <ItemGroup>
     <Compile Include="BitacoraEventosService.cs" />
     <Compile Include="BLLFamilia.cs" />
-    <Compile Include="BLLIdioma55CA.cs" />
+    <Compile Include="BLLIdioma530BA.cs" />
     <Compile Include="BLLPatente.cs" />
     <Compile Include="BLLRol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BE\BE55_CA.csproj">
+    <ProjectReference Include="..\BE\BE530_BA.csproj">
       <Project>{1dce08c7-4239-4595-9712-bac2bbec9de8}</Project>
-      <Name>BE55_CA</Name>
+      <Name>BE530_BA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL_55CA.csproj">
+    <ProjectReference Include="..\DAL\DAL_530BA.csproj">
       <Project>{5afbc41d-c246-4b92-b434-5ee293b75a44}</Project>
-      <Name>DAL_55CA</Name>
+      <Name>DAL_530BA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services\Services_55CA.csproj">
+    <ProjectReference Include="..\Services\Services_530BA.csproj">
       <Project>{960d771d-0546-4ffe-b37e-8d38ade0bc87}</Project>
-      <Name>Services_55CA</Name>
+      <Name>Services_530BA</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

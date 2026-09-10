@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class DALBackUpRestore55CA
+    public class DALBackUpRestore530BA
     {
-        private DALAcceso55CA _dal = new DALAcceso55CA();
+        private DALAcceso530BA _dal = new DALAcceso530BA();
         private string _nombreDB = "is--servicios";
         //private readonly string _stringConnectionOriginal = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=is--servicios;Integrated Security=True";
         private readonly string _stringConnectionOriginal = "Data Source=LAPTOP-8BNKG482\\SQLEXPRESS;Initial Catalog=is--servicios;Integrated Security=True";

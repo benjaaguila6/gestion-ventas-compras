@@ -42,28 +42,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackUpRestore55CA.cs" />
-    <Compile Include="DigitoVerificador55CA.cs" />
+    <Compile Include="BackUpRestore530BA.cs" />
+    <Compile Include="DigitoVerificador530BA.cs" />
     <Compile Include="IdiomaManager.cs" />
-    <Compile Include="Modelos\BitacoraEventosModelo55CA.cs" />
-    <Compile Include="Modelos\CompositeRol\Componente55CA.cs" />
-    <Compile Include="Modelos\CompositeRol\FamiliaModelo55CA.cs" />
-    <Compile Include="Modelos\CompositeRol\PermisoModelo55CA.cs" />
-    <Compile Include="Modelos\CompositeRol\RolModelo55CA.cs" />
+    <Compile Include="Modelos\BitacoraEventosModelo530BA.cs" />
+    <Compile Include="Modelos\CompositeRol\Componente530BA.cs" />
+    <Compile Include="Modelos\CompositeRol\FamiliaModelo530BA.cs" />
+    <Compile Include="Modelos\CompositeRol\PermisoModelo530BA.cs" />
+    <Compile Include="Modelos\CompositeRol\RolModelo530BA.cs" />
     <Compile Include="Modelos\Idioma\IIdiomaObserver.cs" />
-    <Compile Include="Modelos\UsuarioModelo55CA.cs" />
+    <Compile Include="Modelos\UsuarioModelo530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceSeguridad55CA.cs" />
-    <Compile Include="ServiceSessionManager55CA.cs" />
+    <Compile Include="ServiceSeguridad530BA.cs" />
+    <Compile Include="ServiceSessionManager530BA.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BE\BE55_CA.csproj">
+    <ProjectReference Include="..\BE\BE530_BA.csproj">
       <Project>{1dce08c7-4239-4595-9712-bac2bbec9de8}</Project>
-      <Name>BE55_CA</Name>
+      <Name>BE530_BA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL_55CA.csproj">
+    <ProjectReference Include="..\DAL\DAL_530BA.csproj">
       <Project>{5afbc41d-c246-4b92-b434-5ee293b75a44}</Project>
-      <Name>DAL_55CA</Name>
+      <Name>DAL_530BA</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

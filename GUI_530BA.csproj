@@ -167,17 +167,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="BE\BE55_CA.csproj">
+    <ProjectReference Include="BE\BE530_BA.csproj">
       <Project>{1dce08c7-4239-4595-9712-bac2bbec9de8}</Project>
-      <Name>BE55_CA</Name>
+      <Name>BE530_BA</Name>
     </ProjectReference>
-    <ProjectReference Include="BLL\BLL_55CA.csproj">
+    <ProjectReference Include="BLL\BLL_530BA.csproj">
       <Project>{b2fb6397-6033-427b-bb87-fd46a8d06be8}</Project>
-      <Name>BLL_55CA</Name>
+      <Name>BLL_530BA</Name>
     </ProjectReference>
-    <ProjectReference Include="Services\Services_55CA.csproj">
+    <ProjectReference Include="Services\Services_530BA.csproj">
       <Project>{960d771d-0546-4ffe-b37e-8d38ade0bc87}</Project>
-      <Name>Services_55CA</Name>
+      <Name>Services_530BA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

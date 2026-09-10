@@ -12,15 +12,15 @@ namespace BLL
     public class BLLPatente
     {
         DALPatente dal = new DALPatente();
-        public List<PermisoModelo55CA> obtenerTodos()
+        public List<PermisoModelo530BA> obtenerTodos()
         {
             DataTable dt = dal.obtenerTodos();
 
-            List<PermisoModelo55CA> lista = new List<PermisoModelo55CA>();
+            List<PermisoModelo530BA> lista = new List<PermisoModelo530BA>();
 
             foreach (DataRow row in dt.Rows)
             {
-                var patente = new PermisoModelo55CA
+                var patente = new PermisoModelo530BA
                 {
                     Id = Convert.ToInt32(row["Id"]),
                     Nombre = row["Nombre"].ToString()

@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace Services.Modelos
 {
-    public class FamiliaModelo55CA : Componente55CA
+    public class FamiliaModelo530BA : Componente530BA
     {
-        private List<Componente55CA> hijos = new List<Componente55CA>();
+        private List<Componente530BA> hijos = new List<Componente530BA>();
 
-        public override void agregarHijos(Componente55CA c)
+        public override void agregarHijos(Componente530BA c)
         {
             hijos.Add(c);
         }
 
-        public override void eliminarHijo(Componente55CA c)
+        public override void eliminarHijo(Componente530BA c)
         {
             hijos.Remove(c);
         }
 
-        public override List<Componente55CA> obtenerPermisos()
+        public override List<Componente530BA> obtenerPermisos()
         {
-            List<Componente55CA> permisos = new List<Componente55CA>();
+            List<Componente530BA> permisos = new List<Componente530BA>();
 
-            foreach (Componente55CA hijo in hijos)
+            foreach (Componente530BA hijo in hijos)
             {
                 permisos.AddRange(hijo.obtenerPermisos());
             }

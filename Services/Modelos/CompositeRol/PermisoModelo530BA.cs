@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Services.Modelos
 {
-    public class PermisoModelo55CA : Componente55CA
+    public class PermisoModelo530BA : Componente530BA
     {
-        public override List<Componente55CA> obtenerPermisos()
+        public override List<Componente530BA> obtenerPermisos()
         {
-            return new List<Componente55CA> { this }; // se devuelve a si mismo
+            return new List<Componente530BA> { this }; // se devuelve a si mismo
         }
 
         public override string ToString()

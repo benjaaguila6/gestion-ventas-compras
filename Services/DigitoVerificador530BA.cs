@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public static class DigitoVerificador55CA
+    public static class DigitoVerificador530BA
     {
-        static DALDigitoVerificador55CA dalControl = new DALDigitoVerificador55CA();
-        static DALBackUpRestore55CA dalBackup = new DALBackUpRestore55CA();
-        static DALBitacora55CA dalBitacora = new DALBitacora55CA();
+        static DALDigitoVerificador530BA dalControl = new DALDigitoVerificador530BA();
+        static DALBackUpRestore530BA dalBackup = new DALBackUpRestore530BA();
+        static DALBitacora530BA dalBitacora = new DALBitacora530BA();
 
-        static DALUsuario55CA dalUsuario = new DALUsuario55CA();
+        static DALUsuario530BA dalUsuario = new DALUsuario530BA();
         static DALRol dalRol = new DALRol();
         static DALFamilia dalFamilia = new DALFamilia();
         static DALPatente dalPatente = new DALPatente();
@@ -157,14 +157,14 @@ namespace Services
 
         private static void RegistrarDeteccion(string tabla)
         {
-            string dni = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
-            dalBitacora.insertarLog(dni, $"Se detectó una inconsistencia en la tabla {tabla}.", (int)Criticidad55CA.Alto, (int)Modulos55CA.Seguridad, DateTime.Now);
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se detectó una inconsistencia en la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
         }
 
         private static void Registrar(string tabla)
         {
-            string dni = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
-            dalBitacora.insertarLog(dni, $"Se reparó la tabla {tabla}.", (int)Criticidad55CA.Alto, (int)Modulos55CA.Seguridad, DateTime.Now);
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se reparó la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
         }
 
         public static void ActualizarDVVUsuario() => GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario());
