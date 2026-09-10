@@ -46,7 +46,7 @@
             // buscarCarpetaBackUp
             // 
             this.buscarCarpetaBackUp.BackColor = System.Drawing.Color.SteelBlue;
-            this.buscarCarpetaBackUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buscarCarpetaBackUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buscarCarpetaBackUp.ForeColor = System.Drawing.SystemColors.Control;
             this.buscarCarpetaBackUp.Location = new System.Drawing.Point(555, 104);
             this.buscarCarpetaBackUp.Name = "buscarCarpetaBackUp";
@@ -59,7 +59,7 @@
             // btnRealizarBackUp
             // 
             this.btnRealizarBackUp.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnRealizarBackUp.Font = new System.Drawing.Font("Verdana", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRealizarBackUp.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRealizarBackUp.ForeColor = System.Drawing.Color.MintCream;
             this.btnRealizarBackUp.Location = new System.Drawing.Point(42, 162);
             this.btnRealizarBackUp.Margin = new System.Windows.Forms.Padding(4);
@@ -73,7 +73,7 @@
             // btnRealizarRestore
             // 
             this.btnRealizarRestore.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnRealizarRestore.Font = new System.Drawing.Font("Verdana", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRealizarRestore.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRealizarRestore.ForeColor = System.Drawing.Color.MintCream;
             this.btnRealizarRestore.Location = new System.Drawing.Point(42, 321);
             this.btnRealizarRestore.Margin = new System.Windows.Forms.Padding(4);
@@ -87,7 +87,7 @@
             // buscarCarpetaRestore
             // 
             this.buscarCarpetaRestore.BackColor = System.Drawing.Color.SteelBlue;
-            this.buscarCarpetaRestore.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buscarCarpetaRestore.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buscarCarpetaRestore.ForeColor = System.Drawing.SystemColors.Control;
             this.buscarCarpetaRestore.Location = new System.Drawing.Point(555, 263);
             this.buscarCarpetaRestore.Name = "buscarCarpetaRestore";

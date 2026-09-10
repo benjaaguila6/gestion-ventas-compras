@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente530BA.cs" />
     <Compile Include="Enum\Criticidad530BA.cs" />
     <Compile Include="Enum\Modulos530BA.cs" />
     <Compile Include="Idioma530BA.cs" />

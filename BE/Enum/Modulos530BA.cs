@@ -10,6 +10,7 @@ namespace BE.Enum
     {
         Usuario = 1,
         Seguridad = 2,
-        Perfil = 3
+        Perfil = 3,
+        Cliente = 4
     }
 }

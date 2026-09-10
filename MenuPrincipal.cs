@@ -182,5 +182,11 @@ namespace Servicios
             GestionRespaldo form = new GestionRespaldo();
             form.Show();
         }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionClientes form = new GestionClientes();
+            form.Show();
+        }
     }
 }

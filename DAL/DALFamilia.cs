@@ -18,6 +18,7 @@ namespace DAL
                      BEGIN
                          INSERT INTO Familia_Patente(IdFamilia, IdPatente) VALUES(@idFamilia, @idPatente)
                      END";
+
             var parametros = new Dictionary<string, object>
             {
                 {"@idPatente", idPatente },

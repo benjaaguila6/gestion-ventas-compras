@@ -141,9 +141,10 @@ namespace BLL
                 user,
                 passwordHash
             );
-            Services.DigitoVerificador530BA.ActualizarDVVUsuario();
 
             dal.InsertarUsuario(dni, nombre, apellido, email, rol.Id, user, passwordHash, dvh);
+
+            Services.DigitoVerificador530BA.ActualizarDVVUsuario();
 
             string dniAutor = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
 

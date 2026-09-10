@@ -126,7 +126,7 @@
             // btnAceptar
             // 
             this.btnAceptar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnAceptar.Font = new System.Drawing.Font("Verdana", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.ForeColor = System.Drawing.Color.MintCream;
             this.btnAceptar.Location = new System.Drawing.Point(138, 189);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
