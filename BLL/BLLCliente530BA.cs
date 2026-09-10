@@ -49,25 +49,44 @@ namespace BLL
             //mas adelante bitacora de cambios.
         }
 
-        private long CalcularDVHCliente(
-            string nombreCompleto,
-            string dNI,
-            string email,
-            int codPostal,
-            string localidad,
-            string direccion)
+        public void eliminarCliente(string dNI)
         {
-            string cadena =
-                nombreCompleto +
-                dNI +
-                email +
-                codPostal +
-                localidad +
-                direccion;
+            DataRow dr = dal.ObtenerPorDNI(dNI);
+            
+            if (dr == null)
+            {
+                throw new Exception("No existe un cliente con ese DNI"); // falta traduccion
+            }
 
-            return Services.DigitoVerificador530BA.CalcularDVH(cadena);
+            dal.DeleteCliente(dNI);
+            Services.DigitoVerificador530BA.ActualizarDVVCliente();
+
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se eliminó un cliente con DNI: " + dNI, BE.Enum.Criticidad530BA.Medio, BE.Enum.Modulos530BA.Cliente);
         }
 
+        public void modificarCliente(string dni, string email, int codPostal, string localidad, string direccion)
+        {
+            DataRow dr = dal.ObtenerPorDNI(dni);
+
+            if (dr == null)
+            {
+                throw new Exception("No existe un cliente con ese DNI"); // falta traduccion
+            }
+            Cliente530BA cliente = MapearCliente(dr);
+
+            cliente.Email = email;
+            cliente.CodPostal = codPostal;
+            cliente.Localidad = localidad;
+            cliente.Direccion = direccion;
+
+            long dvh = CalcularDVHCliente(cliente.NombreCompleto, cliente.DNI, email, codPostal, localidad, direccion);
+            dal.UpdateCliente(cliente, dvh);
+
+            Services.DigitoVerificador530BA.ActualizarDVVCliente();
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se modificó un cliente" , BE.Enum.Criticidad530BA.Medio, BE.Enum.Modulos530BA.Cliente);
+        }
         public Cliente530BA MapearCliente(DataRow row)
         {
 
@@ -85,5 +104,15 @@ namespace BLL
             string direccion = row["Direccion"].ToString();
             return new Cliente530BA(id, nombreCompleto, dNI, email, codPostal, localidad, direccion);
         }
+
+        #region Digito Verificador
+        private long CalcularDVHCliente(string nombreCompleto, string dNI, string email, int codPostal, string localidad, string direccion)
+        {
+            string cadena = nombreCompleto + dNI + email + codPostal + localidad + direccion;
+
+            return Services.DigitoVerificador530BA.CalcularDVH(cadena);
+        }
+
+        #endregion Digito Verificador
     }
 }

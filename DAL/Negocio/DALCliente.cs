@@ -59,6 +59,40 @@ namespace DAL.Negocio
             dal.executeNonQuery(query, parametros);
         }
 
+        public void DeleteCliente(string dni)
+        {
+            string query = @"DELETE FROM Cliente WHERE DNI = @dni";
+
+            var parametros = new Dictionary<string, object>
+            {
+                {"@dni", dni }
+            };
+
+            dal.executeNonQuery(query, parametros);
+        }
+
+        public void UpdateCliente(Cliente530BA cliente, long dvh)
+        {
+            string query = @"UPDATE Cliente
+                     SET Email = @Email,
+                         CodPostal = @CodPostal,
+                         Localidad = @Localidad,
+                         Direccion = @Direccion,
+                         DVH = @DVH
+                     WHERE Id = @id";
+
+            var parametros = new Dictionary<string, object>
+                {
+                    { "@id", cliente.Id },
+                    { "@Email", cliente.Email },
+                    { "@CodPostal", cliente.CodPostal },
+                    { "@Localidad", cliente.Localidad },
+                    { "@Direccion", cliente.Direccion },
+                    { "@DVH", dvh }
+                };
+
+            dal.executeNonQuery(query, parametros);
+        }
         public void ActualizarDVH(int id, long dvh)
         {
             string query = @"UPDATE Cliente
