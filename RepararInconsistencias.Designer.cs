@@ -48,7 +48,7 @@
             // btnRecalcular
             // 
             this.btnRecalcular.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnRecalcular.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Bold);
+            this.btnRecalcular.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.btnRecalcular.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.btnRecalcular.Location = new System.Drawing.Point(82, 52);
             this.btnRecalcular.Name = "btnRecalcular";
@@ -61,7 +61,7 @@
             // btnRestore
             // 
             this.btnRestore.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnRestore.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Bold);
+            this.btnRestore.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.btnRestore.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.btnRestore.Location = new System.Drawing.Point(82, 92);
             this.btnRestore.Name = "btnRestore";
@@ -74,7 +74,7 @@
             // btnSalir
             // 
             this.btnSalir.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnSalir.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Bold);
+            this.btnSalir.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.btnSalir.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.btnSalir.Location = new System.Drawing.Point(82, 132);
             this.btnSalir.Name = "btnSalir";

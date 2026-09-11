@@ -43,21 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DALAcceso55CA.cs" />
-    <Compile Include="DALBackUpRestore55CA.cs" />
-    <Compile Include="DALBitacora55CA .cs" />
-    <Compile Include="DALDigitoVerificador55CA.cs" />
+    <Compile Include="DALAcceso530BA.cs" />
+    <Compile Include="DALBackUpRestore530BA.cs" />
+    <Compile Include="DALBitacora530BA.cs" />
+    <Compile Include="DALDigitoVerificador530BA.cs" />
     <Compile Include="DALFamilia.cs" />
-    <Compile Include="DALIidioma55CA.cs" />
+    <Compile Include="DALIdioma530BA.cs" />
     <Compile Include="DALPatente.cs" />
     <Compile Include="DALRol.cs" />
-    <Compile Include="DALUsuario55CA.cs" />
+    <Compile Include="DALUsuario530BA.cs" />
+    <Compile Include="Negocio\DALCliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BE\BE55_CA.csproj">
+    <ProjectReference Include="..\BE\BE530_BA.csproj">
       <Project>{1dce08c7-4239-4595-9712-bac2bbec9de8}</Project>
-      <Name>BE55_CA</Name>
+      <Name>BE530_BA</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

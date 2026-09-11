@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Services.Modelos
 {
-    public class BitacoraEventosModelo55CA
+    public class BitacoraEventosModelo530BA
     {
         public int IdBitacora { get; set; }
         public string DNI { get; set; }
         public string Evento { get; set; }
         public int Criticidad { get; set; }
         public DateTime FechaHora { get; set; }
-        public Modulos55CA Modulo { get; set; }
+        public Modulos530BA Modulo { get; set; }
 
         //ctor para bd
-        public BitacoraEventosModelo55CA(int idBitacora, string dNI, string evento, int criticidad, DateTime fechaHora, Modulos55CA modulo)
+        public BitacoraEventosModelo530BA(int idBitacora, string dNI, string evento, int criticidad, DateTime fechaHora, Modulos530BA modulo)
         {
             IdBitacora = idBitacora;
             DNI = dNI;
@@ -28,7 +28,7 @@ namespace Services.Modelos
         }
 
         //ctor para hacer new
-        public BitacoraEventosModelo55CA(string dNI, string evento, int criticidad, DateTime fechaHora, Modulos55CA modulo)
+        public BitacoraEventosModelo530BA(string dNI, string evento, int criticidad, DateTime fechaHora, Modulos530BA modulo)
         {
             DNI = dNI;
             Evento = evento;

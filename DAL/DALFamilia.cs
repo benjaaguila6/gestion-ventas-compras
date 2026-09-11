@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALFamilia
     {
-        DALAcceso55CA dal = new DALAcceso55CA();
+        DALAcceso530BA dal = new DALAcceso530BA();
 
         public int asignarPatenteAFamilia(int idPatente, int idFamilia)
         {
@@ -18,6 +18,7 @@ namespace DAL
                      BEGIN
                          INSERT INTO Familia_Patente(IdFamilia, IdPatente) VALUES(@idFamilia, @idPatente)
                      END";
+
             var parametros = new Dictionary<string, object>
             {
                 {"@idPatente", idPatente },

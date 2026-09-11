@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class DALBitacora55CA
+    public class DALBitacora530BA
     {
-        DALAcceso55CA acceso = new DALAcceso55CA();
+        DALAcceso530BA acceso = new DALAcceso530BA();
 
         public int insertarLog(string dni, string evento, int criticidad, int modulo, DateTime fecha)
         {

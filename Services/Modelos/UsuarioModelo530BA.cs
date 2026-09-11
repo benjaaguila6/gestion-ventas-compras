@@ -7,14 +7,14 @@ using BE;
 
 namespace Services.Modelos
 {
-    public class UsuarioModelo55CA
+    public class UsuarioModelo530BA
     {
 
         public string DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }
-        public RolModelo55CA Rol { get; set; }
+        public RolModelo530BA Rol { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
         public int Intentos { get; set; }
@@ -27,13 +27,13 @@ namespace Services.Modelos
 
 
 
-        public UsuarioModelo55CA()
+        public UsuarioModelo530BA()
         {
             
         }
 
         //ctor para new
-        public UsuarioModelo55CA(string dNI, string nombre, string apellido, string email, RolModelo55CA rol)
+        public UsuarioModelo530BA(string dNI, string nombre, string apellido, string email, RolModelo530BA rol)
         {
             DNI = dNI;
             Nombre = nombre;

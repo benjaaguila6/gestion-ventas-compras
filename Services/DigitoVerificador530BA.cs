@@ -1,5 +1,6 @@
 ﻿using BE.Enum;
 using DAL;
+using DAL.Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public static class DigitoVerificador55CA
+    public static class DigitoVerificador530BA
     {
-        static DALDigitoVerificador55CA dalControl = new DALDigitoVerificador55CA();
-        static DALBackUpRestore55CA dalBackup = new DALBackUpRestore55CA();
-        static DALBitacora55CA dalBitacora = new DALBitacora55CA();
+        static DALDigitoVerificador530BA dalControl = new DALDigitoVerificador530BA();
+        static DALBackUpRestore530BA dalBackup = new DALBackUpRestore530BA();
+        static DALBitacora530BA dalBitacora = new DALBitacora530BA();
 
-        static DALUsuario55CA dalUsuario = new DALUsuario55CA();
+        static DALUsuario530BA dalUsuario = new DALUsuario530BA();
         static DALRol dalRol = new DALRol();
         static DALFamilia dalFamilia = new DALFamilia();
         static DALPatente dalPatente = new DALPatente();
+        static DALCliente dalCliente = new DALCliente();
 
         public static long CalcularDVH(string cadena)
         {
@@ -119,6 +121,30 @@ namespace Services
             }
         }
 
+        private static long CalcularDVHCliente(DataRow row)
+        {
+            string cadena = row["NombreCompleto"].ToString() + row["DNI"].ToString() + row["Email"].ToString()
+                + row["CodPostal"].ToString() + row["Localidad"].ToString() + row["Direccion"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHCliente()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalCliente.ObtenerTodos().Rows) suma += CalcularDVHCliente(row);
+            return suma;
+        }
+
+        private static void RepararTodoCliente()
+        {
+            foreach (DataRow row in dalCliente.ObtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHCliente(row);
+                if (guardado != calculado) dalCliente.ActualizarDVH(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
         private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
         {
             DataRow filaControl = dalControl.ObtenerFila(nombreTabla);
@@ -147,29 +173,32 @@ namespace Services
         public static bool VerificarRol() => VerificarTabla("Rol", ObtenerSumaDVHRol, RepararTodoRol);
         public static bool VerificarFamilia() => VerificarTabla("Familia", ObtenerSumaDVHFamilia, RepararTodoFamilia);
         public static bool VerificarPatente() => VerificarTabla("Patente", ObtenerSumaDVHPatente, RepararTodoPatente);
+        public static bool VerificarCliente() => VerificarTabla("Cliente", ObtenerSumaDVHCliente, RepararTodoCliente);
 
         public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
         public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
         public static void RepararFamilia() { RepararTodoFamilia(); GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia()); Registrar("Familia"); }
         public static void RepararPatente() { RepararTodoPatente(); GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente()); Registrar("Patente"); }
+        public static void RepararCliente() { RepararTodoCliente(); GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente()); Registrar("Cliente"); }
 
         public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
 
         private static void RegistrarDeteccion(string tabla)
         {
-            string dni = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
-            dalBitacora.insertarLog(dni, $"Se detectó una inconsistencia en la tabla {tabla}.", (int)Criticidad55CA.Alto, (int)Modulos55CA.Seguridad, DateTime.Now);
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se detectó una inconsistencia en la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
         }
 
         private static void Registrar(string tabla)
         {
-            string dni = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
-            dalBitacora.insertarLog(dni, $"Se reparó la tabla {tabla}.", (int)Criticidad55CA.Alto, (int)Modulos55CA.Seguridad, DateTime.Now);
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se reparó la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
         }
 
         public static void ActualizarDVVUsuario() => GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario());
         public static void ActualizarDVVRol() => GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol());
         public static void ActualizarDVVFamilia() => GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia());
         public static void ActualizarDVVPatente() => GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente());
+        public static void ActualizarDVVCliente() => GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente());
     }
 }

@@ -3,7 +3,7 @@ using BLL;
 using Services;
 using Services.Modelos;
 using Services.Modelos.Idioma;
-using Services_55CA;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,8 +19,8 @@ namespace Servicios
 {
     public partial class MenuPrincipal : Form, IIdiomaObserver
     {
-        UsuarioModelo55CA usuarioActual = Services_55CA.ServiceSessionManager55CA.getIntancia().usuarioActivo;
-        BLLIdioma55CA _idiomaService = new BLLIdioma55CA();
+        UsuarioModelo530BA usuarioActual = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo;
+        BLLIdioma530BA _idiomaService = new BLLIdioma530BA();
         UsuarioService _userService = new UsuarioService();
 
         public MenuPrincipal()
@@ -29,7 +29,7 @@ namespace Servicios
             configurarAcceso();
             CargarSubItemsIdioma();
 
-            ServiceSessionManager55CA.getIntancia().Idioma.Suscribir(this);
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
             actualizarIdioma();
 
         }
@@ -45,7 +45,7 @@ namespace Servicios
                 item.Tag = idioma;
 
                 // Marcar el idioma actual del usuario
-                int idiomaActual = ServiceSessionManager55CA.getIntancia().usuarioActivo.IdIdioma;
+                int idiomaActual = ServiceSessionManager530BA.getIntancia().usuarioActivo.IdIdioma;
                 item.Checked = idioma.Id == idiomaActual;
 
                 item.Click += IdiomaItem_Click;
@@ -56,14 +56,14 @@ namespace Servicios
         private void IdiomaItem_Click(object sender, EventArgs e)
         {
             var item = (ToolStripMenuItem)sender;
-            var idiomaSeleccionado = (Idioma55CA)item.Tag;
+            var idiomaSeleccionado = (Idioma530BA)item.Tag;
 
             // Guardar en BD y sesión
             _userService.GuardarIdioma(idiomaSeleccionado.Id);
 
             // Aplicar idioma globalmente
             string cod = idiomaSeleccionado.Id == 1 ? "es" : "en";
-            ServiceSessionManager55CA.getIntancia().Idioma.CargarIdioma(cod);
+            ServiceSessionManager530BA.getIntancia().Idioma.CargarIdioma(cod);
 
             // Actualizar checks del submenú
             foreach (ToolStripMenuItem subItem in idiomaToolStripMenuItem.DropDownItems)
@@ -74,17 +74,17 @@ namespace Servicios
 
         private void configurarAcceso()
         {
-            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Cambiar Clave");
-            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Cerrar Sesion");
-            gestionUsuariosToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Gestion Usuario");
-            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Iniciar Sesion");
-            bitacoraEventosToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Auditoria Eventos");
-            gestionRolToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Gestion Roles");
-            gestionFamiliaToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Gestion Familia");
-            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Cambiar Clave");
-            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Cerrar Sesion");
-            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Iniciar Sesion");
-            idiomaToolStripMenuItem.Enabled = ServiceSessionManager55CA.getIntancia().TienePermiso("Cambiar Idioma");
+            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Clave");
+            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
+            gestionUsuariosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Usuario");
+            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
+            bitacoraEventosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Auditoria Eventos");
+            gestionRolToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Roles");
+            gestionFamiliaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Familia");
+            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Clave");
+            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
+            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
+            idiomaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Idioma");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace Servicios
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var t = ServiceSessionManager55CA.getIntancia().Idioma;
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
 
             DialogResult resultado = MessageBox.Show(
                 t.Translate("MenuPrincipal.msgConfirmarCierreSesion"),
@@ -118,7 +118,7 @@ namespace Servicios
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Services_55CA.ServiceSessionManager55CA.getIntancia().Logout();
+            Services_530BA.ServiceSessionManager530BA.getIntancia().Logout();
 
             base.OnFormClosing(e);
         }
@@ -137,7 +137,7 @@ namespace Servicios
 
         public void actualizarIdioma()
         {
-            var t = ServiceSessionManager55CA.getIntancia().Idioma;
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
 
             this.Text = t.Translate("MenuPrincipal.formTitle");
             label1.Text = string.Format(t.Translate("MenuPrincipal.labelBienvenido"), usuarioActual.Nombre, usuarioActual.Apellido);
@@ -180,6 +180,12 @@ namespace Servicios
         private void gestionRespaldoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GestionRespaldo form = new GestionRespaldo();
+            form.Show();
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionClientes form = new GestionClientes();
             form.Show();
         }
     }

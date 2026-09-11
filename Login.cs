@@ -1,7 +1,7 @@
 ﻿using BE;
 using BLL;
 using Services.Modelos.Idioma;
-using Services_55CA;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,13 +19,13 @@ namespace Servicios
     public partial class Login : Form, IIdiomaObserver
     {
         UsuarioService _userService = new UsuarioService();
-        BLLIdioma55CA _idiomaService = new BLLIdioma55CA();
+        BLLIdioma530BA _idiomaService = new BLLIdioma530BA();
         
 
         public Login()
         {
             InitializeComponent();
-            ServiceSessionManager55CA.getIntancia().Idioma.Suscribir(this);
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
 
         }
 
@@ -45,25 +45,25 @@ namespace Servicios
             {
                 bool usaPasswordDefault = _userService.login(username, password);
 
-                int idiomaUsuario = ServiceSessionManager55CA.getIntancia().usuarioActivo.IdIdioma;
+                int idiomaUsuario = ServiceSessionManager530BA.getIntancia().usuarioActivo.IdIdioma;
                 string codIdiomaUsuario = idiomaUsuario == 1 ? "es" : "en";
-                ServiceSessionManager55CA.getIntancia().Idioma.CargarIdioma(codIdiomaUsuario);
+                ServiceSessionManager530BA.getIntancia().Idioma.CargarIdioma(codIdiomaUsuario);
 
-                bool usuarioOk = DigitoVerificador55CA.VerificarUsuario();
-                bool rolOk = DigitoVerificador55CA.VerificarRol();
-                bool familiaOk = DigitoVerificador55CA.VerificarFamilia();
-                bool patenteOk = DigitoVerificador55CA.VerificarPatente();
+                bool usuarioOk = DigitoVerificador530BA.VerificarUsuario();
+                bool rolOk = DigitoVerificador530BA.VerificarRol();
+                bool familiaOk = DigitoVerificador530BA.VerificarFamilia();
+                bool patenteOk = DigitoVerificador530BA.VerificarPatente();
 
 
                 
                 if (!usuarioOk || !rolOk || !familiaOk || !patenteOk)
                 {
-                    if (ServiceSessionManager55CA.getIntancia().usuarioActivo.Rol.Id != 1)
+                    if (ServiceSessionManager530BA.getIntancia().usuarioActivo.Rol.Id != 1)
                     {
                         MessageBox.Show("Se encontraron inconsistencias en la base de datos, contactese con un administrador");
                         txtUser.Text = "";
                         txtPassword.Text = "";
-                        ServiceSessionManager55CA.getIntancia().Logout();
+                        ServiceSessionManager530BA.getIntancia().Logout();
                         return;
 
                     }

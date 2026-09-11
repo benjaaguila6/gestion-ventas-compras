@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace BE.Enum
 {
-    public enum Criticidad55CA
+    public enum Modulos530BA
     {
-        Bajo = 1,
-        Medio = 2,
-        Alto = 3
+        Usuario = 1,
+        Seguridad = 2,
+        Perfil = 3,
+        Cliente = 4
     }
 }

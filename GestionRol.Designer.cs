@@ -65,7 +65,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(4, 30);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 13);
@@ -137,7 +137,7 @@
             // btnEliminar
             // 
             this.btnEliminar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnEliminar.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnEliminar.Location = new System.Drawing.Point(974, 209);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -151,7 +151,7 @@
             // btnAplicar
             // 
             this.btnAplicar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnAplicar.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAplicar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAplicar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnAplicar.Location = new System.Drawing.Point(976, 291);
             this.btnAplicar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -165,7 +165,7 @@
             // btnAsignar
             // 
             this.btnAsignar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnAsignar.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAsignar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAsignar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnAsignar.Location = new System.Drawing.Point(974, 127);
             this.btnAsignar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -179,7 +179,7 @@
             // btnCrear
             // 
             this.btnCrear.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnCrear.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCrear.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnCrear.Location = new System.Drawing.Point(974, 46);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -193,7 +193,7 @@
             // btnCancelar
             // 
             this.btnCancelar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnCancelar.Location = new System.Drawing.Point(974, 454);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -216,7 +216,7 @@
             // btnDesasginar
             // 
             this.btnDesasginar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnDesasginar.Font = new System.Drawing.Font("Verdana", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDesasginar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDesasginar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnDesasginar.Location = new System.Drawing.Point(974, 372);
             this.btnDesasginar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -248,7 +248,7 @@
             this.Controls.Add(this.dgvFamilias);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "GestionRol";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
             this.Text = "GestionRol";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
