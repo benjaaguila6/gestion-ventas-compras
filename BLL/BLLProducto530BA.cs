@@ -13,6 +13,18 @@ namespace BLL
     {
         DALProducto530BA dal = new DALProducto530BA();
 
+        public List<Producto530BA> ObtenerTodos()
+        {
+            DataTable dt = dal.ObtenerTodos();
+            List<Producto530BA> productos = new List<Producto530BA>();
+            
+            foreach (DataRow dr in dt.Rows)
+            {
+                productos.Add(MapearProducto(dr));
+            }
+
+            return productos;
+        }
         public void AgregarProducto(string nombre, int existencia, decimal precioUnitario)
         {
             if(dal.ObtenerPorNombre(nombre) != null)

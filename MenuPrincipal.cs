@@ -188,5 +188,11 @@ namespace Servicios
             GestionClientes form = new GestionClientes();
             form.Show();
         }
+
+        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionProducto form = new GestionProducto();
+            form.Show();
+        }
     }
 }

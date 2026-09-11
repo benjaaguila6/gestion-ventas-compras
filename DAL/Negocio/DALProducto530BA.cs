@@ -21,7 +21,7 @@ namespace DAL.Negocio
 
         public DataRow ObtenerPorNombre(string nombre)
         {
-            string query = "SELECT * FROM Producto WHERE nombre = @nombre";
+            string query = "SELECT * FROM Producto WHERE Nombre = @nombre";
 
             var parametros = new Dictionary<string, object>
             {
@@ -35,7 +35,7 @@ namespace DAL.Negocio
 
         public void InsertarProducto(Producto530BA producto)
         {
-            string query = "INSERT INTO Producto (nombre, existencia, precioUnitario) VALUES (@nombre, @existencia, @precioUnitario)";
+            string query = "INSERT INTO Producto (Nombre, Existencia, PrecioUnitario) VALUES (@nombre, @existencia, @precioUnitario)";
             
             var parametros = new Dictionary<string, object>
             {
@@ -49,7 +49,7 @@ namespace DAL.Negocio
 
         public void UpdateProducto(Producto530BA producto)
         {
-            string query = "UPDATE Producto SET nombre = @nombre, precioUnitario = @precioUnitario WHERE codProducto = @codProducto";
+            string query = "UPDATE Producto SET Nombre = @nombre, PrecioUnitario = @precioUnitario WHERE codProducto = @codProducto";
             var parametros = new Dictionary<string, object>
             {
                 { "@codProducto", producto.codProducto },
@@ -62,7 +62,7 @@ namespace DAL.Negocio
 
         public void ActualizarExistencia(int codProducto, int nuevaExistencia)
         {
-            string query = "UPDATE Producto SET existencia = @nuevaExistencia WHERE codProducto = @codProducto";
+            string query = "UPDATE Producto SET Existencia = @nuevaExistencia WHERE codProducto = @codProducto";
             
             var parametros = new Dictionary<string, object>
             {
