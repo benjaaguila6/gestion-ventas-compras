@@ -183,6 +183,7 @@
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
             this.productosToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
             this.productosToolStripMenuItem.Text = "Productos";
+            this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
             // clientesToolStripMenuItem
             // 
@@ -205,7 +206,7 @@
             this.label1.Location = new System.Drawing.Point(232, 406);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(417, 65);
+            this.label1.Size = new System.Drawing.Size(425, 65);
             this.label1.TabIndex = 1;
             this.label1.Text = "Bienvenido: !";
             // 
