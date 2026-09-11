@@ -45,6 +45,7 @@
     <Compile Include="Enum\Criticidad530BA.cs" />
     <Compile Include="Enum\Modulos530BA.cs" />
     <Compile Include="Idioma530BA.cs" />
+    <Compile Include="Producto530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

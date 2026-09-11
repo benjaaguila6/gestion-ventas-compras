@@ -46,6 +46,7 @@
     <Compile Include="BLLFamilia.cs" />
     <Compile Include="BLLIdioma530BA.cs" />
     <Compile Include="BLLPatente.cs" />
+    <Compile Include="BLLProducto530BA.cs" />
     <Compile Include="BLLRol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioService.cs" />
