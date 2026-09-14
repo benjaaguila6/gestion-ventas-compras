@@ -109,6 +109,13 @@
   "GestionUsuario.msgErrorModificar": "Error al modificar usuario: ",
   "GestionUsuario.msgError": "Error",
 
+  "GestionProducto.msgPrecioMayorCero": "El precio unitario debe ser mayor a cero.",
+  "GestionProducto.msgExistenciaMayorCero": "La existencia debe ser mayor a cero.",
+  "GestionProducto.msgProductoYaActivo": "El producto ya está activo.",
+  "GestionProducto.msgProductoYaDesactivado": "El producto ya está desactivado.",
+  "GestionProducto.msgErrorOperacion": "Error al realizar la operación: ",
+  "GestionProducto.msgSeleccionarProductoModificar": "Seleccione un producto para modificar.",
+
   "Login.formTitle": "Iniciar Sesión",
   "Login.labelBienvenido": "Bienvenido",
   "Login.lblUsuario": "Usuario",
@@ -178,6 +185,10 @@
     "ExcPasswordIgualAnterior": "La contraseña nueva no puede ser igual a la actual.",
     "ExcUsuarioNoEncontrado": "Usuario no encontrado.",
     "ExcUsuarioNoBloqueado": "El usuario no está bloqueado.",
+
+    "ExcClienteDniExistente": "Ya existe un cliente con ese DNI.",
+    "ExcClienteNoEncontrado": "No existe un cliente con ese DNI.",
+    "ExcProductoNombreExistente": "Ya existe un producto con ese nombre.",
 
     "ExcNombreYaExiste": "Ya existe un/a {0} registrado/a con el nombre '{1}'.",
     "ExcConflictoPatenteIndirecta": "Conflicto en la selección: la patente '{0}' ya está incluida indirectamente dentro de otra familia que marcaste.",

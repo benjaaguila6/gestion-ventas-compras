@@ -111,6 +111,13 @@
   "GestionUsuario.msgErrorModificar": "Error updating user: ",
   "GestionUsuario.msgError": "Error",
 
+  "GestionProducto.msgPrecioMayorCero": "The unit price must be greater than zero.",
+  "GestionProducto.msgExistenciaMayorCero": "The stock must be greater than zero.",
+  "GestionProducto.msgProductoYaActivo": "The product is already active.",
+  "GestionProducto.msgProductoYaDesactivado": "The product is already deactivated.",
+  "GestionProducto.msgErrorOperacion": "Error performing the operation: ",
+  "GestionProducto.msgSeleccionarProductoModificar": "Select a product to modify.",
+
   "Login.formTitle": "Log In",
   "Login.labelBienvenido": "Welcome",
   "Login.lblUsuario": "Username",
@@ -178,6 +185,10 @@
   "ExcPasswordIgualAnterior": "The new password cannot be the same as the current one.",
   "ExcUsuarioNoEncontrado": "User not found.",
     "ExcUsuarioNoBloqueado": "The user is not blocked.",
+
+    "ExcClienteDniExistente": "A client with that DNI already exists.",
+    "ExcClienteNoEncontrado": "No client with that DNI was found.",
+    "ExcProductoNombreExistente": "A product with that name already exists.",
 
     "ExcNombreYaExiste": "A {0} named '{1}' already exists.",
     "ExcConflictoPatenteIndirecta": "Selection conflict: the permission '{0}' is already indirectly included within another family you selected.",

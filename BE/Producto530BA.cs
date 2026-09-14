@@ -19,12 +19,13 @@ namespace BE
 
 
         //ctor para la bd
-        public Producto530BA(int codProducto, string nombre, int existencia, decimal precioUnitario)
+        public Producto530BA(int codProducto, string nombre, int existencia, decimal precioUnitario, long dvh)
         {
             this.codProducto = codProducto;
             this.nombre = nombre;
             this.existencia = existencia;
             this.precioUnitario = precioUnitario;
+            this.DVH = dvh;
         }
 
 
@@ -36,6 +37,7 @@ namespace BE
         public string nombre { get; set; }
         public int existencia { get; set; }
         public decimal  precioUnitario { get; set; }
+        public long DVH { get; set; }
         public bool Activo { get; set; } = true;
     }
 }

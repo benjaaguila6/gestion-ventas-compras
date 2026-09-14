@@ -16,12 +16,12 @@ namespace Services
         static DALDigitoVerificador530BA dalControl = new DALDigitoVerificador530BA();
         static DALBackUpRestore530BA dalBackup = new DALBackUpRestore530BA();
         static DALBitacora530BA dalBitacora = new DALBitacora530BA();
-
         static DALUsuario530BA dalUsuario = new DALUsuario530BA();
         static DALRol dalRol = new DALRol();
         static DALFamilia dalFamilia = new DALFamilia();
         static DALPatente dalPatente = new DALPatente();
         static DALCliente dalCliente = new DALCliente();
+        static DALProducto530BA dalProducto = new DALProducto530BA();
 
         public static long CalcularDVH(string cadena)
         {
@@ -145,6 +145,31 @@ namespace Services
             }
         }
 
+        private static long CalcularDVHProducto(DataRow row)
+        {
+            string cadena = row["nombre"].ToString() + row["existencia"].ToString() + row["precioUnitario"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHProducto()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalProducto.ObtenerTodos().Rows) suma += CalcularDVHProducto(row);
+            return suma;
+        }
+
+        private static void RepararTodoProducto()
+        {
+            foreach (DataRow row in dalProducto.ObtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHProducto(row);
+                if (guardado != calculado) dalProducto.ActualizarDVH(Convert.ToInt32(row["codProducto"]), calculado);
+            }
+        }
+
+
+
         private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
         {
             DataRow filaControl = dalControl.ObtenerFila(nombreTabla);
@@ -174,12 +199,14 @@ namespace Services
         public static bool VerificarFamilia() => VerificarTabla("Familia", ObtenerSumaDVHFamilia, RepararTodoFamilia);
         public static bool VerificarPatente() => VerificarTabla("Patente", ObtenerSumaDVHPatente, RepararTodoPatente);
         public static bool VerificarCliente() => VerificarTabla("Cliente", ObtenerSumaDVHCliente, RepararTodoCliente);
+        public static bool VerificarProducto() => VerificarTabla("Producto", ObtenerSumaDVHProducto, RepararTodoProducto);
 
         public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
         public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
         public static void RepararFamilia() { RepararTodoFamilia(); GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia()); Registrar("Familia"); }
         public static void RepararPatente() { RepararTodoPatente(); GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente()); Registrar("Patente"); }
         public static void RepararCliente() { RepararTodoCliente(); GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente()); Registrar("Cliente"); }
+        public static void RepararProducto() { RepararTodoProducto(); GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto()); Registrar("Producto"); }
 
         public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
 
@@ -200,5 +227,6 @@ namespace Services
         public static void ActualizarDVVFamilia() => GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia());
         public static void ActualizarDVVPatente() => GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente());
         public static void ActualizarDVVCliente() => GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente());
+        public static void ActualizarDVVProducto() => GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto());
     }
 }

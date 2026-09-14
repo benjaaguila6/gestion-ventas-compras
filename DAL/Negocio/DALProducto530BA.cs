@@ -19,6 +19,21 @@ namespace DAL.Negocio
             return dal.executeDataTable(query);
         }
 
+        public DataRow ObtenerPorCodProducto(int codProducto)
+        {
+            string query = "SELECT * FROM Producto WHERE codProducto = @codProducto";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@codProducto", codProducto }
+            };
+
+            DataTable dt = dal.executeDataTable(query, parametros);
+
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+        }
+
+
         public DataRow ObtenerPorNombre(string nombre)
         {
             string query = "SELECT * FROM Producto WHERE Nombre = @nombre";
@@ -33,15 +48,16 @@ namespace DAL.Negocio
             return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
 
-        public void InsertarProducto(Producto530BA producto)
+        public void InsertarProducto(Producto530BA producto, long dvh)
         {
-            string query = "INSERT INTO Producto (Nombre, Existencia, PrecioUnitario) VALUES (@nombre, @existencia, @precioUnitario)";
+            string query = "INSERT INTO Producto (Nombre, Existencia, PrecioUnitario, DVH) VALUES (@nombre, @existencia, @precioUnitario, @dvh)";
             
             var parametros = new Dictionary<string, object>
             {
                 { "@nombre", producto.nombre },
                 { "@existencia", producto.existencia },
-                { "@precioUnitario", producto.precioUnitario }
+                { "@precioUnitario", producto.precioUnitario },
+                { "@dvh", dvh }
             };
 
             dal.executeNonQuery(query, parametros);
@@ -92,6 +108,19 @@ namespace DAL.Negocio
             var parametros = new Dictionary<string, object>
             {
                 { "@codProducto", codProducto }
+            };
+
+            dal.executeNonQuery(query, parametros);
+        }
+
+        public void ActualizarDVH(int codProducto, long dvh)
+        {
+            string query = "UPDATE Producto SET DVH = @dvh WHERE codProducto = @codProducto";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@codProducto", codProducto },
+                { "@dvh", dvh }
             };
 
             dal.executeNonQuery(query, parametros);

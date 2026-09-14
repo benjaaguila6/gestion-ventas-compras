@@ -16,7 +16,7 @@ namespace Servicios
 {
     public partial class RepararInconsistencias : Form, IIdiomaObserver
     {
-        private bool usuarioOk, rolOk, familiaOk, patenteOk;
+        private bool usuarioOk, rolOk, familiaOk, patenteOk, clienteOk, productoOk;
 
         private void btnRecalcular_Click(object sender, EventArgs e)
         {
@@ -28,6 +28,8 @@ namespace Servicios
                 if (!rolOk) DigitoVerificador530BA.RepararRol();
                 if (!familiaOk) DigitoVerificador530BA.RepararFamilia();
                 if (!patenteOk) DigitoVerificador530BA.RepararPatente();
+                if (!clienteOk) DigitoVerificador530BA.RepararCliente();
+                if (!productoOk) DigitoVerificador530BA.RepararProducto();
 
                 MessageBox.Show(idioma.Translate("MsgReparacionExitosa"));
 
@@ -73,7 +75,7 @@ namespace Servicios
             }
         }
 
-        public RepararInconsistencias(bool usuarioOk, bool rolOk, bool familiaOk, bool patenteOk)
+        public RepararInconsistencias(bool usuarioOk, bool rolOk, bool familiaOk, bool patenteOk, bool clienteOk, bool productoOk)
         {
             InitializeComponent();
 
@@ -81,6 +83,8 @@ namespace Servicios
             this.rolOk = rolOk;
             this.familiaOk = familiaOk;
             this.patenteOk = patenteOk;
+            this.clienteOk = clienteOk;
+            this.productoOk = productoOk;
 
             ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
 
@@ -111,6 +115,8 @@ namespace Servicios
             if (!rolOk) mensaje += "- Rol\n";
             if (!familiaOk) mensaje += "- Familia\n";
             if (!patenteOk) mensaje += "- Patente\n";
+            if (!clienteOk) mensaje += "- Cliente\n";
+            if (!productoOk) mensaje += "- Producto\n";
 
             lblMensaje.Text = mensaje;
         }
