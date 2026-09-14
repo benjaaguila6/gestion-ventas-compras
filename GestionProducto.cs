@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -67,6 +68,8 @@ namespace Servicios
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             try
             {
                 switch (modoActual)
@@ -79,13 +82,13 @@ namespace Servicios
 
                         if(precioUnitario <= 0)
                         {
-                            MessageBox.Show("El precio unitario debe ser mayor a cero."); // falta traducir
+                            MessageBox.Show(t.Translate("GestionProducto.msgPrecioMayorCero"));
                             return;
                         }
 
                         if(existencia <= 0)
                         {
-                            MessageBox.Show("La existencia debe ser mayor a cero."); // falta traducir
+                            MessageBox.Show(t.Translate("GestionProducto.msgExistenciaMayorCero"));
                             return;
                         }
 
@@ -99,7 +102,7 @@ namespace Servicios
 
                         if (precioUnitarioMod <= 0)
                         {
-                            MessageBox.Show("El precio unitario debe ser mayor a cero."); // falta traducir
+                            MessageBox.Show(t.Translate("GestionProducto.msgPrecioMayorCero"));
                             return;
                         }
 
@@ -114,7 +117,7 @@ namespace Servicios
 
                         if(productoSeleccionadoActivar.Activo)
                         {
-                            MessageBox.Show("El producto ya está activo."); // falta traducir
+                            MessageBox.Show(t.Translate("GestionProducto.msgProductoYaActivo"));
                             return;
                         }
 
@@ -127,7 +130,7 @@ namespace Servicios
 
                         if (!productoSeleccionadoDesactivar.Activo)
                         {
-                            MessageBox.Show("El producto ya está desactivado."); // falta traducir
+                            MessageBox.Show(t.Translate("GestionProducto.msgProductoYaDesactivado"));
                             return;
                         }
 
@@ -154,7 +157,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al realizar la operación: " + ex.Message); // falta traducir
+                MessageBox.Show(t.Translate("GestionProducto.msgErrorOperacion") + ex.Message);
             }
         }
 
@@ -181,7 +184,8 @@ namespace Servicios
             }
             else
             {
-                MessageBox.Show("Seleccione un producto para modificar."); // falta traducir
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+                MessageBox.Show(t.Translate("GestionProducto.msgSeleccionarProductoModificar"));
             }
         }
 
@@ -201,7 +205,8 @@ namespace Servicios
             }
             else
             {
-                MessageBox.Show("Seleccione un producto para modificar."); // falta traducir
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+                MessageBox.Show(t.Translate("GestionProducto.msgSeleccionarProductoModificar"));
             }
         }
 
@@ -221,7 +226,8 @@ namespace Servicios
             }
             else
             {
-                MessageBox.Show("Seleccione un producto para modificar."); // falta traducir
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+                MessageBox.Show(t.Translate("GestionProducto.msgSeleccionarProductoModificar"));
             }
 
         }

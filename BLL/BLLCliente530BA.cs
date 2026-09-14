@@ -30,9 +30,11 @@ namespace BLL
         }
         public void crearCliente(string nombreCompleto, string dNI, string email, int codPostal, string localidad, string direccion)
         {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
+
             if(dal.ObtenerPorDNI(dNI) != null)
             {
-                throw new Exception("Ya existe un cliente con ese DNI"); // falta traduccion
+                throw new Exception(idioma.Translate("ExcClienteDniExistente"));
             }
 
             Cliente530BA cliente = new Cliente530BA(nombreCompleto, dNI, email, codPostal, localidad, direccion);
@@ -51,11 +53,13 @@ namespace BLL
 
         public void eliminarCliente(string dNI)
         {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
+
             DataRow dr = dal.ObtenerPorDNI(dNI);
             
             if (dr == null)
             {
-                throw new Exception("No existe un cliente con ese DNI"); // falta traduccion
+                throw new Exception(idioma.Translate("ExcClienteNoEncontrado"));
             }
 
             dal.DeleteCliente(dNI);
@@ -67,11 +71,13 @@ namespace BLL
 
         public void modificarCliente(string dni, string email, int codPostal, string localidad, string direccion)
         {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
+
             DataRow dr = dal.ObtenerPorDNI(dni);
 
             if (dr == null)
             {
-                throw new Exception("No existe un cliente con ese DNI"); // falta traduccion
+                throw new Exception(idioma.Translate("ExcClienteNoEncontrado"));
             }
             Cliente530BA cliente = MapearCliente(dr);
 
