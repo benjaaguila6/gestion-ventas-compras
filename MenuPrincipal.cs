@@ -85,7 +85,9 @@ namespace Servicios
             cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
             iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
             idiomaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Idioma");
-            //cargarFacturaToolStripMenuItem1.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cargar Factura");
+            gestionRespaldoToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Respaldo");
+            cargarFacturaToolStripMenuItem1.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cargar Factura");
+            productosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Producto");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
