@@ -85,6 +85,7 @@ namespace Servicios
             cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
             iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
             idiomaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Idioma");
+            //cargarFacturaToolStripMenuItem1.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cargar Factura");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -153,6 +154,7 @@ namespace Servicios
             ayudaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuAyuda");
             idiomaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuIdioma");
             gestionRespaldoToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuRespaldo");
+            cargarFacturaToolStripMenuItem1.Text = t.Translate("MenuPrincipal.menuCargarFactura");
         }
 
         private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,6 +194,17 @@ namespace Servicios
         private void productosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GestionProducto form = new GestionProducto();
+            form.Show();
+        }
+
+        private void cargarFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cargarFacturaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CargarFactura form = new CargarFactura();
             form.Show();
         }
     }

@@ -139,6 +139,13 @@
 
   "MenuPrincipal.menuIdioma": "Idioma",
   "MenuPrincipal.menuRespaldo": "Gestion respaldo",
+  "MenuPrincipal.menuCargarFactura": "Cargar Factura",
+
+  "GestionFactura.msgSeleccionarLinea": "Seleccione una línea de la factura.",
+  "GestionFactura.msgFacturaCreada": "Factura N° {0} creada correctamente.",
+  "GestionFactura.msgErrorOperacion": "Error al guardar la factura: ",
+
+  "SeleccionarProducto.msgSeleccionar": "Seleccione un producto.",
 
   "GestionRespaldo.titulo": "Gestión de Respaldo",
   "GestionRespaldo.btnRealizarBackup": "Realizar BackUp",
@@ -189,6 +196,12 @@
     "ExcClienteDniExistente": "Ya existe un cliente con ese DNI.",
     "ExcClienteNoEncontrado": "No existe un cliente con ese DNI.",
     "ExcProductoNombreExistente": "Ya existe un producto con ese nombre.",
+
+    "ExcProductoNoEncontrado": "El producto no existe.",
+    "ExcStockInsuficienteProducto": "No hay stock suficiente del producto '{0}'.",
+    "ExcStockInsuficiente": "No hay stock suficiente para completar la factura.",
+    "ExcFacturaSinItems": "La factura debe tener al menos un producto.",
+    "ExcCantidadInvalida": "La cantidad ingresada no es válida.",
 
     "ExcNombreYaExiste": "Ya existe un/a {0} registrado/a con el nombre '{1}'.",
     "ExcConflictoPatenteIndirecta": "Conflicto en la selección: la patente '{0}' ya está incluida indirectamente dentro de otra familia que marcaste.",

@@ -28,11 +28,25 @@ namespace BLL
 
             return list;
         }
+
+        public Cliente530BA ObtenerPorDNI(string dni)
+        {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
+
+            DataRow dr = dal.ObtenerPorDNI(dni);
+
+            if (dr == null)
+            {
+                throw new Exception(idioma.Translate("ExcClienteNoEncontrado"));
+            }
+
+            return MapearCliente(dr);
+        }
         public void crearCliente(string nombreCompleto, string dNI, string email, int codPostal, string localidad, string direccion)
         {
             var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
-            if(dal.ObtenerPorDNI(dNI) != null)
+            if(ObtenerPorDNI(dNI) != null)
             {
                 throw new Exception(idioma.Translate("ExcClienteDniExistente"));
             }

@@ -45,6 +45,8 @@
     <Compile Include="Enum\Criticidad530BA.cs" />
     <Compile Include="Enum\Modulos530BA.cs" />
     <Compile Include="Idioma530BA.cs" />
+    <Compile Include="Factura530BA.cs" />
+    <Compile Include="ItemFactura530BA.cs" />
     <Compile Include="Producto530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -47,6 +47,8 @@
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.ventasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cargarFacturaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +62,7 @@
             this.usuarioToolStripMenuItem,
             this.administradorToolStripMenuItem,
             this.maestrosToolStripMenuItem,
+            this.ventasToolStripMenuItem,
             this.ayudaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -210,6 +213,21 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Bienvenido: !";
             // 
+            // ventasToolStripMenuItem
+            // 
+            this.ventasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cargarFacturaToolStripMenuItem1});
+            this.ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
+            this.ventasToolStripMenuItem.Size = new System.Drawing.Size(118, 41);
+            this.ventasToolStripMenuItem.Text = "Ventas";
+            // 
+            // cargarFacturaToolStripMenuItem1
+            // 
+            this.cargarFacturaToolStripMenuItem1.Name = "cargarFacturaToolStripMenuItem1";
+            this.cargarFacturaToolStripMenuItem1.Size = new System.Drawing.Size(359, 46);
+            this.cargarFacturaToolStripMenuItem1.Text = "Cargar Factura";
+            this.cargarFacturaToolStripMenuItem1.Click += new System.EventHandler(this.cargarFacturaToolStripMenuItem1_Click);
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -251,5 +269,7 @@
         private System.Windows.Forms.ToolStripMenuItem maestrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ventasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cargarFacturaToolStripMenuItem1;
     }
 }
