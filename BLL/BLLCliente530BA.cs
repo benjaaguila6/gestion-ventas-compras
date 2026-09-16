@@ -46,14 +46,16 @@ namespace BLL
         {
             var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
-            if(ObtenerPorDNI(dNI) != null)
+            if(dal.ObtenerPorDNI(dNI) != null)
             {
                 throw new Exception(idioma.Translate("ExcClienteDniExistente"));
             }
 
-            Cliente530BA cliente = new Cliente530BA(nombreCompleto, dNI, email, codPostal, localidad, direccion);
+            string emailCifrado = ServiceSeguridad530BA.EncriptarAES(email);
 
-            long dvh = CalcularDVHCliente(nombreCompleto, dNI, email, codPostal, localidad, direccion);
+            Cliente530BA cliente = new Cliente530BA(nombreCompleto, dNI, emailCifrado, codPostal, localidad, direccion);
+
+            long dvh = CalcularDVHCliente(nombreCompleto, dNI, emailCifrado, codPostal, localidad, direccion);
 
             dal.InsertCliente(cliente, dvh);
 
@@ -118,7 +120,8 @@ namespace BLL
             int id = Convert.ToInt32(row["Id"]);
             string nombreCompleto = row["NombreCompleto"].ToString();
             string dNI = row["DNI"].ToString();
-            string email = row["Email"].ToString();
+            string email = ServiceSeguridad530BA.DesencriptarAES(row["Email"].ToString());
+            //string email = row["Email"].ToString();
             int codPostal = Convert.ToInt32(row["CodPostal"]);
             string localidad = row["Localidad"].ToString();
             string direccion = row["Direccion"].ToString();
