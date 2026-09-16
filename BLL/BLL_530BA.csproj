@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BitacoraEventosService.cs" />
     <Compile Include="BLLCliente530BA.cs" />
+    <Compile Include="BLLFactura530BA.cs" />
     <Compile Include="BLLFamilia.cs" />
     <Compile Include="BLLIdioma530BA.cs" />
     <Compile Include="BLLPatente.cs" />

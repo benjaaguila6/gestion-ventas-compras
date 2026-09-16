@@ -141,6 +141,13 @@
 
   "MenuPrincipal.menuIdioma": "Language",
   "MenuPrincipal.menuRespaldo": "Backup management",
+  "MenuPrincipal.menuCargarFactura": "Load Invoice",
+
+  "GestionFactura.msgSeleccionarLinea": "Select an invoice line.",
+  "GestionFactura.msgFacturaCreada": "Invoice N° {0} created successfully.",
+  "GestionFactura.msgErrorOperacion": "Error saving the invoice: ",
+
+  "SeleccionarProducto.msgSeleccionar": "Select a product.",
 
   "GestionRespaldo.titulo": "Backup Management",
   "GestionRespaldo.btnRealizarBackup": "Perform Backup",
@@ -189,6 +196,12 @@
     "ExcClienteDniExistente": "A client with that DNI already exists.",
     "ExcClienteNoEncontrado": "No client with that DNI was found.",
     "ExcProductoNombreExistente": "A product with that name already exists.",
+
+    "ExcProductoNoEncontrado": "The product does not exist.",
+    "ExcStockInsuficienteProducto": "Not enough stock for product '{0}'.",
+    "ExcStockInsuficiente": "There is not enough stock to complete the invoice.",
+    "ExcFacturaSinItems": "The invoice must contain at least one product.",
+    "ExcCantidadInvalida": "The entered quantity is invalid.",
 
     "ExcNombreYaExiste": "A {0} named '{1}' already exists.",
     "ExcConflictoPatenteIndirecta": "Selection conflict: the permission '{0}' is already indirectly included within another family you selected.",

@@ -22,6 +22,7 @@ namespace Services
         static DALPatente dalPatente = new DALPatente();
         static DALCliente dalCliente = new DALCliente();
         static DALProducto530BA dalProducto = new DALProducto530BA();
+        static DALFactura dalFactura = new DALFactura();
 
         public static long CalcularDVH(string cadena)
         {
@@ -168,6 +169,53 @@ namespace Services
             }
         }
 
+        private static long CalcularDVHFactura(DataRow row)
+        {
+            string cadena = row["DNI"].ToString() + row["Fecha"].ToString() + row["Total"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHFactura()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalFactura.ObtenerTodas().Rows) suma += CalcularDVHFactura(row);
+            return suma;
+        }
+
+        private static void RepararTodoFactura()
+        {
+            foreach (DataRow row in dalFactura.ObtenerTodas().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHFactura(row);
+                if (guardado != calculado) dalFactura.ActualizarDVHFactura(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
+        private static long CalcularDVHDetalleFactura(DataRow row)
+        {
+            string cadena = row["IdFactura"].ToString() + row["codProducto"].ToString() + row["Cantidad"].ToString()
+                + row["PrecioUnitario"].ToString() + row["Subtotal"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHDetalleFactura()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalFactura.ObtenerDetalles().Rows) suma += CalcularDVHDetalleFactura(row);
+            return suma;
+        }
+
+        private static void RepararTodoDetalleFactura()
+        {
+            foreach (DataRow row in dalFactura.ObtenerDetalles().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHDetalleFactura(row);
+                if (guardado != calculado) dalFactura.ActualizarDVHDetalle(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
 
 
         private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
@@ -200,6 +248,8 @@ namespace Services
         public static bool VerificarPatente() => VerificarTabla("Patente", ObtenerSumaDVHPatente, RepararTodoPatente);
         public static bool VerificarCliente() => VerificarTabla("Cliente", ObtenerSumaDVHCliente, RepararTodoCliente);
         public static bool VerificarProducto() => VerificarTabla("Producto", ObtenerSumaDVHProducto, RepararTodoProducto);
+        public static bool VerificarFactura() => VerificarTabla("Factura", ObtenerSumaDVHFactura, RepararTodoFactura);
+        public static bool VerificarDetalleFactura() => VerificarTabla("DetalleFactura", ObtenerSumaDVHDetalleFactura, RepararTodoDetalleFactura);
 
         public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
         public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
@@ -207,6 +257,8 @@ namespace Services
         public static void RepararPatente() { RepararTodoPatente(); GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente()); Registrar("Patente"); }
         public static void RepararCliente() { RepararTodoCliente(); GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente()); Registrar("Cliente"); }
         public static void RepararProducto() { RepararTodoProducto(); GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto()); Registrar("Producto"); }
+        public static void RepararFactura() { RepararTodoFactura(); GuardarOActualizarDVV("Factura", ObtenerSumaDVHFactura()); Registrar("Factura"); }
+        public static void RepararDetalleFactura() { RepararTodoDetalleFactura(); GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura()); Registrar("DetalleFactura"); }
 
         public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
 
@@ -228,5 +280,7 @@ namespace Services
         public static void ActualizarDVVPatente() => GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente());
         public static void ActualizarDVVCliente() => GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente());
         public static void ActualizarDVVProducto() => GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto());
+        public static void ActualizarDVVFactura() => GuardarOActualizarDVV("Factura", ObtenerSumaDVHFactura());
+        public static void ActualizarDVVDetalleFactura() => GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura());
     }
 }

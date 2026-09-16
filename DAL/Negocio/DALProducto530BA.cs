@@ -125,5 +125,21 @@ namespace DAL.Negocio
 
             dal.executeNonQuery(query, parametros);
         }
+
+        public DataTable ObtenerProductosActivos(string filtro = null)
+        {
+            string query = "SELECT * FROM Producto WHERE Activo = 1";
+            var parametros = new Dictionary<string, object>();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                query += " AND Nombre LIKE @filtro";
+                parametros.Add("@filtro", "%" + filtro + "%");
+            }
+
+            query += " ORDER BY Nombre";
+
+            return dal.executeDataTable(query, parametros);
+        }
     }
 }

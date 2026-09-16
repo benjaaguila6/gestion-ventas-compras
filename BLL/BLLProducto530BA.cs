@@ -25,6 +25,18 @@ namespace BLL
 
             return productos;
         }
+
+        public List<Producto530BA> BuscarProductos(string filtro = null)
+        {
+            List<Producto530BA> productos = new List<Producto530BA>();
+
+            foreach (DataRow dr in dal.ObtenerProductosActivos(filtro).Rows)
+            {
+                productos.Add(MapearProducto(dr));
+            }
+
+            return productos;
+        }
         public void AgregarProducto(string nombre, int existencia, decimal precioUnitario)
         {
             var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
@@ -72,7 +84,24 @@ namespace BLL
             RecalcularDVHProducto(codProducto);
         }
 
+        public void ValidarStock(int codProducto, int cantidad)
+        {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
+            DataRow dr = dal.ObtenerPorCodProducto(codProducto);
+
+            if (dr == null)
+            {
+                throw new Exception(idioma.Translate("ExcProductoNoEncontrado"));
+            }
+
+            int existencia = Convert.ToInt32(dr["existencia"]);
+
+            if (existencia < cantidad)
+            {
+                throw new Exception(string.Format(idioma.Translate("ExcStockInsuficienteProducto"), dr["nombre"].ToString()));
+            }
+        }
         public Producto530BA MapearProducto(DataRow dr)
         {
             return new Producto530BA
