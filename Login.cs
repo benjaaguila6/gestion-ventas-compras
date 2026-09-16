@@ -26,7 +26,6 @@ namespace Servicios
         {
             InitializeComponent();
             ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
-
         }
 
         
