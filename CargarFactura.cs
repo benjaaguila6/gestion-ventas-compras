@@ -15,7 +15,6 @@ namespace Servicios
 {
     public partial class CargarFactura : Form
     {
-        BLLFactura530BA bllFactura = new BLLFactura530BA();
         BLLCliente530BA bllCliente = new BLLCliente530BA();
         List<ItemFactura530BA> items = new List<ItemFactura530BA>();
         private string dniClienteSeleccionado = string.Empty;
@@ -24,31 +23,49 @@ namespace Servicios
         {
             InitializeComponent();
             CargarGrilla();
+
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("CargarFactura.formTitle");
+            groupBox1.Text = t.Translate("CargarFactura.groupBoxCliente");
+            label2.Text = t.Translate("CargarFactura.labelCliente");
+            label1.Text = t.Translate("CargarFactura.labelDni");
+            label3.Text = t.Translate("CargarFactura.labelDni");
+            groupBox2.Text = t.Translate("CargarFactura.groupBoxDetalle");
+            btnBuscarCliente.Text = t.Translate("CargarFactura.btnBuscarCliente");
+            btnAgregarProducto.Text = t.Translate("CargarFactura.btnAgregarProducto");
+            btnQuitarProducto.Text = t.Translate("CargarFactura.btnQuitarProducto");
+            btnFinalizar.Text = t.Translate("CargarFactura.btnFinalizar");
+            btnCancelar.Text = t.Translate("CargarFactura.btnCancelar");
         }
 
         private void CargarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             dgvLineas.AutoGenerateColumns = false;
 
             dgvLineas.Columns.Clear();
-            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "nombre" });
-            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Cantidad", DataPropertyName = "cantidad" });
-            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio Unitario", DataPropertyName = "precioUnitario" });
-            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Subtotal", DataPropertyName = "Subtotal" });
+            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colProducto"), DataPropertyName = "nombre" });
+            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colCantidad"), DataPropertyName = "cantidad" });
+            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colPrecioUnitario"), DataPropertyName = "precioUnitario" });
+            dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colSubtotal"), DataPropertyName = "Subtotal" });
 
             dgvLineas.DataSource = null;
             dgvLineas.DataSource = items;
 
-            lblTotal.Text = "Total: " + items.Sum(i => i.Subtotal).ToString();
+            lblTotal.Text = string.Format(t.Translate("CargarFactura.msgTotalFactura"), items.Sum(i => i.Subtotal).ToString());
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             try
             {
                 if(txtDNI.Text.Trim() == "")
                 {
-                    MessageBox.Show("Debe ingresar un DNI para buscar el cliente."); //falta traudcir
+                    MessageBox.Show(t.Translate("CargarFactura.msgDniRequerido"));
                     return;
                 }
 
@@ -57,13 +74,13 @@ namespace Servicios
 
                 dniClienteSeleccionado = cliente.DNI;
 
-                MessageBox.Show("Cliente asignado: " + cliente.NombreCompleto);
+                MessageBox.Show(string.Format(t.Translate("CargarFactura.msgClienteAsignado"), cliente.NombreCompleto));
             }
             catch (Exception ex)
             {
                 lblNombreCliente.Text = "";
 
-                DialogResult respuesta = MessageBox.Show(ex.Message + ".   ¿Quiere registrar el cliente?", "Buscar Cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult respuesta = MessageBox.Show(ex.Message + t.Translate("CargarFactura.msgRegistrarCliente"), t.Translate("CargarFactura.titleBuscarCliente"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (respuesta == DialogResult.Yes)
                 {
@@ -125,20 +142,55 @@ namespace Servicios
         {
             var t = ServiceSessionManager530BA.getIntancia().Idioma;
 
+            if (dniClienteSeleccionado == "")
+            {
+                MessageBox.Show(t.Translate("GestionFactura.msgFaltaCliente"));
+                return;
+            }
+
+            if (items.Count == 0)
+            {
+                MessageBox.Show(t.Translate("ExcFacturaSinItems"));
+                return;
+            }
+
+            if (!ServiceSessionManager530BA.getIntancia().TienePermiso("Cobrar Venta"))
+            {
+                MessageBox.Show(t.Translate("CobrarVenta.msgSinPermiso"));
+                return;
+            }
+
+            BLLFactura530BA bllFactura = new BLLFactura530BA();
+            int idFactura;
+
+            // se retienen los datos del cliente antes de limpiar el formulario
+            string dni = dniClienteSeleccionado;
+            string nombre = lblNombreCliente.Text;
+            List<ItemFactura530BA> lineas = new List<ItemFactura530BA>(items);
+
             try
             {
-                int idFactura = bllFactura.GuardarFactura(dniClienteSeleccionado, items);
-
-                MessageBox.Show(string.Format(t.Translate("GestionFactura.msgFacturaCreada"), idFactura));
-
-                items.Clear();
-                txtDNI.Text = "";
-                lblNombreCliente.Text = "";
-                CargarGrilla();
+                idFactura = bllFactura.GuardarFactura(dni, lineas);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(t.Translate("GestionFactura.msgErrorOperacion") + ex.Message);
+                return;
+            }
+
+            MessageBox.Show(string.Format(t.Translate("GestionFactura.msgFacturaCreada"), idFactura) + "\n\n" + t.Translate("GestionFactura.msgDebeCobrar"));
+
+            // El carrito ya quedo persistido en la base: se limpia siempre, se cobre o no. Si el operador no cobra ahora, la factura queda en estado 0 y habria que cobrarla despues por otro lado.
+            items.Clear();
+            txtDNI.Text = "";
+            lblNombreCliente.Text = "";
+            dniClienteSeleccionado = string.Empty;
+            CargarGrilla();
+
+            using (CobrarVenta form = new CobrarVenta())
+            {
+                form.CargarDatosDeFactura(idFactura, dni, nombre, lineas);
+                form.ShowDialog();
             }
         }
 

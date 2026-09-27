@@ -14,20 +14,19 @@ namespace DAL
         private readonly string _stringConnection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=is--servicios;Integrated Security=True";
         public string CadenaConexion => _stringConnection;
 
-        //private readonly string _stringConnection = "Data Source=LAPTOP-8BNKG482\\SQLEXPRESS;Initial Catalog=is--servicios;Integrated Security=True";
         public DataTable executeDataTable(string query, Dictionary<string, object> parametros = null)
         {
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(_stringConnection))
             {
-                using (SqlCommand cmd = new SqlCommand(query,conn))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    if(parametros != null)
+                    if (parametros != null)
                     {
                         foreach (var p in parametros)
                         {
                             cmd.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
-                        } 
+                        }
                     }
 
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -52,6 +51,7 @@ namespace DAL
             {
                 using (SqlCommand cmd = new SqlCommand(consulta, conn))
                 {
+
                     if (parametros != null)
                     {
                         foreach (var p in parametros)
@@ -59,6 +59,7 @@ namespace DAL
                             cmd.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
                         }
                     }
+
                     try
                     {
                         conn.Open();
@@ -78,6 +79,7 @@ namespace DAL
             {
                 using (SqlCommand cmd = new SqlCommand(consulta, conn))
                 {
+
                     if (parametros != null)
                     {
                         foreach (var p in parametros)
@@ -98,5 +100,6 @@ namespace DAL
                 }
             }
         }
+
     }
 }

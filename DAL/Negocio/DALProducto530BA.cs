@@ -76,14 +76,14 @@ namespace DAL.Negocio
             dal.executeNonQuery(query, parametros);
         }
 
-        public void ActualizarExistencia(int codProducto, int nuevaExistencia)
+        public void DescontarStock(int codProducto, int cantidad)
         {
-            string query = "UPDATE Producto SET Existencia = @nuevaExistencia WHERE codProducto = @codProducto";
-            
+            string query = "UPDATE Producto SET Existencia = Existencia - @cantidad WHERE codProducto = @codProducto AND Existencia >= @cantidad";
+
             var parametros = new Dictionary<string, object>
             {
                 { "@codProducto", codProducto },
-                { "@nuevaExistencia", nuevaExistencia }
+                { "@cantidad", cantidad }
             };
 
             dal.executeNonQuery(query, parametros);

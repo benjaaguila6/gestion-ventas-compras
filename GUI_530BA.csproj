@@ -66,6 +66,12 @@
     <Compile Include="CargarFactura.Designer.cs">
       <DependentUpon>CargarFactura.cs</DependentUpon>
     </Compile>
+    <Compile Include="CobrarVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CobrarVenta.Designer.cs">
+      <DependentUpon>CobrarVenta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuracion Inicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambiarContraseña.resx">
       <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CobrarVenta.resx">
+      <DependentUpon>CobrarVenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CargarFactura.resx">
       <DependentUpon>CargarFactura.cs</DependentUpon>

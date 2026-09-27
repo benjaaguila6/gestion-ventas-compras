@@ -1,4 +1,5 @@
 ﻿using BE;
+using DAL;
 using DAL.Negocio;
 using System;
 using System.Collections.Generic;
@@ -78,9 +79,9 @@ namespace BLL
             dal.DesactivarProducto(codProducto);
         }
 
-        public void ActualizarExistencia(int codProducto, int nuevaExistencia)
+        public void DescontarStock(int codProducto, int cantidad)
         {
-            dal.ActualizarExistencia(codProducto, nuevaExistencia);
+            dal.DescontarStock(codProducto, cantidad);
             RecalcularDVHProducto(codProducto);
         }
 

@@ -27,16 +27,26 @@ namespace Servicios
         {
             InitializeComponent();
             CargarGrilla();
+
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("SeleccionarProducto.formTitle");
+            groupBox1.Text = t.Translate("SeleccionarProducto.groupBoxProductos");
+            label1.Text = t.Translate("SeleccionarProducto.labelBuscar");
+            btnSeleccionar.Text = t.Translate("SeleccionarProducto.btnSeleccionar");
+            btnCancelar.Text = t.Translate("SeleccionarProducto.btnCancelar");
         }
 
         private void CargarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             dgvProductos.AutoGenerateColumns = false;
 
             dgvProductos.Columns.Clear();
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombre", DataPropertyName = "nombre" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "existencia" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio Unitario", DataPropertyName = "precioUnitario" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("SeleccionarProducto.colNombre"), DataPropertyName = "nombre" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("SeleccionarProducto.colStock"), DataPropertyName = "existencia" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("SeleccionarProducto.colPrecioUnitario"), DataPropertyName = "precioUnitario" });
 
             listProducto = bllProducto.BuscarProductos(txtBuscar.Text.Trim());
 
@@ -55,7 +65,7 @@ namespace Servicios
             {
                 var t = ServiceSessionManager530BA.getIntancia().Idioma;
 
-                string input = Interaction.InputBox("Ingrese la cantidad a seleccionar:", "Cantidad","1");
+                string input = Interaction.InputBox(t.Translate("SeleccionarProducto.msgIngresarCantidad"), t.Translate("SeleccionarProducto.titleCantidad"),"1");
 
                 // Si cancela o deja vacío, no cerramos el formulario
                 if (string.IsNullOrWhiteSpace(input)) return;
@@ -74,7 +84,7 @@ namespace Servicios
                     }
                     else
                     {
-                        MessageBox.Show("Por favor ingrese un número entero mayor a 0.");
+                        MessageBox.Show(t.Translate("SeleccionarProducto.msgCantidadInvalida"));
                     }
                 }
                 catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using BE;
 using BLL;
 using Services.Modelos.Idioma;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,21 +22,26 @@ namespace Servicios
         {
             InitializeComponent();
             cargarGrilla();
+
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
+            actualizarIdioma();
         }
 
         private void cargarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             dgvClientes.AutoGenerateColumns = false;
             dgvClientes.Columns.Clear();
 
 
             //para que no muestre el id y el dvh en la grilla, solo los datos visibles para el usuario
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombre Completo", DataPropertyName = "NombreCompleto" });
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "DNI", DataPropertyName = "DNI" });
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Email", DataPropertyName = "Email" });
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código Postal", DataPropertyName = "CodPostal" });
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Localidad", DataPropertyName = "Localidad" });
-            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Dirección", DataPropertyName = "Direccion" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colNombreCompleto"), DataPropertyName = "NombreCompleto" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colDni"), DataPropertyName = "DNI" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colEmail"), DataPropertyName = "Email" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colCodPostal"), DataPropertyName = "CodPostal" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colLocalidad"), DataPropertyName = "Localidad" });
+            dgvClientes.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionClientes.colDireccion"), DataPropertyName = "Direccion" });
 
             listClientes = bllCliente.ObtenerTodos();
 
@@ -45,7 +51,23 @@ namespace Servicios
 
         public void actualizarIdioma()
         {
-            throw new NotImplementedException();
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("GestionClientes.formTitle");
+            groupBox1.Text = t.Translate("GestionClientes.groupBoxDatosPersonales");
+            groupBox2.Text = t.Translate("GestionClientes.groupBoxDatosEntrega");
+            groupBox3.Text = t.Translate("GestionClientes.groupBoxClientes");
+            label1.Text = t.Translate("GestionClientes.labelDni");
+            label2.Text = t.Translate("GestionClientes.labelNombre");
+            label3.Text = t.Translate("GestionClientes.labelEmail");
+            label4.Text = t.Translate("GestionClientes.labelCodPostal");
+            label5.Text = t.Translate("GestionClientes.labelDireccion");
+            label6.Text = t.Translate("GestionClientes.labelLocalidad");
+            btnCrear.Text = t.Translate("GestionClientes.btnCrear");
+            btnModificar.Text = t.Translate("GestionClientes.btnModificar");
+            btnEliminar.Text = t.Translate("GestionClientes.btnEliminar");
+            btnGuardar.Text = t.Translate("GestionClientes.btnGuardar");
+            btnCancelar.Text = t.Translate("GestionClientes.btnCancelar");
         }
 
 
@@ -77,6 +99,8 @@ namespace Servicios
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             switch (modoActual)
             {
                 case ModoOperacion.Crear:
@@ -91,13 +115,13 @@ namespace Servicios
 
                         bllCliente.crearCliente(nombre, dni, email, codPostal, localidad, direccion);
 
-                        MessageBox.Show("Cliente creado correctamente"); // despues traducir
+                        MessageBox.Show(t.Translate("GestionClientes.msgClienteCreado"));
                         cargarGrilla();
 
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message); // traducir
+                        MessageBox.Show(ex.Message);
                     }
                     break;
 
@@ -108,17 +132,17 @@ namespace Servicios
                         {
                             Cliente530BA clienteSeleccionado = (Cliente530BA)dgvClientes.SelectedRows[0].DataBoundItem;
                             bllCliente.eliminarCliente(clienteSeleccionado.DNI);
-                            MessageBox.Show("Cliente eliminado correctamente"); // despues traducir
+                            MessageBox.Show(t.Translate("GestionClientes.msgClienteEliminado"));
                             cargarGrilla();
                         }
                         else
                         {
-                            MessageBox.Show("Seleccione un cliente para eliminar"); // despues traducir
+                            MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteEliminar"));
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message); // traudcir
+                        MessageBox.Show(ex.Message);
                     }
                     break;
 
@@ -136,17 +160,17 @@ namespace Servicios
 
                             bllCliente.modificarCliente(clienteSeleccionado.DNI, email, codPostal, localidad, direccion);
 
-                            MessageBox.Show("Cliente modificado correctamente"); // despues traducir
+                            MessageBox.Show(t.Translate("GestionClientes.msgClienteModificado"));
                             cargarGrilla();
                         }
                         else
                         {
-                            MessageBox.Show("Seleccione un cliente para modificar"); // despues traducir
+                            MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteModificar"));
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message); // traducir
+                        MessageBox.Show(ex.Message);
                     }
                     break;
             }
@@ -220,7 +244,8 @@ namespace Servicios
             }
             else
             {
-                MessageBox.Show("Seleccione un cliente para eliminar"); // despues traducir
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+                MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteEliminar"));
             }
         }
 

@@ -159,7 +159,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show(string.Format(t.Translate("GestionUsuario.msgErrorExcepcion"), ex.Message));
             }
         }
 
