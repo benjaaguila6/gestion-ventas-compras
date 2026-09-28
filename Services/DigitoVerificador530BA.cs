@@ -165,7 +165,7 @@ namespace Services
             {
                 long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
                 long calculado = CalcularDVHProducto(row);
-                if (guardado != calculado) dalProducto.ActualizarDVH(Convert.ToInt32(row["codProducto"]), calculado);
+                if (guardado != calculado) dalProducto.ActualizarDVHProducto(Convert.ToInt32(row["codProducto"]), calculado);
             }
         }
 

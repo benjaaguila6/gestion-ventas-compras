@@ -33,6 +33,12 @@ namespace BE
             Direccion = direccion;
         }
 
+        //ctor sin referencias para xml
+        public Cliente530BA()
+        {
+            
+        }
+
         public int Id { get; set; }
         public long DVH { get; set; }
         public string NombreCompleto { get; set; }

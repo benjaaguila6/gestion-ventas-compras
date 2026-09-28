@@ -14,6 +14,7 @@
   "AuditoriaBitacora.colCriticidad": "Criticidad",
   "AuditoriaBitacora.colModulo": "Modulo",
   "AuditoriaBitacora.colFechaHora": "FechaHora",
+
   "CargarFactura.formTitle": "Cargar Factura",
   "CargarFactura.groupBoxCliente": "Cliente",
   "CargarFactura.labelDni": "DNI",
@@ -33,6 +34,7 @@
   "CargarFactura.titleBuscarCliente": "Buscar Cliente",
   "CargarFactura.msgTotalFactura": "Total: {0}",
   "CargarFactura.labelCliente": "Cliente:",
+  
   "CambiarContraseña.formTitle": "Cambiar Contraseña",
   "CambiarContraseña.labelUser": "Usuario",
   "CambiarContraseña.labelContraseñaActual": "Contraseña Actual",
@@ -42,6 +44,7 @@
   "CambiarContraseña.msgNoCoinciden": "Las contraseñas no coinciden.",
   "CambiarContraseña.msgExito": "Contraseña modificada con éxito. Debe volver a iniciar sesión.",
   "CambiarContraseña.msgError": "Error al cambiar contraseña: ",
+  
   "ConfiguracionInicial.formTitle": "Configuracion_Inicial",
   "ConfiguracionInicial.labelTitulo": "Configuración conexión a la base de datos",
   "ConfiguracionInicial.labelDescripcion": "Elegí la instancia de SQL Server donde queres instalar / conectarte a la base.",
@@ -49,6 +52,7 @@
   "ConfiguracionInicial.btnConectar": "Detectar",
   "ConfiguracionInicial.btnContinuar": "Continuar",
   "ConfiguracionInicial.btnCancelar": "Cancelar",
+
   "GestionClientes.formTitle": "GestionClientes",
   "GestionClientes.btnCrear": "CREAR",
   "GestionClientes.btnModificar": "MODIFICAR",
@@ -75,6 +79,24 @@
   "GestionClientes.msgClienteModificado": "Cliente modificado correctamente",
   "GestionClientes.msgSeleccionarClienteEliminar": "Seleccione un cliente para eliminar",
   "GestionClientes.msgSeleccionarClienteModificar": "Seleccione un cliente para modificar",
+  "GestionClientes.btnSerializar": "SERIALIZAR",
+  "GestionClientes.btnDeserializar": "DESERIALIZAR",
+  "GestionClientes.btnLimpiar": "LIMPIAR",
+  "GestionClientes.msgAtencion": "Atención",
+  "GestionClientes.msgExito": "Éxito",
+  "GestionClientes.msgError": "Error",
+  "GestionClientes.msgAdvertencia": "Advertencia",
+  "GestionClientes.msgErrorFormato": "Error de Formato",
+  "GestionClientes.msgSeleccionarClienteSerializar": "Debe seleccionar al menos un cliente de la grilla para serializar.",
+  "GestionClientes.titleGuardarXml": "Guardar clientes seleccionados",
+  "GestionClientes.msgSerializacionExito": "Serialización realizada con éxito.",
+  "GestionClientes.msgSerializacionError": "Ocurrió un error al intentar serializar los clientes:\n",
+  "GestionClientes.titleAbrirXml": "Seleccione un archivo XML de clientes",
+  "GestionClientes.msgDeserializacionVacia": "El archivo XML está vacío o no contiene datos válidos de clientes.",
+  "GestionClientes.msgDeserializacionExito": "Deserialización realizada con éxito.",
+  "GestionClientes.msgDeserializacionErrorFormato": "El formato del archivo XML no es válido para clientes.\nDetalle: ",
+  "GestionClientes.msgDeserializacionErrorGeneral": "Ocurrió un error al intentar deserializar el archivo:\n",
+
   "GestionFamilia.formTitle": "Gestión de Familia",
   "GestionFamilia.labelFamilias": "Familias",
   "GestionFamilia.labelPermisosFamilias": "Permisos / Familias",
@@ -96,6 +118,7 @@
   "GestionFamilia.msgSeleccionarComponente": "Debe marcar al menos un Componente (Familia/Permiso) de la lista.",
   "GestionFamilia.msgSeleccionarFamilia": "Debe seleccionar una Familia de la lista de Familias",
   "GestionFamilia.msgError": "Error: {0}",
+  
   "GestionRol.formTitle": "Gestión de Rol",
   "GestionRol.labelRoles": "Roles",
   "GestionRol.labelPermisosFamilias": "Permisos / Familias",
@@ -121,6 +144,7 @@
   "GestionRol.msgSeleccionarComponenteDesasignar": "Debe seleccionar un componente del árbol para desasignarlo.",
   "GestionRol.msgSoloDesasignarComponentesDirectos": "Solo puede desasignar componentes directos del rol. Para quitar permisos internos, modifique la familia correspondiente.",
   "GestionRol.msgConfirmacion": "Confirmar",
+  
   "GestionUsuario.formTitle": "Gestión de Usuarios",
   "GestionUsuario.gbUsuarios": "Usuarios",
   "GestionUsuario.gbDatos": "Datos",
@@ -160,6 +184,7 @@
   "GestionUsuario.msgErrorModificar": "Error al modificar usuario: ",
   "GestionUsuario.msgError": "Error",
   "GestionUsuario.msgErrorExcepcion": "Error: {0}",
+  
   "GestionProducto.msgPrecioMayorCero": "El precio unitario debe ser mayor a cero.",
   "GestionProducto.msgExistenciaMayorCero": "La existencia debe ser mayor a cero.",
   "GestionProducto.msgProductoYaActivo": "El producto ya está activo.",
@@ -182,12 +207,14 @@
   "GestionProducto.colExistencia": "Existencia",
   "GestionProducto.colPrecioUnitario": "Precio Unitario",
   "GestionProducto.colActivo": "Activo",
+  
   "Login.formTitle": "Iniciar Sesión",
   "Login.labelBienvenido": "Bienvenido",
   "Login.lblUsuario": "Usuario",
   "Login.lblPassword": "Contraseña",
   "Login.btnLogin": "Iniciar Sesión",
   "Login.msgInconsistencias": "Se encontraron inconsistencias en la base de datos, contactese con un administrador",
+  
   "MenuPrincipal.formTitle": "Menú Principal",
   "MenuPrincipal.labelBienvenido": "Bienvenido: {0}, {1} !",
   "MenuPrincipal.menuUsuario": "Usuario",
@@ -211,8 +238,10 @@
   "MenuPrincipal.menuVentas": "Ventas",
   "MenuPrincipal.menuEspanol": "Español",
   "MenuPrincipal.menuEnglish": "English",
+  
   "GestionFactura.msgDebeCobrar": "Debe cobrar la venta.",
   "GestionFactura.msgFaltaCliente": "Debe seleccionar un cliente antes de finalizar.",
+  
   "CobrarVenta.msgSinPermiso": "No tiene permiso para cobrar ventas.",
   "CobrarVenta.msgFaltaMetodoPago": "Seleccione el metodo de pago.",
   "CobrarVenta.msgFaltaTitular": "Ingrese el nombre del titular de la tarjeta.",
@@ -240,9 +269,11 @@
   "CobrarVenta.msgDetalleFactura": "Factura N° {0}  -  Cliente: {1}",
   "CobrarVenta.msgTotalACobrar": "Total a cobrar: ${0}",
   "CobrarVenta.lblErrorFaltaMetodoPago": "Falta seleccionar método de pago.",
+  
   "GestionFactura.msgSeleccionarLinea": "Seleccione una línea de la factura.",
   "GestionFactura.msgFacturaCreada": "Factura N° {0} creada correctamente.",
   "GestionFactura.msgErrorOperacion": "Error al guardar la factura: ",
+  
   "SeleccionarProducto.msgSeleccionar": "Seleccione un producto.",
   "SeleccionarProducto.formTitle": "Seleccionar Producto",
   "SeleccionarProducto.groupBoxProductos": "Productos",
@@ -255,6 +286,7 @@
   "SeleccionarProducto.msgIngresarCantidad": "Ingrese la cantidad a seleccionar:",
   "SeleccionarProducto.titleCantidad": "Cantidad",
   "SeleccionarProducto.msgCantidadInvalida": "Por favor ingrese un número entero mayor a 0.",
+  
   "GestionRespaldo.titulo": "Gestión de Respaldo",
   "GestionRespaldo.btnRealizarBackup": "Realizar BackUp",
   "GestionRespaldo.btnRealizarRestore": "Realizar Restore",
@@ -273,6 +305,7 @@
   "GestionRespaldo.buscarCarpetaBackUp": "🗂️",
   "GestionRespaldo.buscarCarpetaRestore": "🗂️",
   "GestionRespaldo.filtroArchivoBackup": "Archivos de Backup SQL (*.bak)|*.bak|Todos los archivos (*.*)|*.*",
+  
   "RepararInconsistencias.itemUsuario": "- Usuario\n",
   "RepararInconsistencias.itemRol": "- Rol\n",
   "RepararInconsistencias.itemFamilia": "- Familia\n",

@@ -113,7 +113,7 @@ namespace DAL.Negocio
             dal.executeNonQuery(query, parametros);
         }
 
-        public void ActualizarDVH(int codProducto, long dvh)
+        public void ActualizarDVHProducto(int codProducto, long dvh)
         {
             string query = "UPDATE Producto SET DVH = @dvh WHERE codProducto = @codProducto";
 

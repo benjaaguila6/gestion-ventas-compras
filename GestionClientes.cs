@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Servicios
 {
@@ -25,6 +27,7 @@ namespace Servicios
 
             ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
             actualizarIdioma();
+
         }
 
         private void cargarGrilla()
@@ -68,6 +71,9 @@ namespace Servicios
             btnEliminar.Text = t.Translate("GestionClientes.btnEliminar");
             btnGuardar.Text = t.Translate("GestionClientes.btnGuardar");
             btnCancelar.Text = t.Translate("GestionClientes.btnCancelar");
+            btnSerializar.Text = t.Translate("GestionClientes.btnSerializar");
+            btnDeserializar.Text = t.Translate("GestionClientes.btnDeserializar");
+            btnLimpiar.Text = t.Translate("GestionClientes.btnLimpiar");
         }
 
 
@@ -268,6 +274,94 @@ namespace Servicios
             txtDireccion.Text = null;
 
             modoActual = ModoOperacion.Ninguno;
+        }
+
+        private void btnSerializar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+                if (dgvClientes.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteSerializar"), t.Translate("GestionClientes.msgAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                List<Cliente530BA> clientesASerializar = new List<Cliente530BA>();
+                foreach (DataGridViewRow row in dgvClientes.SelectedRows)
+                {
+                    clientesASerializar.Add((Cliente530BA)row.DataBoundItem);
+                }
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
+                saveFileDialog.Title = t.Translate("GestionClientes.titleGuardarXml");
+                saveFileDialog.FileName = "clientes_seleccionados.xml"; // Nombre por defecto
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Cliente530BA>));
+
+                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                    {
+                        serializer.Serialize(fs, clientesASerializar);
+                    }
+
+                    MessageBox.Show(t.Translate("GestionClientes.msgSerializacionExito"), t.Translate("GestionClientes.msgExito"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al intentar serializar los clientes:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            cargarGrilla();
+        }
+
+        private void btnDeserializar_Click(object sender, EventArgs e)
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
+                openFileDialog.Title = t.Translate("GestionClientes.titleAbrirXml");
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Cliente530BA>));
+                    List<Cliente530BA> clientesRecuperados;
+
+                    using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))
+                    {
+                        clientesRecuperados = (List<Cliente530BA>)serializer.Deserialize(fs);
+                    }
+
+                    if (clientesRecuperados == null || clientesRecuperados.Count == 0)
+                    {
+                        MessageBox.Show(t.Translate("GestionClientes.msgDeserializacionVacia"), t.Translate("GestionClientes.msgAdvertencia"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    dgvClientes.DataSource = null;
+                    dgvClientes.DataSource = clientesRecuperados;
+
+                    MessageBox.Show(t.Translate("GestionClientes.msgDeserializacionExito"), t.Translate("GestionClientes.msgExito"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (InvalidOperationException) // Excepción típica de XmlSerializer cuando el formato falla
+            {
+                MessageBox.Show(t.Translate("GestionClientes.msgDeserializacionErrorFormato"), t.Translate("GestionClientes.msgErrorFormato"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception)
+            {
+                // Manejo de otros errores (permisos de lectura, archivo en uso, etc.)
+                MessageBox.Show(t.Translate("GestionClientes.msgDeserializacionErrorGeneral"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
