@@ -49,6 +49,9 @@
             this.txtLocalidad = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnSerializar = new System.Windows.Forms.Button();
+            this.btnDeserializar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -86,7 +89,7 @@
             this.btnModificar.BackColor = System.Drawing.Color.SteelBlue;
             this.btnModificar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnModificar.Location = new System.Drawing.Point(1605, 236);
+            this.btnModificar.Location = new System.Drawing.Point(1605, 233);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(4);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(340, 133);
@@ -100,7 +103,7 @@
             this.btnEliminar.BackColor = System.Drawing.Color.SteelBlue;
             this.btnEliminar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnEliminar.Location = new System.Drawing.Point(1605, 403);
+            this.btnEliminar.Location = new System.Drawing.Point(1605, 397);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(340, 133);
@@ -115,7 +118,7 @@
             this.btnGuardar.Enabled = false;
             this.btnGuardar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnGuardar.Location = new System.Drawing.Point(1605, 570);
+            this.btnGuardar.Location = new System.Drawing.Point(1605, 725);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(340, 133);
@@ -130,7 +133,7 @@
             this.btnCancelar.Enabled = false;
             this.btnCancelar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnCancelar.Location = new System.Drawing.Point(1605, 737);
+            this.btnCancelar.Location = new System.Drawing.Point(1605, 889);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(340, 133);
@@ -202,7 +205,7 @@
             this.groupBox1.Controls.Add(this.txtNombre);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(31, 720);
+            this.groupBox1.Location = new System.Drawing.Point(31, 744);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(444, 278);
             this.groupBox1.TabIndex = 27;
@@ -219,7 +222,7 @@
             this.groupBox2.Controls.Add(this.txtLocalidad);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(515, 720);
+            this.groupBox2.Location = new System.Drawing.Point(515, 744);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(444, 278);
             this.groupBox2.TabIndex = 28;
@@ -292,12 +295,57 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Clientes";
             // 
+            // btnSerializar
+            // 
+            this.btnSerializar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnSerializar.Font = new System.Drawing.Font("Verdana", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSerializar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnSerializar.Location = new System.Drawing.Point(994, 725);
+            this.btnSerializar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSerializar.Name = "btnSerializar";
+            this.btnSerializar.Size = new System.Drawing.Size(256, 56);
+            this.btnSerializar.TabIndex = 30;
+            this.btnSerializar.Text = "SERIALIZAR";
+            this.btnSerializar.UseVisualStyleBackColor = false;
+            this.btnSerializar.Click += new System.EventHandler(this.btnSerializar_Click);
+            // 
+            // btnDeserializar
+            // 
+            this.btnDeserializar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnDeserializar.Font = new System.Drawing.Font("Verdana", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeserializar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnDeserializar.Location = new System.Drawing.Point(1324, 725);
+            this.btnDeserializar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDeserializar.Name = "btnDeserializar";
+            this.btnDeserializar.Size = new System.Drawing.Size(256, 56);
+            this.btnDeserializar.TabIndex = 31;
+            this.btnDeserializar.Text = "DESERIALIZAR";
+            this.btnDeserializar.UseVisualStyleBackColor = false;
+            this.btnDeserializar.Click += new System.EventHandler(this.btnDeserializar_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnLimpiar.Location = new System.Drawing.Point(1605, 561);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(340, 133);
+            this.btnLimpiar.TabIndex = 32;
+            this.btnLimpiar.Text = "LIMPIAR";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // GestionClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(1975, 1010);
+            this.ClientSize = new System.Drawing.Size(1975, 1066);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.btnDeserializar);
+            this.Controls.Add(this.btnSerializar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -341,5 +389,8 @@
         private System.Windows.Forms.TextBox txtLocalidad;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnSerializar;
+        private System.Windows.Forms.Button btnDeserializar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

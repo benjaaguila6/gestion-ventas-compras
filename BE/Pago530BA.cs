@@ -2,15 +2,6 @@ using System;
 
 namespace BE
 {
-    // Pago asociado a una factura.
-    //
-    // Seguridad / PCI-DSS:
-    //   - Nunca se persiste el numero completo de tarjeta (PAN).
-    //   - Nunca se persiste el CVV/CVC, ni siquiera cifrado.
-    //   - Solo Ultimos4, mas datos de titular y vencimiento, que
-    //     quedan fuera del alcance de informacion sensible de tarjeta.
-    // La integridad se protege con DVH, igual que el resto de las
-    // tablas del sistema.
     public class Pago530BA
     {
         // ctor para crear un pago nuevo

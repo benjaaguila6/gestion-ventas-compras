@@ -135,7 +135,7 @@ namespace BLL
 
             long nuevoDVH = CalcularDVHProducto(nombre, existencia, precioUnitario);
 
-            dal.ActualizarDVH(codProducto, nuevoDVH);
+            dal.ActualizarDVHProducto(codProducto, nuevoDVH);
             Services.DigitoVerificador530BA.ActualizarDVVProducto();
         }
 
