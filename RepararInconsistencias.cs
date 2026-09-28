@@ -111,12 +111,12 @@ namespace Servicios
 
             string mensaje = idioma.Translate("MensajeInconsistenciasDetectadas") + "\n";
 
-            if (!usuarioOk) mensaje += "- Usuario\n";
-            if (!rolOk) mensaje += "- Rol\n";
-            if (!familiaOk) mensaje += "- Familia\n";
-            if (!patenteOk) mensaje += "- Patente\n";
-            if (!clienteOk) mensaje += "- Cliente\n";
-            if (!productoOk) mensaje += "- Producto\n";
+            if (!usuarioOk) mensaje += idioma.Translate("RepararInconsistencias.itemUsuario");
+            if (!rolOk) mensaje += idioma.Translate("RepararInconsistencias.itemRol");
+            if (!familiaOk) mensaje += idioma.Translate("RepararInconsistencias.itemFamilia");
+            if (!patenteOk) mensaje += idioma.Translate("RepararInconsistencias.itemPatente");
+            if (!clienteOk) mensaje += idioma.Translate("RepararInconsistencias.itemCliente");
+            if (!productoOk) mensaje += idioma.Translate("RepararInconsistencias.itemProducto");
 
             lblMensaje.Text = mensaje;
         }

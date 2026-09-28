@@ -52,8 +52,10 @@
     <Compile Include="DALPatente.cs" />
     <Compile Include="DALRol.cs" />
     <Compile Include="DALUsuario530BA.cs" />
+    <Compile Include="Transaccion530BA.cs" />
     <Compile Include="Negocio\DALCliente.cs" />
     <Compile Include="Negocio\DALFactura.cs" />
+    <Compile Include="Negocio\DALPago.cs" />
     <Compile Include="Negocio\DALProducto530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -71,6 +71,14 @@ namespace Servicios
             btAplicar.Text = t.Translate("GestionFamilia.btnAplicar");
             btEliminar.Text = t.Translate("GestionFamilia.btnEliminar");
             btCancelar.Text = t.Translate("GestionFamilia.btnCancelar");
+
+            // Los botones del panel de detalle (btn*) repiten el mismo texto que
+            // los de la grilla (bt*), asi que reutilizan las mismas claves.
+            btnCrear.Text = t.Translate("GestionFamilia.btnCrear");
+            btnAsignar.Text = t.Translate("GestionFamilia.btnAsignar");
+            btnAplicar.Text = t.Translate("GestionFamilia.btnAplicar");
+            btnEliminar.Text = t.Translate("GestionFamilia.btnEliminar");
+            btnCancelar.Text = t.Translate("GestionFamilia.btnCancelar");
         }
 
 
@@ -125,9 +133,11 @@ namespace Servicios
 
         private void btAsignar_Click(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             if (dgvFamilias.CurrentRow == null)
             {
-                MessageBox.Show("Debe seleccionar una Familia de la lista de Familias.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarFamilia"), t.Translate("GestionFamilia.msgValidacion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -243,7 +253,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error: " + ex.Message);
+                        MessageBox.Show(string.Format(t.Translate("GestionFamilia.msgError"), ex.Message));
                     }
 
                 }

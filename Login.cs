@@ -37,7 +37,8 @@ namespace Servicios
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             string username = txtUser.Text;
             string password = txtPassword.Text;
             try
@@ -60,7 +61,7 @@ namespace Servicios
                 {
                     if (ServiceSessionManager530BA.getIntancia().usuarioActivo.Rol.Id != 1)
                     {
-                        MessageBox.Show("Se encontraron inconsistencias en la base de datos, contactese con un administrador");
+                        MessageBox.Show(t.Translate("Login.msgInconsistencias"));
                         txtUser.Text = "";
                         txtPassword.Text = "";
                         ServiceSessionManager530BA.getIntancia().Logout();
@@ -103,9 +104,19 @@ namespace Servicios
             this.Show();
         }
 
+        // OJO: no se llama desde el constructor a proposito. Al arrancar la app
+        // todavia no se cargo ningun idioma (traducciones == null) y
+        // Translate() reventaria con NullReferenceException. Esta forma llega
+        // sola por Suscribir() cuando Login.btnLogin_Click carga el idioma.
         public void actualizarIdioma()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
 
+            this.Text = t.Translate("Login.formTitle");
+            lblUsuario.Text = t.Translate("Login.lblUsuario");
+            lblContrasena.Text = t.Translate("Login.lblPassword");
+            label3.Text = t.Translate("Login.labelBienvenido");
+            btnLogin.Text = t.Translate("Login.btnLogin");
         }
 
         

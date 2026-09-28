@@ -65,7 +65,7 @@ namespace Servicios
             {
                 var t = ServiceSessionManager530BA.getIntancia().Idioma;
                 ofd.Title = t.Translate("GestionRespaldo.titleSeleccionarBackup");
-                ofd.Filter = "Archivos de Backup SQL (*.bak)|*.bak|Todos los archivos (*.*)|*.*";
+                ofd.Filter = t.Translate("GestionRespaldo.filtroArchivoBackup");
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -96,7 +96,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorRestore") + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorRestore") + ex.Message, t.Translate("GestionRespaldo.titleError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -107,6 +107,8 @@ namespace Servicios
             this.Text = t.Translate("GestionRespaldo.titulo");
             btnRealizarBackUp.Text = t.Translate("GestionRespaldo.btnRealizarBackup");
             btnRealizarRestore.Text = t.Translate("GestionRespaldo.btnRealizarRestore");
+            buscarCarpetaBackUp.Text = t.Translate("GestionRespaldo.buscarCarpetaBackUp");
+            buscarCarpetaRestore.Text = t.Translate("GestionRespaldo.buscarCarpetaRestore");
 
         }
     }

@@ -157,6 +157,12 @@ namespace Servicios
             idiomaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuIdioma");
             gestionRespaldoToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuRespaldo");
             cargarFacturaToolStripMenuItem1.Text = t.Translate("MenuPrincipal.menuCargarFactura");
+            maestrosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuMaestros");
+            productosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProductos");
+            clientesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuClientes");
+            ventasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVentas");
+            españolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEspanol");
+            englishToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEnglish");
         }
 
         private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)

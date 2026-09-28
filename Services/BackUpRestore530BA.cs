@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Services_530BA;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +12,17 @@ namespace Services
     public class BackUpRestore530BA
     {
         DALBackUpRestore530BA _dal = new DALBackUpRestore530BA();
-        
+
+        private static string Traducir(string key)
+        {
+            return ServiceSessionManager530BA.getIntancia().Idioma.Translate(key);
+        }
+
         public void realizarBackUp(string ruta)
         {
             if (!Directory.Exists(ruta))
             {
-                throw new Exception("El directorio seleccionado no existe.");
+                throw new Exception(Traducir("Services.msgDirectorioNoExiste"));
             }
 
             string nombreArchivo = $"Backup_Sistema_{DateTime.Now:yyyyMMdd_HHmm}.bak";
@@ -29,13 +35,13 @@ namespace Services
         {
             if (!File.Exists(ruta))
             {
-                throw new Exception("El archivo de backup seleccionado no existe o fue movido.");
+                throw new Exception(Traducir("Services.msgArchivoBackupNoExiste"));
             }
-                
+
 
             if (Path.GetExtension(ruta).ToLower() != ".bak")
             {
-                throw new Exception("El archivo seleccionado no tiene un formato válido de backup (.bak).");
+                throw new Exception(Traducir("Services.msgFormatoBackupInvalido"));
             }
                 
 

@@ -33,17 +33,34 @@ namespace Servicios
         {
             InitializeComponent();
             CargarGrilla();
+
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("GestionProducto.formTitle");
+            groupBox1.Text = t.Translate("GestionProducto.groupBoxProductos");
+            groupBox2.Text = t.Translate("GestionProducto.groupBoxDatos");
+            label1.Text = t.Translate("GestionProducto.labelNombre");
+            label2.Text = t.Translate("GestionProducto.labelPrecioUnitario");
+            label3.Text = t.Translate("GestionProducto.labelStockInicial");
+            btnCrear.Text = t.Translate("GestionProducto.btnCrear");
+            btnModificar.Text = t.Translate("GestionProducto.btnModificar");
+            btnActivar.Text = t.Translate("GestionProducto.btnActivar");
+            btnDesactivar.Text = t.Translate("GestionProducto.btnDesactivar");
+            btnGuardar.Text = t.Translate("GestionProducto.btnGuardar");
+            btnCancelar.Text = t.Translate("GestionProducto.btnCancelar");
         }
 
         private void CargarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             dgvProductos.AutoGenerateColumns = false;
 
             dgvProductos.Columns.Clear();
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombre", DataPropertyName = "nombre" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Existencia", DataPropertyName = "existencia" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio Unitario", DataPropertyName = "precioUnitario" });
-            dgvProductos.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Activo", DataPropertyName = "Activo" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colNombre"), DataPropertyName = "nombre" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colExistencia"), DataPropertyName = "existencia" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colPrecioUnitario"), DataPropertyName = "precioUnitario" });
+            dgvProductos.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = t.Translate("GestionProducto.colActivo"), DataPropertyName = "Activo" });
 
             listProducto = bllProducto.ObtenerTodos();
 
