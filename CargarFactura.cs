@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using iTextSharp.text;
 using Services_530BA;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,13 @@ namespace Servicios
         public CargarFactura()
         {
             InitializeComponent();
+
+            dgvLineas.AllowUserToAddRows = false;
+            dgvLineas.AllowUserToDeleteRows = false;
+            dgvLineas.ReadOnly = true;
+            dgvLineas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvLineas.MultiSelect = false;
+
             CargarGrilla();
 
             var t = ServiceSessionManager530BA.getIntancia().Idioma;
@@ -51,8 +59,15 @@ namespace Servicios
             dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colPrecioUnitario"), DataPropertyName = "precioUnitario" });
             dgvLineas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("CargarFactura.colSubtotal"), DataPropertyName = "Subtotal" });
 
-            dgvLineas.DataSource = null;
+            
             dgvLineas.DataSource = items;
+
+            if (dgvLineas.BindingContext[items] is CurrencyManager cm)
+            {
+                cm.Refresh();
+            }
+
+            dgvLineas.CurrentCell = null;
 
             lblTotal.Text = string.Format(t.Translate("CargarFactura.msgTotalFactura"), items.Sum(i => i.Subtotal).ToString());
         }
@@ -125,9 +140,8 @@ namespace Servicios
 
         private void btnQuitarProducto_Click(object sender, EventArgs e)
         {
-            if (dgvLineas.SelectedRows.Count > 0 && dgvLineas.SelectedRows[0].Index >= 0)
+            if (dgvLineas.CurrentRow?.DataBoundItem is ItemFactura530BA item)
             {
-                ItemFactura530BA item = (ItemFactura530BA)dgvLineas.CurrentRow.DataBoundItem;
                 items.Remove(item);
                 CargarGrilla();
             }
@@ -206,10 +220,7 @@ namespace Servicios
 
         private void dgvLineas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvLineas.SelectedRows.Count == 0 || dgvLineas.CurrentRow == null || dgvLineas.CurrentRow.Index < 0)
-            {
-                return;
-            }
+            if (e.RowIndex < 0) return;
         }
     }
 }

@@ -380,6 +380,11 @@
   "VerFacturas.formTitle": "View Invoices",
   "VerFacturas.btnCobrarFactura": "CHARGE INVOICE",
   "VerFacturas.btnImprimirFactura": "PRINT INVOICE",
+  "VerFacturas.colID": "ID",
+  "VerFacturas.colDNI": "DNI",
+  "VerFacturas.colFecha": "Date",
+  "VerFacturas.colEstado": "State",
+  "VerFacturas.colTotal": "Total",
 
   "DAL.msgErrorLectura": "Error reading from the database.",
   "DAL.msgErrorEscritura": "Error writing to the database.",

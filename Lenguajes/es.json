@@ -374,6 +374,11 @@
   "VerFacturas.formTitle": "Ver Facturas",
   "VerFacturas.btnCobrarFactura": "COBRAR FACTURA",
   "VerFacturas.btnImprimirFactura": "IMPRIMIR FACTURA",
+  "VerFacturas.colID": "ID",
+  "VerFacturas.colDNI": "DNI",
+  "VerFacturas.colFecha": "Fecha",
+  "VerFacturas.colEstado": "Estado",
+  "VerFacturas.colTotal": "Total",
 
   "DAL.msgErrorLectura": "Error de lectura en la base de datos.",
   "DAL.msgErrorEscritura": "Error al escribir en la base de datos.",

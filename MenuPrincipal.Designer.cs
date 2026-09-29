@@ -211,14 +211,14 @@
             // cargarFacturaToolStripMenuItem1
             // 
             this.cargarFacturaToolStripMenuItem1.Name = "cargarFacturaToolStripMenuItem1";
-            this.cargarFacturaToolStripMenuItem1.Size = new System.Drawing.Size(359, 46);
+            this.cargarFacturaToolStripMenuItem1.Size = new System.Drawing.Size(331, 46);
             this.cargarFacturaToolStripMenuItem1.Text = "Cargar Factura";
             this.cargarFacturaToolStripMenuItem1.Click += new System.EventHandler(this.cargarFacturaToolStripMenuItem1_Click);
             // 
             // verFacturasToolStripMenuItem
             // 
             this.verFacturasToolStripMenuItem.Name = "verFacturasToolStripMenuItem";
-            this.verFacturasToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
+            this.verFacturasToolStripMenuItem.Size = new System.Drawing.Size(331, 46);
             this.verFacturasToolStripMenuItem.Text = "Ver Facturas";
             this.verFacturasToolStripMenuItem.Click += new System.EventHandler(this.verFacturasToolStripMenuItem_Click);
             // 
@@ -235,6 +235,7 @@
             this.facturaToolStripMenuItem.Name = "facturaToolStripMenuItem";
             this.facturaToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
             this.facturaToolStripMenuItem.Text = "Factura";
+            this.facturaToolStripMenuItem.Click += new System.EventHandler(this.facturaToolStripMenuItem_Click);
             // 
             // ayudaToolStripMenuItem
             // 

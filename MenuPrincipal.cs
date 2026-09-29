@@ -224,5 +224,11 @@ namespace Servicios
             VerFacturas form = new VerFacturas();
             form.Show();
         }
+
+        private void facturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VerFacturas form = new VerFacturas();
+            form.Show();
+        }
     }
 }
