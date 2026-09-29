@@ -88,6 +88,9 @@ namespace Servicios
             gestionRespaldoToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Respaldo");
             cargarFacturaToolStripMenuItem1.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cargar Factura");
             productosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Producto");
+            clientesToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Cliente");
+            verFacturasToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
+            facturaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
