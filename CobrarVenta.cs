@@ -140,15 +140,28 @@ namespace Servicios
         private static bool EsVencimientoValido(string vencimiento)
         {
             // formato MM/AA
-            if (vencimiento.Length != 5 || vencimiento[2] != '/') return false;
+            if (string.IsNullOrWhiteSpace(vencimiento) || vencimiento.Length != 5 || vencimiento[2] != '/')
+                return false;
 
-            string mes = vencimiento.Substring(0, 2);
-            string anio = vencimiento.Substring(3, 2);
+            string mesStr = vencimiento.Substring(0, 2);
+            string anioStr = vencimiento.Substring(3, 2);
 
-            if (!mes.All(char.IsDigit) || !anio.All(char.IsDigit)) return false;
+            if (!mesStr.All(char.IsDigit) || !anioStr.All(char.IsDigit))
+                return false;
 
-            int m = int.Parse(mes);
-            return m >= 1 && m <= 12;
+            int mes = int.Parse(mesStr);
+            int anio = int.Parse(anioStr) + 2000; // Convierte "26" a 2026
+
+            // Verifica que el mes sea válido
+            if (mes < 1 || mes > 12)
+                return false;
+
+            int mesActual = DateTime.Now.Month;
+            int anioActual = DateTime.Now.Year;
+
+            // Si el año es mayor al actual, es válida.
+            // Si es el mismo año, el mes de vencimiento debe ser mayor o igual al mes actual.
+            return anio > anioActual || (anio == anioActual && mes >= mesActual);
         }
 
 
