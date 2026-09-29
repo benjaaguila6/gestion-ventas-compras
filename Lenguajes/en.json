@@ -96,6 +96,7 @@
   "GestionClientes.msgDeserializacionExito": "Deserialization completed successfully.",
   "GestionClientes.msgDeserializacionErrorFormato": "The XML file format is not valid for clients.\nDetail: ",
   "GestionClientes.msgDeserializacionErrorGeneral": "An error occurred while attempting to deserialize the file:\n",
+  "ExcClienteConFacturas": "The client cannot be deleted because they have associated invoices.",
 
   "GestionFamilia.formTitle": "Family Management",
   "GestionFamilia.labelFamilias": "Families",

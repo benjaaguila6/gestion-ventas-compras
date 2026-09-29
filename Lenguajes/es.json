@@ -96,6 +96,7 @@
   "GestionClientes.msgDeserializacionExito": "Deserialización realizada con éxito.",
   "GestionClientes.msgDeserializacionErrorFormato": "El formato del archivo XML no es válido para clientes.\nDetalle: ",
   "GestionClientes.msgDeserializacionErrorGeneral": "Ocurrió un error al intentar deserializar el archivo:\n",
+  "ExcClienteConFacturas": "No se puede eliminar el cliente porque tiene facturas asociadas.",
 
   "GestionFamilia.formTitle": "Gestión de Familia",
   "GestionFamilia.labelFamilias": "Familias",
