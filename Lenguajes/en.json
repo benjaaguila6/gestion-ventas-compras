@@ -192,6 +192,7 @@
   "GestionProducto.msgProductoYaDesactivado": "The product is already deactivated.",
   "GestionProducto.msgErrorOperacion": "Error performing the operation: ",
   "GestionProducto.msgSeleccionarProductoModificar": "Select a product to modify.",
+  "GestionProducto.msgCamposVacios": "You must complete all fields.",
   "GestionProducto.formTitle": "Product Management",
   "GestionProducto.groupBoxProductos": "Products",
   "GestionProducto.groupBoxDatos": "Data",

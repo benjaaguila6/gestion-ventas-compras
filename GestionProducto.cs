@@ -86,6 +86,7 @@ namespace Servicios
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             var t = ServiceSessionManager530BA.getIntancia().Idioma;
+           
 
             try
             {
@@ -93,9 +94,16 @@ namespace Servicios
                 {
                     case ModoOperacion.Crear:
 
+                        if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtExistencia.Text) || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
+                        {
+                            MessageBox.Show(t.Translate("GestionProducto.msgCamposVacios"));
+                            return;
+                        }
+
                         string nombre = txtNombre.Text;
                         int existencia = Convert.ToInt32(txtExistencia.Text);
                         decimal precioUnitario = decimal.Parse(txtPrecioUnitario.Text);
+
 
                         if(precioUnitario <= 0)
                         {
@@ -113,6 +121,12 @@ namespace Servicios
                         break;
 
                     case ModoOperacion.Modificar:
+                        
+                        if (string.IsNullOrWhiteSpace(txtNombre.Text) ||string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
+                        {
+                            MessageBox.Show(t.Translate("GestionProducto.msgCamposVacios"));
+                            return;
+                        }
 
                         string nombreMod = txtNombre.Text;
                         decimal precioUnitarioMod = decimal.Parse(txtPrecioUnitario.Text);
