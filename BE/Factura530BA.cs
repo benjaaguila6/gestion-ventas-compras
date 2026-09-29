@@ -19,13 +19,12 @@ namespace BE
         }
 
         // ctor para mapear desde la BD
-        public Factura530BA(int id, string dni, DateTime fecha, decimal total, long dvh, EstadoFactura530BA estado)
+        public Factura530BA(int id, string dni, DateTime fecha, decimal total, EstadoFactura530BA estado)
         {
             Id = id;
             DNI = dni;
             Fecha = fecha;
             Total = total;
-            DVH = dvh;
             Estado = estado;
         }
 

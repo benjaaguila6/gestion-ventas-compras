@@ -125,7 +125,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("CobrarVenta.msgErrorCobro") + ex.Message);
+                MessageBox.Show(t.Translate("CobrarVenta.msgErrorCobro") + t.Translate(ex.Message));
             }
         }
 

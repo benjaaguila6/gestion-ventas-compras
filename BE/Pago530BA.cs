@@ -30,6 +30,10 @@ namespace BE
             DVH = dvh;
         }
 
+        public Pago530BA()
+        {
+            
+        }
         public int Id { get; set; }
         public int IdFactura { get; set; }
         public Enum.MetodoPago530BA Metodo { get; set; }

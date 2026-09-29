@@ -42,7 +42,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(idioma.Translate("MsgErrorReparar") + ex.Message);
+                MessageBox.Show(idioma.Translate("MsgErrorReparar") + idioma.Translate(ex.Message));
             }
         }
 
@@ -69,7 +69,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(idioma.Translate("MsgErrorRestore") + ex.Message);
+                        MessageBox.Show(idioma.Translate("MsgErrorRestore") + idioma.Translate(ex.Message));
                     }
                 }
             }

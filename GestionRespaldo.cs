@@ -55,7 +55,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorBackup") + ex.Message, t.Translate("GestionRespaldo.titleError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorBackup") + t.Translate(ex.Message), t.Translate("GestionRespaldo.titleError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorRestore") + ex.Message, t.Translate("GestionRespaldo.titleError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(t.Translate("GestionRespaldo.msgErrorRestore") + t.Translate(ex.Message), t.Translate("GestionRespaldo.titleError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

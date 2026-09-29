@@ -241,7 +241,7 @@ namespace Servicios
                     RolModelo530BA rolSeleccionado = (RolModelo530BA)dgvFamilias.CurrentRow.DataBoundItem;
                     Componente530BA componenteAQuitar = (Componente530BA)tvPermisosAsignados.SelectedNode.Tag;
 
-                    DialogResult respuesta = MessageBox.Show(t.Translate("GestionRol.msgConfirmarQuitarComponente"), "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult respuesta = MessageBox.Show(t.Translate("GestionRol.msgConfirmarQuitarComponente"), t.Translate("GestionRol.msgConfirmacion"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (respuesta == DialogResult.Yes)
                     {
@@ -273,7 +273,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(t.Translate(ex.Message));
             }
         }
 

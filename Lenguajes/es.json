@@ -236,6 +236,9 @@
   "MenuPrincipal.menuProductos": "Productos",
   "MenuPrincipal.menuClientes": "Clientes",
   "MenuPrincipal.menuVentas": "Ventas",
+  "MenuPrincipal.menuFactura": "Factura",
+  "MenuPrincipal.menuVerFacturas": "Ver Facturas",
+  "MenuPrincipal.menuReportes": "Reportes",
   "MenuPrincipal.menuEspanol": "Español",
   "MenuPrincipal.menuEnglish": "English",
   
@@ -360,5 +363,19 @@
   "ExcFamiliaAsignadaAsiMisma": "Una familia no puede asignarse a sí misma como hija.",
   "ExcFamiliaHijaPermisoDuplicado": "La familia {0} posee el permiso {1} que la familia {2} ya posee.",
   "ExcRolDuplicariaPatente": "Operación denegada: el Rol '{0}' utiliza la Familia '{1}'. Si se asigna la familia '{2}', el rol duplicaría la patente '{3}'. Debe limpiarlo del Rol primero.",
-  "ExcFamiliaConDependencias": "No se puede eliminar la familia porque está asignada a un Rol o es parte de otra Familia."
+  "ExcFamiliaConDependencias": "No se puede eliminar la familia porque está asignada a un Rol o es parte de otra Familia.",
+
+  "VerFacturas.msgSeleccionarFactura": "Debe seleccionar una factura.",
+  "VerFacturas.msgFacturaYaCobrada": "Esta factura ya se encuentra pagada.",
+  "VerFacturas.msgPdfGenerado": "PDF generado con éxito.",
+  "VerFacturas.titleExito": "Éxito",
+  "VerFacturas.formTitle": "Ver Facturas",
+  "VerFacturas.btnCobrarFactura": "COBRAR FACTURA",
+  "VerFacturas.btnImprimirFactura": "IMPRIMIR FACTURA",
+
+  "DAL.msgErrorLectura": "Error de lectura en la base de datos.",
+  "DAL.msgErrorEscritura": "Error al escribir en la base de datos.",
+  "DAL.msgErrorEscalar": "Error al leer valor escalar en la base de datos.",
+
+  "Services.msgIdiomaNoEncontrado": "No se encontró el idioma '{0}'."
 }

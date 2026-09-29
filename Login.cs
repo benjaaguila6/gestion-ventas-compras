@@ -94,7 +94,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(t.Translate(ex.Message));
             }
         }
 

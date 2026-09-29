@@ -21,6 +21,52 @@ namespace BLL
         BLLProducto530BA bllProducto = new BLLProducto530BA();
         BitacoraEventosService bit = new BitacoraEventosService();
 
+        public List<Factura530BA> ObtenerTodas()
+        {
+            DataTable dt = dalFactura.ObtenerTodas();
+            List<Factura530BA> lista = new List<Factura530BA>();
+
+            foreach(DataRow dr in dt.Rows)
+            {
+                lista.Add(MapearFactura(dr));
+            }
+
+            return lista;
+        }
+
+        public List<ItemFactura530BA> ObtenerDetalles(int idFactura)
+        {
+            List<ItemFactura530BA> lista = dalFactura.ObtenerDetalleFactura(idFactura);
+
+            BLLProducto530BA bllProducto = new BLLProducto530BA();
+
+            foreach (ItemFactura530BA item in lista)
+            {
+                Producto530BA producto = bllProducto.ObtenerPorID(item.codProducto);
+
+                item.nombre = producto.nombre;
+                item.precioUnitario = producto.precioUnitario;
+            }
+
+            return lista;
+        }
+
+        private Factura530BA MapearFactura(DataRow row)
+        {
+            if (row == null)
+            {
+                return null;
+            }
+
+            int id = Convert.ToInt32(row["ID"]);
+            string DNI = row["DNI"].ToString();
+            DateTime fecha = Convert.ToDateTime(row["Fecha"]);
+            decimal total = Convert.ToDecimal(row["Total"]);
+            EstadoFactura530BA estado = (EstadoFactura530BA)Convert.ToInt32(row["Estado"]);
+
+            return new Factura530BA(id, DNI, fecha, total, estado);
+        }
+
         public int GuardarFactura(string dniCliente, List<ItemFactura530BA> items)
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
@@ -125,6 +171,47 @@ namespace BLL
             {
                 throw new Exception(idioma.Translate("CobrarVenta.msgUltimos4Invalido"));
             }
+        }
+
+        public Pago530BA ObtenerPagoPorFactura(int idFactura)
+        {
+            // Se asume que DALPago tiene un método que devuelve un DataRow buscando por IdFactura
+            DataRow dr = dalFactura.ObtenerPagoPorFactura(idFactura);
+
+            // Si la factura no tiene pago asociado (o aún está pendiente en la base, aunque no debería si el estado es pagado)
+            if (dr == null)
+            {
+                return null;
+            }
+
+            return MapearPago(dr);
+        }
+
+        public Pago530BA MapearPago(DataRow row)
+        {
+            if (row == null)
+            {
+                return null;
+            }
+
+            Pago530BA pago = new Pago530BA();
+
+            pago.Id = Convert.ToInt32(row["Id"]);
+            pago.IdFactura = Convert.ToInt32(row["IdFactura"]);
+
+            // Casteo explícito del entero guardado en BD hacia tu enumerador
+            pago.Metodo = (BE.Enum.MetodoPago530BA)Convert.ToInt32(row["MetodoPago"]);
+
+            // Validación de nulos (DBNull) para los campos de tarjeta, ya que si paga en efectivo pueden venir nulos desde SQL
+            pago.Ultimos4 = row["Ultimos4"] != DBNull.Value ? row["Ultimos4"].ToString() : string.Empty;
+            pago.NombreTitular = row["NombreTitular"] != DBNull.Value ? row["NombreTitular"].ToString() : string.Empty;
+            pago.Vencimiento = row["Vencimiento"] != DBNull.Value ? row["Vencimiento"].ToString() : string.Empty;
+
+            pago.Monto = Convert.ToDecimal(row["Monto"]);
+            pago.Fecha = Convert.ToDateTime(row["Fecha"]);
+            pago.DVH = Convert.ToInt64(row["DVH"]);
+
+            return pago;
         }
     }
 }

@@ -84,6 +84,7 @@
   "GestionClientes.msgExito": "Success",
   "GestionClientes.msgError": "Error",
   "GestionClientes.msgAdvertencia": "Warning",
+  "GestionClientes.msgAtencion": "Attention",
   "GestionClientes.msgActualizacion": "Update",
   "GestionClientes.msgErrorFormato": "Format Error",
   "GestionClientes.msgSeleccionarClienteSerializar": "You must select at least one client from the grid to serialize.",
@@ -237,6 +238,9 @@
   "MenuPrincipal.menuProductos": "Products",
   "MenuPrincipal.menuClientes": "Customers",
   "MenuPrincipal.menuVentas": "Sales",
+  "MenuPrincipal.menuFactura": "Invoice",
+  "MenuPrincipal.menuVerFacturas": "View Invoices",
+  "MenuPrincipal.menuReportes": "Reports",
   "MenuPrincipal.menuEspanol": "Spanish",
   "MenuPrincipal.menuEnglish": "English",
 
@@ -365,6 +369,19 @@
   "ExcFamiliaAsignadaAsiMisma": "A family cannot be assigned to itself as a child.",
   "ExcFamiliaHijaPermisoDuplicado": "The family {0} has the permission {1} that the family {2} already has.",
   "ExcRolDuplicariaPatente": "Operation denied: the Role '{0}' uses the Family '{1}'. If the family '{2}' is assigned, the role would duplicate the permission '{3}'. You must remove it from the Role first.",
-  "ExcFamiliaConDependencias": "The family cannot be deleted because it is assigned to a Role or is part of another Family."
+  "ExcFamiliaConDependencias": "The family cannot be deleted because it is assigned to a Role or is part of another Family.",
 
+  "VerFacturas.msgSeleccionarFactura": "You must select an invoice.",
+  "VerFacturas.msgFacturaYaCobrada": "This invoice has already been paid.",
+  "VerFacturas.msgPdfGenerado": "PDF generated successfully.",
+  "VerFacturas.titleExito": "Success",
+  "VerFacturas.formTitle": "View Invoices",
+  "VerFacturas.btnCobrarFactura": "CHARGE INVOICE",
+  "VerFacturas.btnImprimirFactura": "PRINT INVOICE",
+
+  "DAL.msgErrorLectura": "Error reading from the database.",
+  "DAL.msgErrorEscritura": "Error writing to the database.",
+  "DAL.msgErrorEscalar": "Error reading scalar value from the database.",
+
+  "Services.msgIdiomaNoEncontrado": "Language file '{0}' not found."
 }

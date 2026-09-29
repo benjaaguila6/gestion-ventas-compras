@@ -38,7 +38,7 @@ namespace DAL
                     catch (SqlException ex)
                     {
 
-                        throw new Exception("Error de lectura en la base de datos", ex);
+                        throw new Exception("DAL.msgErrorLectura", ex);
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace DAL
                     }
                     catch (SqlException ex)
                     {
-                        throw new Exception("Error al escribir en la base de datos", ex);
+                        throw new Exception("DAL.msgErrorEscritura", ex);
                     }
                 }
             }
@@ -95,7 +95,7 @@ namespace DAL
                     }
                     catch (SqlException ex)
                     {
-                        throw new Exception("Error al leer valor escalar en la base de datos", ex);
+                        throw new Exception("DAL.msgErrorEscalar", ex);
                     }
                 }
             }

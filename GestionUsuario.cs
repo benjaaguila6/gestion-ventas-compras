@@ -159,7 +159,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(t.Translate("GestionUsuario.msgErrorExcepcion"), ex.Message));
+                MessageBox.Show(string.Format(t.Translate("GestionUsuario.msgErrorExcepcion"), t.Translate(ex.Message)));
             }
         }
 
@@ -268,7 +268,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(t.Translate(ex.Message), t.Translate("GestionUsuario.msgError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -311,7 +311,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(t.Translate(ex.Message));
             }
             
         }
