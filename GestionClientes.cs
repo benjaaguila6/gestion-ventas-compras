@@ -100,6 +100,7 @@ namespace Servicios
             btnGuardar.Enabled = true;
             btnCancelar.Enabled = true;
             btnEliminar.Enabled = false;
+            btnLimpiar.Enabled = false;
             btnModificar.Enabled = false;
         }
 
@@ -112,6 +113,13 @@ namespace Servicios
                 case ModoOperacion.Crear:
                     try
                     {
+                        if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtDNI.Text) || string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrEmpty(txtCodPostal.Text)
+                            || string.IsNullOrEmpty(txtLocalidad.Text) || string.IsNullOrEmpty(txtDireccion.Text))
+                        {
+                            MessageBox.Show(t.Translate("GestionProducto.msgCamposVacios"));
+                            return;
+                        }
+
                         string nombre = txtNombre.Text;
                         string dni = txtDNI.Text;
                         string email = txtEmail.Text;
@@ -157,6 +165,12 @@ namespace Servicios
                     {
                         if (dgvClientes.SelectedRows.Count > 0)
                         {
+                            if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrEmpty(txtCodPostal.Text) || string.IsNullOrEmpty(txtLocalidad.Text) || string.IsNullOrEmpty(txtDireccion.Text))
+                            {
+                                MessageBox.Show(t.Translate("GestionProducto.msgCamposVacios"));
+                                return;
+                            }
+
                             Cliente530BA clienteSeleccionado = (Cliente530BA)dgvClientes.SelectedRows[0].DataBoundItem;
 
                             string email = txtEmail.Text;
@@ -203,6 +217,7 @@ namespace Servicios
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+
             if (dgvClientes.SelectedRows.Count > 0)
             {
                 Cliente530BA clienteSeleccionado = (Cliente530BA)dgvClientes.SelectedRows[0].DataBoundItem;
@@ -210,6 +225,7 @@ namespace Servicios
                 modoActual = ModoOperacion.Modificar;
                 groupBox1.Visible = true;
                 groupBox2.Visible = true;
+                btnLimpiar.Enabled = false;
                 btnGuardar.Enabled = true;
                 btnCancelar.Enabled = true;
                 btnCrear.Enabled = false;
@@ -227,7 +243,11 @@ namespace Servicios
                 //solo los modificables se habilitan, el nombre y el dni no se pueden modificar
                 txtNombre.Enabled = false;
                 txtDNI.Enabled = false;
-
+            }
+            else
+            {
+                var t = ServiceSessionManager530BA.getIntancia().Idioma;
+                MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteModificar"));
             }
         }
 
@@ -239,8 +259,9 @@ namespace Servicios
 
                 modoActual = ModoOperacion.Eliminar;
 
-                groupBox1.Visible = true;
-                groupBox2.Visible = true;
+                groupBox1.Visible = false;
+                groupBox2.Visible = false;
+                btnLimpiar.Enabled = false;
                 btnGuardar.Enabled = true;
                 btnCancelar.Enabled = true;
                 btnCrear.Enabled = false;
@@ -260,6 +281,7 @@ namespace Servicios
             btnCrear.Enabled = true;
             btnEliminar.Enabled = true;
             btnModificar.Enabled = true;
+            btnLimpiar.Enabled = true;
 
             btnGuardar.Enabled = false;
             btnCancelar.Enabled = false;
@@ -358,7 +380,6 @@ namespace Servicios
             }
             catch (Exception)
             {
-                // Manejo de otros errores (permisos de lectura, archivo en uso, etc.)
                 MessageBox.Show(t.Translate("GestionClientes.msgDeserializacionErrorGeneral"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

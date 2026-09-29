@@ -71,6 +71,20 @@ namespace DAL.Negocio
             dal.executeNonQuery(query, parametros);
         }
 
+        public bool TieneFacturasAsociadas(string dni)
+        {
+            string query = @"SELECT Id FROM Factura WHERE DNI = @dni";
+
+            var parametros = new Dictionary<string, object>
+            {
+                {"@dni", dni }
+            };
+
+            DataTable dt = dal.executeDataTable(query, parametros);
+
+            return dt != null && dt.Rows.Count > 0;
+        }
+
         public void UpdateCliente(Cliente530BA cliente, long dvh)
         {
             string query = @"UPDATE Cliente

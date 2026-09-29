@@ -78,6 +78,11 @@ namespace BLL
                 throw new Exception(idioma.Translate("ExcClienteNoEncontrado"));
             }
 
+            if (dal.TieneFacturasAsociadas(dNI))
+            {
+                throw new Exception(idioma.Translate("ExcClienteConFacturas"));
+            }
+
             dal.DeleteCliente(dNI);
             Services.DigitoVerificador530BA.ActualizarDVVCliente();
 
