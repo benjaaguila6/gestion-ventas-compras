@@ -250,7 +250,7 @@
   "CobrarVenta.msgSinPermiso": "No tiene permiso para cobrar ventas.",
   "CobrarVenta.msgFaltaMetodoPago": "Seleccione el metodo de pago.",
   "CobrarVenta.msgFaltaTitular": "Ingrese el nombre del titular de la tarjeta.",
-  "CobrarVenta.msgVencimientoInvalido": "El vencimiento debe tener el formato MM/AA.",
+  "CobrarVenta.msgVencimientoInvalido": "El vencimiento debe tener el formato MM/AA, o la tarjeta está expirada.",
   "CobrarVenta.msgTarjetaInvalida": "El numero de tarjeta no es valido.",
   "CobrarVenta.msgUltimos4Invalido": "Los ultimos 4 digitos de la tarjeta no son validos.",
   "CobrarVenta.msgFacturaYaCobrada": "La factura ya fue cobrada o no existe.",

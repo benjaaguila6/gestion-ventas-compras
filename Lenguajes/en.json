@@ -251,7 +251,7 @@
   "CobrarVenta.msgSinPermiso": "You do not have permission to collect sales.",
   "CobrarVenta.msgFaltaMetodoPago": "Select a payment method.",
   "CobrarVenta.msgFaltaTitular": "Enter the cardholder name.",
-  "CobrarVenta.msgVencimientoInvalido": "The expiration date must use the MM/YY format.",
+  "CobrarVenta.msgVencimientoInvalido": "The expiration date must use the MM/YY format, or the card is expired.",
   "CobrarVenta.msgTarjetaInvalida": "The card number is not valid.",
   "CobrarVenta.msgUltimos4Invalido": "The last 4 digits of the card are not valid.",
   "CobrarVenta.msgFacturaYaCobrada": "The invoice was already collected or does not exist.",
