@@ -66,7 +66,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("CambiarContraseña.msgError") + ex.Message);
+                MessageBox.Show(t.Translate("CambiarContraseña.msgError") + t.Translate(ex.Message));
                 return;
             }
         }

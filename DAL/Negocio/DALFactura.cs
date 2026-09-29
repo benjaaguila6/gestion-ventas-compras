@@ -150,9 +150,17 @@ namespace DAL.Negocio
             _dal.executeNonQuery(query, parametros);
         }
 
-        public DataTable ObtenerPagos()
+        public DataRow ObtenerPagoPorFactura(int idFactura)
         {
-            return _dal.executeDataTable("SELECT * FROM Pago");
+            string query = "SELECT * FROM Pago WHERE IdFactura = @idFactura";
+
+            var parametros = new Dictionary<string, object>
+            {
+                {"@idFactura", idFactura }
+            };
+
+            DataTable dt = _dal.executeDataTable(query, parametros);
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
 
         public DataTable ObtenerTodas()

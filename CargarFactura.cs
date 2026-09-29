@@ -80,7 +80,7 @@ namespace Servicios
             {
                 lblNombreCliente.Text = "";
 
-                DialogResult respuesta = MessageBox.Show(ex.Message + t.Translate("CargarFactura.msgRegistrarCliente"), t.Translate("CargarFactura.titleBuscarCliente"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult respuesta = MessageBox.Show(t.Translate(ex.Message) + t.Translate("CargarFactura.msgRegistrarCliente"), t.Translate("CargarFactura.titleBuscarCliente"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (respuesta == DialogResult.Yes)
                 {
@@ -174,7 +174,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("GestionFactura.msgErrorOperacion") + ex.Message);
+                MessageBox.Show(t.Translate("GestionFactura.msgErrorOperacion") + t.Translate(ex.Message));
                 return;
             }
 

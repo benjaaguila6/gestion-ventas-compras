@@ -127,7 +127,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(t.Translate(ex.Message));
                     }
                     break;
 
@@ -148,7 +148,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(t.Translate(ex.Message));
                     }
                     break;
 
@@ -176,7 +176,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(t.Translate(ex.Message));
                     }
                     break;
             }
@@ -278,10 +278,9 @@ namespace Servicios
 
         private void btnSerializar_Click(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
             try
             {
-                var t = ServiceSessionManager530BA.getIntancia().Idioma;
-
                 if (dgvClientes.SelectedRows.Count == 0)
                 {
                     MessageBox.Show(t.Translate("GestionClientes.msgSeleccionarClienteSerializar"), t.Translate("GestionClientes.msgAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -313,7 +312,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error al intentar serializar los clientes:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(t.Translate("GestionClientes.msgSerializacionError") + t.Translate(ex.Message), t.Translate("GestionClientes.msgError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

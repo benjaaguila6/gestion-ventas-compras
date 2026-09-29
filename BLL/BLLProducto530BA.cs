@@ -27,6 +27,13 @@ namespace BLL
             return productos;
         }
 
+        public Producto530BA ObtenerPorID(int id)
+        {
+            DataRow dr = dal.ObtenerPorCodProducto(id);
+
+            return MapearProducto(dr);
+        }
+
         public List<Producto530BA> BuscarProductos(string filtro = null)
         {
             List<Producto530BA> productos = new List<Producto530BA>();

@@ -174,7 +174,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(t.Translate("GestionProducto.msgErrorOperacion") + ex.Message);
+                MessageBox.Show(t.Translate("GestionProducto.msgErrorOperacion") + t.Translate(ex.Message));
             }
         }
 

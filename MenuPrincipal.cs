@@ -157,6 +157,9 @@ namespace Servicios
             idiomaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuIdioma");
             gestionRespaldoToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuRespaldo");
             cargarFacturaToolStripMenuItem1.Text = t.Translate("MenuPrincipal.menuCargarFactura");
+            verFacturasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVerFacturas");
+            reportesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuReportes");
+            facturaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuFactura");
             maestrosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuMaestros");
             productosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProductos");
             clientesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuClientes");
@@ -213,6 +216,12 @@ namespace Servicios
         private void cargarFacturaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             CargarFactura form = new CargarFactura();
+            form.Show();
+        }
+
+        private void verFacturasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VerFacturas form = new VerFacturas();
             form.Show();
         }
     }

@@ -38,7 +38,12 @@ namespace Services
 
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"No se encontró el idioma '{codIdioma}'",path);
+                // Si ya hay un diccionario cargado, lo usamos para mantener el mensaje traducido;
+                // si no, dejamos un fallback técnico en inglés (idioma del runtime).
+                string mensaje = (traducciones != null && traducciones.ContainsKey("Services.msgIdiomaNoEncontrado"))
+                    ? string.Format(traducciones["Services.msgIdiomaNoEncontrado"], codIdioma)
+                    : $"Language file '{codIdioma}' not found.";
+                throw new FileNotFoundException(mensaje, path);
             }
                 
             string json = File.ReadAllText(path);

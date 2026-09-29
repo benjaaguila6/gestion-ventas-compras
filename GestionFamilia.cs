@@ -253,7 +253,7 @@ namespace Servicios
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format(t.Translate("GestionFamilia.msgError"), ex.Message));
+                        MessageBox.Show(string.Format(t.Translate("GestionFamilia.msgError"), t.Translate(ex.Message)));
                     }
 
                 }
@@ -274,7 +274,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, t.Translate("GestionFamilia.msgAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(t.Translate(ex.Message), t.Translate("GestionFamilia.msgAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

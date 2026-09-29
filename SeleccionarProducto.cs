@@ -89,7 +89,7 @@ namespace Servicios
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ServiceSessionManager530BA.getIntancia().Idioma.Translate(ex.Message));
                 }
             }
             else
