@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNombreCliente = new System.Windows.Forms.Label();
             this.txtDNI = new System.Windows.Forms.TextBox();
@@ -41,7 +42,6 @@
             this.btnQuitarProducto = new System.Windows.Forms.Button();
             this.btnFinalizar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLineas)).BeginInit();
@@ -61,6 +61,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cliente";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(8, 43);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 25);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "DNI";
             // 
             // label2
             // 
@@ -128,7 +139,9 @@
             this.dgvLineas.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvLineas.ColumnHeadersHeight = 46;
             this.dgvLineas.Location = new System.Drawing.Point(6, 45);
+            this.dgvLineas.MultiSelect = false;
             this.dgvLineas.Name = "dgvLineas";
+            this.dgvLineas.ReadOnly = true;
             this.dgvLineas.RowHeadersWidth = 82;
             this.dgvLineas.RowTemplate.Height = 33;
             this.dgvLineas.Size = new System.Drawing.Size(1138, 470);
@@ -205,17 +218,6 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(8, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 25);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "DNI";
             // 
             // CargarFactura
             // 

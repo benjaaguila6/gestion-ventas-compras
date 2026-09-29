@@ -22,6 +22,7 @@ using iTextSharp.text.pdf.draw;
 using Font = iTextSharp.text.Font;
 using Rectangle = iTextSharp.text.Rectangle;
 using Chunk = iTextSharp.text.Chunk;
+using Services_530BA;
 
 namespace Servicios
 {
@@ -41,6 +42,16 @@ namespace Servicios
 
         private void cargarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+            dgvFacturas.AutoGenerateColumns = false;
+            dgvFacturas.Columns.Clear();
+
+            dgvFacturas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("VerFacturas.colID"), DataPropertyName = "ID" });
+            dgvFacturas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("VerFacturas.colDNI"), DataPropertyName = "DNI" });
+            dgvFacturas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("VerFacturas.colFecha"), DataPropertyName = "Fecha" });
+            dgvFacturas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("VerFacturas.colTotal"), DataPropertyName = "Total" });
+            dgvFacturas.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("VerFacturas.colEstado"), DataPropertyName = "Estado" });
+
             listaFacturas = bllFactura.ObtenerTodas();
             dgvFacturas.DataSource = null;
             dgvFacturas.DataSource = listaFacturas;
@@ -50,7 +61,6 @@ namespace Servicios
         {
             var t = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
 
-            // 1. Validar selección
             if (dgvFacturas.SelectedRows.Count == 0)
             {
                 MessageBox.Show(t.Translate("VerFacturas.msgSeleccionarFactura"));
@@ -59,7 +69,6 @@ namespace Servicios
 
             Factura530BA facturaSeleccionada = (Factura530BA)dgvFacturas.CurrentRow.DataBoundItem;
 
-            // 2. Validar que la factura esté pendiente y no haya sido pagada ya
             if (facturaSeleccionada.Estado == EstadoFactura530BA.Pagada)
             {
                 // Agrega esta key a tu JSON ("Esta factura ya se encuentra pagada.")
@@ -72,7 +81,6 @@ namespace Servicios
                 int idFactura = facturaSeleccionada.Id;
                 string dni = facturaSeleccionada.DNI;
 
-                // 3. Buscar el nombre del cliente utilizando su BLL
                 BLLCliente530BA bllCliente = new BLLCliente530BA();
                 Cliente530BA cliente = bllCliente.ObtenerPorDNI(dni);
                 string nombre = cliente.NombreCompleto;
@@ -85,14 +93,11 @@ namespace Servicios
                     return;
                 }
 
-                // 5. Cargar datos en el formulario de cobro
                 using (CobrarVenta form = new CobrarVenta())
                 {
                     form.CargarDatosDeFactura(idFactura, dni, nombre, lineas);
                     form.ShowDialog();
                 }
-
-                // 6. Refrescar la grilla para actualizar el estado visual de la factura si fue pagada
                 cargarGrilla();
             }
             catch (Exception ex)
@@ -115,11 +120,9 @@ namespace Servicios
 
             try
             {
-                // 1. Obtener datos del cliente
                 BLLCliente530BA bllCliente = new BLLCliente530BA();
                 Cliente530BA cliente = bllCliente.ObtenerPorDNI(facturaSeleccionada.DNI);
 
-                // 2. Obtener el detalle de la factura
                 List<ItemFactura530BA> lineas = bllFactura.ObtenerDetalles(facturaSeleccionada.Id);
 
                 if (lineas == null || lineas.Count == 0)
@@ -128,21 +131,18 @@ namespace Servicios
                     return;
                 }
 
-                // 3. NUEVO: Obtener los datos del pago (si la factura está pagada)
                 Pago530BA pago = null;
                 if (facturaSeleccionada.Estado == EstadoFactura530BA.Pagada)
                 {
                     pago = bllFactura.ObtenerPagoPorFactura(facturaSeleccionada.Id);
                 }
 
-                // 4. Dialogo para guardar el archivo
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
                 saveFileDialog.FileName = $"Factura_{facturaSeleccionada.Id:D8}.pdf";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // 5. Llamar al generador enviando también el objeto pago
                     GenerarDocumentoPDF(facturaSeleccionada, cliente, lineas, pago, saveFileDialog.FileName);
 
                     MessageBox.Show(t.Translate("VerFacturas.msgPdfGenerado"), t.Translate("VerFacturas.titleExito"), MessageBoxButtons.OK, MessageBoxIcon.Information);
