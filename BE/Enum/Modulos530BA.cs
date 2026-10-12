@@ -12,6 +12,7 @@ namespace BE.Enum
         Seguridad = 2,
         Perfil = 3,
         Cliente = 4,
-        Factura = 5
+        Factura = 5,
+        Producto = 6
     }
 }
