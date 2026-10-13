@@ -60,6 +60,12 @@
     <Compile Include="AuditoriaBitacora.Designer.cs">
       <DependentUpon>AuditoriaBitacora.cs</DependentUpon>
     </Compile>
+    <Compile Include="BitacoraCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BitacoraCambios.Designer.cs">
+      <DependentUpon>BitacoraCambios.cs</DependentUpon>
+    </Compile>
     <Compile Include="CambiarContraseña.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </Content>
     <EmbeddedResource Include="AuditoriaBitacora.resx">
       <DependentUpon>AuditoriaBitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BitacoraCambios.resx">
+      <DependentUpon>BitacoraCambios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CambiarContraseña.resx">
       <DependentUpon>CambiarContraseña.cs</DependentUpon>

@@ -233,5 +233,11 @@ namespace Servicios
             VerFacturas form = new VerFacturas();
             form.Show();
         }
+
+        private void bitacoraCambiosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BitacoraCambios form = new BitacoraCambios();
+            form.Show();
+        }
     }
 }

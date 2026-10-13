@@ -51,6 +51,7 @@
     <Compile Include="ItemFactura530BA.cs" />
     <Compile Include="Pago530BA.cs" />
     <Compile Include="Producto530BA.cs" />
+    <Compile Include="ProductoHistorial530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
