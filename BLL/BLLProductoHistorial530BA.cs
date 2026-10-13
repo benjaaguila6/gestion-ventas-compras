@@ -1,5 +1,6 @@
 ﻿using BE;
 using DAL.Negocio;
+using Services;
 using Services_530BA;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,11 @@ namespace BLL
             string dni = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
             
             dal.RestaurarVersion(versionSeleccionada, dni);
+
+            BLLProducto530BA bllProducto = new BLLProducto530BA();
+            bllProducto.RecalcularDVHProducto(codProducto);
+
+            DigitoVerificador530BA.ActualizarDVVProducto();
 
             bit.registrarEvento(dni, $"Restauración de versión de producto, Se restauró la versión {versionSeleccionada.Version} del producto con código {versionSeleccionada.codProducto}.", BE.Enum.Criticidad530BA.Alto, BE.Enum.Modulos530BA.Producto);
         }

@@ -118,13 +118,6 @@ namespace Servicios
             });
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "colUsuario",
-                HeaderText = t.Translate("BitacoraCambios.colUsuario"),
-                DataPropertyName = "UsuarioId",
-                FillWeight = 12
-            });
-            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn
-            {
                 Name = "colNombre",
                 HeaderText = t.Translate("BitacoraCambios.colNombre"),
                 DataPropertyName = "nombre",
@@ -274,6 +267,7 @@ namespace Servicios
                 );
 
                 dgvHistorial.DataSource = bllProductoHistorial.ObtenerHistorial(productoSeleccionado.codProducto);
+                dgvProductos.DataSource = bllProducto.ObtenerTodos();
             }
             catch (Exception ex)
             {
