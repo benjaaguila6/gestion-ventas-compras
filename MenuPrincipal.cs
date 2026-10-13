@@ -1,0 +1,243 @@
+﻿using BE;
+using BLL;
+using Services;
+using Services.Modelos;
+using Services.Modelos.Idioma;
+using Services_530BA;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Collections.Specialized.BitVector32;
+
+namespace Servicios
+{
+    public partial class MenuPrincipal : Form, IIdiomaObserver
+    {
+        UsuarioModelo530BA usuarioActual = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo;
+        BLLIdioma530BA _idiomaService = new BLLIdioma530BA();
+        UsuarioService _userService = new UsuarioService();
+
+        public MenuPrincipal()
+        {
+            InitializeComponent();
+            configurarAcceso();
+            CargarSubItemsIdioma();
+
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
+            actualizarIdioma();
+
+        }
+        private void CargarSubItemsIdioma()
+        {
+            idiomaToolStripMenuItem.DropDownItems.Clear();
+
+            var idiomas = _idiomaService.obtenerTodos();
+
+            foreach (var idioma in idiomas)
+            {
+                var item = new ToolStripMenuItem(idioma.Nombre);
+                item.Tag = idioma;
+
+                // Marcar el idioma actual del usuario
+                int idiomaActual = ServiceSessionManager530BA.getIntancia().usuarioActivo.IdIdioma;
+                item.Checked = idioma.Id == idiomaActual;
+
+                item.Click += IdiomaItem_Click;
+                idiomaToolStripMenuItem.DropDownItems.Add(item);
+            }
+        }
+
+        private void IdiomaItem_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            var idiomaSeleccionado = (Idioma530BA)item.Tag;
+
+            // Guardar en BD y sesión
+            _userService.GuardarIdioma(idiomaSeleccionado.Id);
+
+            // Aplicar idioma globalmente
+            string cod = idiomaSeleccionado.Id == 1 ? "es" : "en";
+            ServiceSessionManager530BA.getIntancia().Idioma.CargarIdioma(cod);
+
+            // Actualizar checks del submenú
+            foreach (ToolStripMenuItem subItem in idiomaToolStripMenuItem.DropDownItems)
+            {
+                subItem.Checked = subItem.Tag == item.Tag;
+            }
+        }
+
+        private void configurarAcceso()
+        {
+            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Clave");
+            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
+            gestionUsuariosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Usuario");
+            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
+            bitacoraEventosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Auditoria Eventos");
+            gestionRolToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Roles");
+            gestionFamiliaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Familia");
+            cambiarClaveToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Clave");
+            cerrarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cerrar Sesion");
+            iniciarSesionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Iniciar Sesion");
+            idiomaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cambiar Idioma");
+            gestionRespaldoToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Gestion Respaldo");
+            cargarFacturaToolStripMenuItem1.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Cargar Factura");
+            productosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Producto");
+            clientesToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Cliente");
+            verFacturasToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
+            facturaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
+        }
+
+        private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CambiarContraseña form = new CambiarContraseña();
+            form.Show();
+        }
+
+        private void gestionUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionUsuario form = new GestionUsuario();
+            form.Show();
+        }
+
+        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            DialogResult resultado = MessageBox.Show(
+                t.Translate("MenuPrincipal.msgConfirmarCierreSesion"),
+                t.Translate("MenuPrincipal.msgTituloCierreSesion"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resultado == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Services_530BA.ServiceSessionManager530BA.getIntancia().Logout();
+
+            base.OnFormClosing(e);
+        }
+
+        private void iniciarSesionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Login form = new Login();
+            form.Show();
+        }
+
+        private void bitacoraEventosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AuditoriaBitacora form = new AuditoriaBitacora();
+            form.Show();
+        }
+
+        public void actualizarIdioma()
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("MenuPrincipal.formTitle");
+            label1.Text = string.Format(t.Translate("MenuPrincipal.labelBienvenido"), usuarioActual.Nombre, usuarioActual.Apellido);
+            usuarioToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuUsuario");
+            cambiarClaveToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuCambiarClave");
+            cerrarSesionToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuCerrarSesion");
+            iniciarSesionToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuIniciarSesion");
+            administradorToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuAdministrador");
+            gestionUsuariosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuGestionUsuarios");
+            bitacoraEventosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuBitacoraEventos");
+            gestionFamiliaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuGestionFamilia");
+            gestionRolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuGestionRol");
+            ayudaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuAyuda");
+            idiomaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuIdioma");
+            gestionRespaldoToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuRespaldo");
+            cargarFacturaToolStripMenuItem1.Text = t.Translate("MenuPrincipal.menuCargarFactura");
+            verFacturasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVerFacturas");
+            reportesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuReportes");
+            facturaToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuFactura");
+            maestrosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuMaestros");
+            productosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProductos");
+            clientesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuClientes");
+            ventasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVentas");
+            españolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEspanol");
+            englishToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEnglish");
+        }
+
+        private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionFamilia form = new GestionFamilia();
+            form.Show();
+        }
+
+        private void gestionRolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionRol form = new GestionRol();
+            form.Show();
+        }
+
+        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void administradorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gestionRespaldoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionRespaldo form = new GestionRespaldo();
+            form.Show();
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionClientes form = new GestionClientes();
+            form.Show();
+        }
+
+        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionProducto form = new GestionProducto();
+            form.Show();
+        }
+
+        private void cargarFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cargarFacturaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CargarFactura form = new CargarFactura();
+            form.Show();
+        }
+
+        private void verFacturasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VerFacturas form = new VerFacturas();
+            form.Show();
+        }
+
+        private void facturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VerFacturas form = new VerFacturas();
+            form.Show();
+        }
+
+        private void bitacoraCambiosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BitacoraCambios form = new BitacoraCambios();
+            form.Show();
+        }
+    }
+}

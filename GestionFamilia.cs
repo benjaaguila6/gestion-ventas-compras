@@ -1,0 +1,303 @@
+﻿using BLL;
+using Services.Modelos;
+using Services.Modelos.Idioma;
+using Services_530BA;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Servicios
+{
+    public partial class GestionFamilia : Form, IIdiomaObserver
+    {
+        private BLLFamilia bllFamilia = new BLLFamilia();
+        private BLLPatente bllPermiso = new BLLPatente();
+        private List<FamiliaModelo530BA> listaFamilias;
+
+        private enum ModoOperacionFamilia
+        {
+            Ninguno,
+            Crear,
+            Asignar,
+            Eliminar
+        }
+
+        private ModoOperacionFamilia modoActual = ModoOperacionFamilia.Ninguno;
+
+        public GestionFamilia()
+        {
+            InitializeComponent();
+            cargarDatos();
+
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
+            actualizarIdioma();
+        }
+
+        public void cargarDatos()
+        {
+            tvPermisosAsignados.Nodes.Clear();
+            listaFamilias = bllFamilia.ObtenerTodos();
+            dgvFamilias.DataSource = null;
+            dgvFamilias.DataSource = listaFamilias;
+
+            var todosLosComponentes = new List<Componente530BA>();
+            todosLosComponentes.AddRange(listaFamilias);
+            todosLosComponentes.AddRange(bllPermiso.obtenerTodos());
+
+            checkListPermisosFamilias.DataSource = null;
+            checkListPermisosFamilias.DataSource = todosLosComponentes;
+
+            btAplicar.Enabled = false;
+            btCancelar.Enabled = false;
+        }
+        public void actualizarIdioma()
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            this.Text = t.Translate("GestionFamilia.formTitle");
+            label1.Text = t.Translate("GestionFamilia.labelFamilias");
+            label2.Text = t.Translate("GestionFamilia.labelPermisosFamilias");
+            label3.Text = t.Translate("GestionFamilia.labelAsignados");
+            groupBox1.Text = t.Translate("GestionFamilia.groupBoxDatos");
+            label4.Text = t.Translate("GestionFamilia.labelNombre");
+            btCrear.Text = t.Translate("GestionFamilia.btnCrear");
+            btAsignar.Text = t.Translate("GestionFamilia.btnAsignar");
+            btAplicar.Text = t.Translate("GestionFamilia.btnAplicar");
+            btEliminar.Text = t.Translate("GestionFamilia.btnEliminar");
+            btCancelar.Text = t.Translate("GestionFamilia.btnCancelar");
+
+            // Los botones del panel de detalle (btn*) repiten el mismo texto que
+            // los de la grilla (bt*), asi que reutilizan las mismas claves.
+            btnCrear.Text = t.Translate("GestionFamilia.btnCrear");
+            btnAsignar.Text = t.Translate("GestionFamilia.btnAsignar");
+            btnAplicar.Text = t.Translate("GestionFamilia.btnAplicar");
+            btnEliminar.Text = t.Translate("GestionFamilia.btnEliminar");
+            btnCancelar.Text = t.Translate("GestionFamilia.btnCancelar");
+        }
+
+
+        private void dgvFamilias_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvFamilias.CurrentRow != null)
+            {
+                FamiliaModelo530BA familiaSeleccionada = (FamiliaModelo530BA)dgvFamilias.CurrentRow.DataBoundItem;
+                MostrarArbol(familiaSeleccionada);
+            }
+        }
+
+        private void MostrarArbol(FamiliaModelo530BA familia)
+        {
+            tvPermisosAsignados.Nodes.Clear(); 
+
+            TreeNode nodoRaiz = new TreeNode(familia.Nombre);
+            tvPermisosAsignados.Nodes.Add(nodoRaiz);
+            ConstruirRamas(nodoRaiz, familia);
+
+            tvPermisosAsignados.ExpandAll();
+        }
+
+        private void ConstruirRamas(TreeNode nodoPadre, FamiliaModelo530BA familia)
+        {
+            foreach (Componente530BA hijo in familia.obtenerPermisos())
+            {
+                TreeNode nodoHijo = new TreeNode(hijo.Nombre);
+                nodoPadre.Nodes.Add(nodoHijo);
+
+                if (hijo is FamiliaModelo530BA subFamilia)
+                {
+                    nodoHijo.NodeFont = new Font(tvPermisosAsignados.Font, FontStyle.Bold);
+                    ConstruirRamas(nodoHijo, subFamilia);
+                }
+            }
+        }
+
+        private void btCrear_Click(object sender, EventArgs e)
+        {
+            modoActual = ModoOperacionFamilia.Crear;
+
+            groupBox1.Visible = true;
+            txtNombre.Focus();
+
+            btAplicar.Enabled = true;
+            btCancelar.Enabled = true;
+            btCrear.Enabled = false;
+            btEliminar.Enabled = false;
+            btAsignar.Enabled = false;
+        }
+
+        private void btAsignar_Click(object sender, EventArgs e)
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            if (dgvFamilias.CurrentRow == null)
+            {
+                MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarFamilia"), t.Translate("GestionFamilia.msgValidacion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            FamiliaModelo530BA familiaDestino = (FamiliaModelo530BA)dgvFamilias.CurrentRow.DataBoundItem;
+
+            var todosLosComponentes = new List<Componente530BA>();
+            todosLosComponentes.AddRange(bllFamilia.ObtenerTodos());
+            todosLosComponentes.AddRange(bllPermiso.obtenerTodos());
+
+            var listaFiltrada = todosLosComponentes.Where(componente => !(componente is FamiliaModelo530BA && componente.Id == familiaDestino.Id)).ToList();
+
+            checkListPermisosFamilias.DataSource = null;
+            checkListPermisosFamilias.DataSource = listaFiltrada;
+
+            modoActual = ModoOperacionFamilia.Asignar;
+
+            btAplicar.Enabled = true;
+            btCancelar.Enabled = true;
+            btEliminar.Enabled = false;
+            btCrear.Enabled = false;
+            btAsignar.Enabled = false;
+        }
+
+        private void btEliminar_Click(object sender, EventArgs e)
+        {
+            modoActual = ModoOperacionFamilia.Eliminar;
+
+            btCancelar.Enabled = true;
+            btAplicar.Enabled = true;
+            btAsignar.Enabled = false;
+            btCrear.Enabled = false;
+        }
+
+        private void btAplicar_Click(object sender, EventArgs e)
+        {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            try
+            {
+                if (modoActual == ModoOperacionFamilia.Crear)
+                {
+                    string nombre = txtNombre.Text;
+
+                    if (nombre.Length <= 0)
+                    {
+                        MessageBox.Show(t.Translate("GestionFamilia.msgNombreRequerido"));
+                        return;
+                    }
+
+                    if (checkListPermisosFamilias.CheckedItems.Count == 0)
+                    {
+                        MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarComponente"), t.Translate("GestionFamilia.msgValidacion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    List<Componente530BA> componentesSeleccionados = new List<Componente530BA>();
+
+                    foreach (var item in checkListPermisosFamilias.CheckedItems)
+                    {
+                        componentesSeleccionados.Add((Componente530BA)item);
+                    }
+
+                    bllFamilia.CrearFamilia(nombre, componentesSeleccionados);
+
+                    MessageBox.Show(t.Translate("GestionFamilia.msgFamiliaCreada"));
+                }
+
+                else if (modoActual == ModoOperacionFamilia.Asignar)
+                {
+                    if (dgvFamilias.CurrentRow == null)
+                    {
+                        MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarFamilia"), t.Translate("GestionFamilia.msgValidacion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (checkListPermisosFamilias.CheckedItems.Count == 0)
+                    {
+                        MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarComponente"), t.Translate("GestionFamilia.msgValidacion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    FamiliaModelo530BA familiaDestino = (FamiliaModelo530BA)dgvFamilias.CurrentRow.DataBoundItem;
+
+                    foreach (Componente530BA componenteMarcado in checkListPermisosFamilias.CheckedItems)
+                    {
+                        if (componenteMarcado is PermisoModelo530BA patente)
+                        {
+                            bllFamilia.AsignarPatente(familiaDestino, patente);
+                        }
+                        else if (componenteMarcado is FamiliaModelo530BA familiaHija)
+                        {
+                            bllFamilia.AsignarFamilia(familiaDestino, familiaHija);
+                        }
+                    }
+
+                    MessageBox.Show(t.Translate("GestionFamilia.msgComponenteAsignado"));
+                }
+
+                else if (modoActual == ModoOperacionFamilia.Eliminar)
+                {
+                    if (dgvFamilias.CurrentRow == null)
+                    {
+                        MessageBox.Show(t.Translate("GestionFamilia.msgSeleccionarFamiliaComponente"));
+                        return;
+                    }
+
+                    FamiliaModelo530BA familiaSeleccionada = (FamiliaModelo530BA)dgvFamilias.CurrentRow.DataBoundItem;
+
+                    try
+                    {
+                        bllFamilia.EliminarFamilia(familiaSeleccionada.Id);
+                        MessageBox.Show(t.Translate("GestionFamilia.msgFamiliaEliminada"));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format(t.Translate("GestionFamilia.msgError"), t.Translate(ex.Message)));
+                    }
+
+                }
+
+                modoActual = ModoOperacionFamilia.Ninguno;
+
+                txtNombre.Clear();
+                groupBox1.Visible = false;
+
+                btCrear.Enabled = true;
+                btAsignar.Enabled = true;
+                btEliminar.Enabled = true;
+                btAplicar.Enabled = false;
+                btCancelar.Enabled = false;
+
+                cargarDatos();
+                DesmarcarCheckList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(t.Translate(ex.Message), t.Translate("GestionFamilia.msgAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btCancelar_Click(object sender, EventArgs e)
+        {
+            modoActual = ModoOperacionFamilia.Ninguno;
+
+            groupBox1.Visible = false;
+            btCancelar.Enabled = false;
+            btAplicar.Enabled = false;
+            btCrear.Enabled = true;
+            btAsignar.Enabled = true;
+            btEliminar.Enabled = true;
+
+            DesmarcarCheckList();
+        }
+
+        private void DesmarcarCheckList()
+        {
+            for (int i = 0; i < checkListPermisosFamilias.Items.Count; i++)
+            {
+                checkListPermisosFamilias.SetItemChecked(i, false);
+            }
+        }
+    }
+}

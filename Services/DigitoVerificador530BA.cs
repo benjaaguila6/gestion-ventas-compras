@@ -1,0 +1,286 @@
+﻿using BE.Enum;
+using DAL;
+using DAL.Negocio;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services
+{
+    public static class DigitoVerificador530BA
+    {
+        static DALDigitoVerificador530BA dalControl = new DALDigitoVerificador530BA();
+        static DALBackUpRestore530BA dalBackup = new DALBackUpRestore530BA();
+        static DALBitacora530BA dalBitacora = new DALBitacora530BA();
+        static DALUsuario530BA dalUsuario = new DALUsuario530BA();
+        static DALRol dalRol = new DALRol();
+        static DALFamilia dalFamilia = new DALFamilia();
+        static DALPatente dalPatente = new DALPatente();
+        static DALCliente dalCliente = new DALCliente();
+        static DALProducto530BA dalProducto = new DALProducto530BA();
+        static DALFactura dalFactura = new DALFactura();
+
+        public static long CalcularDVH(string cadena)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(cadena));
+
+                long resultado = BitConverter.ToInt64(hashBytes, 0);
+
+                return Math.Abs(resultado);
+            }
+        }
+
+        public static long CalcularDVV(IEnumerable<long> dvhs)
+        {
+            long suma = 0;
+            foreach (long dvh in dvhs)
+            {
+                suma += dvh;
+            }
+            return suma;
+        }
+
+        private static long CalcularDVHControl(string nombreTabla, long dvv)
+        {
+            return CalcularDVH(nombreTabla + dvv);
+        }
+
+        private static void GuardarOActualizarDVV(string nombreTabla, long dvv)
+        {
+            long dvh = CalcularDVHControl(nombreTabla, dvv);
+            if (dalControl.ExisteTabla(nombreTabla))
+                dalControl.ActualizarDVV(nombreTabla, dvv, dvh);
+            else
+                dalControl.GuardarDVV(nombreTabla, dvv, dvh);
+        }
+
+        private static long CalcularDVHUsuario(DataRow row)
+        {
+            string cadena = row["DNI"].ToString() + row["Nombre"].ToString() + row["Apellido"].ToString()
+                + row["Email"].ToString() + row["IdRol"].ToString() + row["Username"].ToString() + row["PasswordHash"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHUsuario()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalUsuario.obtenerTodos().Rows) suma += CalcularDVHUsuario(row);
+            return suma;
+        }
+
+        private static void RepararTodoUsuario()
+        {
+            foreach (DataRow row in dalUsuario.obtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHUsuario(row);
+                if (guardado != calculado) dalUsuario.ActualizarDVH(row["DNI"].ToString(), calculado);
+            }
+        }
+
+        private static long CalcularDVHFilaGenerica(DataRow row)
+        {
+            return CalcularDVH(row["Id"].ToString() + row["Nombre"].ToString());
+        }
+
+        private static long ObtenerSumaDVHRol() { long s = 0; foreach (DataRow r in dalRol.obtenerTodos().Rows) s += CalcularDVHFilaGenerica(r); return s; }
+        private static void RepararTodoRol()
+        {
+            foreach (DataRow row in dalRol.obtenerTodos().Rows)
+            {
+                long g = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long c = CalcularDVHFilaGenerica(row);
+                if (g != c) dalRol.ActualizarDVH(Convert.ToInt32(row["Id"]), c);
+            }
+        }
+
+        private static long ObtenerSumaDVHFamilia() { long s = 0; foreach (DataRow r in dalFamilia.obtenerTodos().Rows) s += CalcularDVHFilaGenerica(r); return s; }
+        private static void RepararTodoFamilia()
+        {
+            foreach (DataRow row in dalFamilia.obtenerTodos().Rows)
+            {
+                long g = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long c = CalcularDVHFilaGenerica(row);
+                if (g != c) dalFamilia.ActualizarDVH(Convert.ToInt32(row["Id"]), c);
+            }
+        }
+
+        private static long ObtenerSumaDVHPatente() { long s = 0; foreach (DataRow r in dalPatente.obtenerTodos().Rows) s += CalcularDVHFilaGenerica(r); return s; }
+        private static void RepararTodoPatente()
+        {
+            foreach (DataRow row in dalPatente.obtenerTodos().Rows)
+            {
+                long g = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long c = CalcularDVHFilaGenerica(row);
+                if (g != c) dalPatente.ActualizarDVH(Convert.ToInt32(row["Id"]), c);
+            }
+        }
+
+        private static long CalcularDVHCliente(DataRow row)
+        {
+            string cadena = row["NombreCompleto"].ToString() + row["DNI"].ToString() + row["Email"].ToString()
+                + row["CodPostal"].ToString() + row["Localidad"].ToString() + row["Direccion"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHCliente()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalCliente.ObtenerTodos().Rows) suma += CalcularDVHCliente(row);
+            return suma;
+        }
+
+        private static void RepararTodoCliente()
+        {
+            foreach (DataRow row in dalCliente.ObtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHCliente(row);
+                if (guardado != calculado) dalCliente.ActualizarDVH(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
+        private static long CalcularDVHProducto(DataRow row)
+        {
+            string cadena = row["nombre"].ToString() + row["existencia"].ToString() + row["precioUnitario"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHProducto()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalProducto.ObtenerTodos().Rows) suma += CalcularDVHProducto(row);
+            return suma;
+        }
+
+        private static void RepararTodoProducto()
+        {
+            foreach (DataRow row in dalProducto.ObtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHProducto(row);
+                if (guardado != calculado) dalProducto.ActualizarDVHProducto(Convert.ToInt32(row["codProducto"]), calculado);
+            }
+        }
+
+        private static long CalcularDVHFactura(DataRow row)
+        {
+            string cadena = row["DNI"].ToString() + row["Fecha"].ToString() + row["Total"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHFactura()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalFactura.ObtenerTodas().Rows) suma += CalcularDVHFactura(row);
+            return suma;
+        }
+
+        private static void RepararTodoFactura()
+        {
+            foreach (DataRow row in dalFactura.ObtenerTodas().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHFactura(row);
+                if (guardado != calculado) dalFactura.ActualizarDVHFactura(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
+        private static long CalcularDVHDetalleFactura(DataRow row)
+        {
+            string cadena = row["IdFactura"].ToString() + row["codProducto"].ToString() + row["Cantidad"].ToString()
+                + row["PrecioUnitario"].ToString() + row["Subtotal"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHDetalleFactura()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalFactura.ObtenerDetalles().Rows) suma += CalcularDVHDetalleFactura(row);
+            return suma;
+        }
+
+        private static void RepararTodoDetalleFactura()
+        {
+            foreach (DataRow row in dalFactura.ObtenerDetalles().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHDetalleFactura(row);
+                if (guardado != calculado) dalFactura.ActualizarDVHDetalle(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
+
+
+        private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
+        {
+            DataRow filaControl = dalControl.ObtenerFila(nombreTabla);
+            if (filaControl == null)
+            {
+                reparar();
+                GuardarOActualizarDVV(nombreTabla, obtenerSuma());
+                return true;
+            }
+
+            long dvvGuardado = Convert.ToInt64(filaControl["DVV"]);
+            long dvhGuardado = Convert.ToInt64(filaControl["DVH"]);
+
+            if (dvhGuardado != CalcularDVHControl(nombreTabla, dvvGuardado))
+            {
+                RegistrarDeteccion(nombreTabla);
+                return false;
+            }
+
+            bool consistente = dvvGuardado == obtenerSuma();
+            if (!consistente) RegistrarDeteccion(nombreTabla);
+            return consistente;
+        }
+
+        public static bool VerificarUsuario() => VerificarTabla("Usuario", ObtenerSumaDVHUsuario, RepararTodoUsuario);
+        public static bool VerificarRol() => VerificarTabla("Rol", ObtenerSumaDVHRol, RepararTodoRol);
+        public static bool VerificarFamilia() => VerificarTabla("Familia", ObtenerSumaDVHFamilia, RepararTodoFamilia);
+        public static bool VerificarPatente() => VerificarTabla("Patente", ObtenerSumaDVHPatente, RepararTodoPatente);
+        public static bool VerificarCliente() => VerificarTabla("Cliente", ObtenerSumaDVHCliente, RepararTodoCliente);
+        public static bool VerificarProducto() => VerificarTabla("Producto", ObtenerSumaDVHProducto, RepararTodoProducto);
+        public static bool VerificarFactura() => VerificarTabla("Factura", ObtenerSumaDVHFactura, RepararTodoFactura);
+        public static bool VerificarDetalleFactura() => VerificarTabla("DetalleFactura", ObtenerSumaDVHDetalleFactura, RepararTodoDetalleFactura);
+
+        public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
+        public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
+        public static void RepararFamilia() { RepararTodoFamilia(); GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia()); Registrar("Familia"); }
+        public static void RepararPatente() { RepararTodoPatente(); GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente()); Registrar("Patente"); }
+        public static void RepararCliente() { RepararTodoCliente(); GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente()); Registrar("Cliente"); }
+        public static void RepararProducto() { RepararTodoProducto(); GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto()); Registrar("Producto"); }
+        public static void RepararFactura() { RepararTodoFactura(); GuardarOActualizarDVV("Factura", ObtenerSumaDVHFactura()); Registrar("Factura"); }
+        public static void RepararDetalleFactura() { RepararTodoDetalleFactura(); GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura()); Registrar("DetalleFactura"); }
+
+        public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
+
+        private static void RegistrarDeteccion(string tabla)
+        {
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se detectó una inconsistencia en la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
+        }
+
+        private static void Registrar(string tabla)
+        {
+            string dni = Services_530BA.ServiceSessionManager530BA.getIntancia().usuarioActivo?.DNI ?? "SISTEMA";
+            dalBitacora.insertarLog(dni, $"Se reparó la tabla {tabla}.", (int)Criticidad530BA.Alto, (int)Modulos530BA.Seguridad, DateTime.Now);
+        }
+
+        public static void ActualizarDVVUsuario() => GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario());
+        public static void ActualizarDVVRol() => GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol());
+        public static void ActualizarDVVFamilia() => GuardarOActualizarDVV("Familia", ObtenerSumaDVHFamilia());
+        public static void ActualizarDVVPatente() => GuardarOActualizarDVV("Patente", ObtenerSumaDVHPatente());
+        public static void ActualizarDVVCliente() => GuardarOActualizarDVV("Cliente", ObtenerSumaDVHCliente());
+        public static void ActualizarDVVProducto() => GuardarOActualizarDVV("Producto", ObtenerSumaDVHProducto());
+        public static void ActualizarDVVFactura() => GuardarOActualizarDVV("Factura", ObtenerSumaDVHFactura());
+        public static void ActualizarDVVDetalleFactura() => GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura());
+    }
+}
