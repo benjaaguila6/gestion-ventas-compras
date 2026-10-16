@@ -52,6 +52,7 @@
     <Compile Include="BLLProductoHistorial530BA.cs" />
     <Compile Include="BLLProveedor530BA.cs" />
     <Compile Include="BLLRol.cs" />
+    <Compile Include="BLLSolicitudCotizacion530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioService.cs" />
   </ItemGroup>

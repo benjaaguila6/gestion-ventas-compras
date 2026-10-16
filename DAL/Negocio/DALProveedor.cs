@@ -38,7 +38,7 @@ namespace DAL.Negocio
 
         public DataRow ObtenerPorId(int id)
         {
-            string query = "SELECT Id, Email, RazonSocial, Telefono, Cuit, Direccion, CVU, Estado FROM Proveedor WHERE Id = @Id";
+            string query = "SELECT Id, Email, RazonSocial, Telefono, Cuit, Direccion, CVU, Estado, Activo FROM Proveedor WHERE Id = @Id";
             var param = new Dictionary<string, object> { { "@Id", id } };
 
             DataTable dt = dal.executeDataTable(query, param);

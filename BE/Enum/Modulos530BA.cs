@@ -13,6 +13,7 @@ namespace BE.Enum
         Perfil = 3,
         Cliente = 4,
         Factura = 5,
-        Producto = 6
+        Producto = 6,
+        Compras = 7
     }
 }
