@@ -39,6 +39,7 @@
             this.administradorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionUsuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraEventosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bitacoraCambiosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionFamiliaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionRolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionRespaldoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,7 @@
             this.facturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.bitacoraCambiosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,6 +158,13 @@
             this.bitacoraEventosToolStripMenuItem.Text = "Bitacora Eventos";
             this.bitacoraEventosToolStripMenuItem.Click += new System.EventHandler(this.bitacoraEventosToolStripMenuItem_Click);
             // 
+            // bitacoraCambiosToolStripMenuItem
+            // 
+            this.bitacoraCambiosToolStripMenuItem.Name = "bitacoraCambiosToolStripMenuItem";
+            this.bitacoraCambiosToolStripMenuItem.Size = new System.Drawing.Size(366, 46);
+            this.bitacoraCambiosToolStripMenuItem.Text = "Bitacora Cambios";
+            this.bitacoraCambiosToolStripMenuItem.Click += new System.EventHandler(this.bitacoraCambiosToolStripMenuItem_Click);
+            // 
             // gestionFamiliaToolStripMenuItem
             // 
             this.gestionFamiliaToolStripMenuItem.Name = "gestionFamiliaToolStripMenuItem";
@@ -182,7 +190,8 @@
             // 
             this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productosToolStripMenuItem,
-            this.clientesToolStripMenuItem});
+            this.clientesToolStripMenuItem,
+            this.proveedoresToolStripMenuItem});
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
             this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(150, 41);
             this.maestrosToolStripMenuItem.Text = "Maestros";
@@ -190,14 +199,14 @@
             // productosToolStripMenuItem
             // 
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(278, 46);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(278, 46);
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
             this.clientesToolStripMenuItem.Text = "Clientes";
             this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
@@ -257,12 +266,12 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Bienvenido: !";
             // 
-            // bitacoraCambiosToolStripMenuItem
+            // proveedoresToolStripMenuItem
             // 
-            this.bitacoraCambiosToolStripMenuItem.Name = "bitacoraCambiosToolStripMenuItem";
-            this.bitacoraCambiosToolStripMenuItem.Size = new System.Drawing.Size(366, 46);
-            this.bitacoraCambiosToolStripMenuItem.Text = "Bitacora Cambios";
-            this.bitacoraCambiosToolStripMenuItem.Click += new System.EventHandler(this.bitacoraCambiosToolStripMenuItem_Click);
+            this.proveedoresToolStripMenuItem.Name = "proveedoresToolStripMenuItem";
+            this.proveedoresToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
+            this.proveedoresToolStripMenuItem.Text = "Proveedores";
+            this.proveedoresToolStripMenuItem.Click += new System.EventHandler(this.proveedoresToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -311,5 +320,6 @@
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem facturaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bitacoraCambiosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proveedoresToolStripMenuItem;
     }
 }

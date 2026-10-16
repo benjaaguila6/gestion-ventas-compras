@@ -239,5 +239,11 @@ namespace Servicios
             BitacoraCambios form = new BitacoraCambios();
             form.Show();
         }
+
+        private void proveedoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionProveedor form = new GestionProveedor();
+            form.Show();
+        }
     }
 }
