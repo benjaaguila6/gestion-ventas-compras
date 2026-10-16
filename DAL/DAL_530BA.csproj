@@ -57,6 +57,7 @@
     <Compile Include="Negocio\DALPago.cs" />
     <Compile Include="Negocio\DALProducto530BA.cs" />
     <Compile Include="Negocio\DALProductoHistorial.cs" />
+    <Compile Include="Negocio\DALProveedor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
