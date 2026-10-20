@@ -124,6 +124,18 @@ namespace BLL
             dal.CambiarEstadoActivo(idProveedor);
         }
 
+        public Proveedor530BA ObtenerPorId(int idProveedor)
+        {
+            DataRow dr = dal.ObtenerPorId(idProveedor);
+
+            if (dr == null)
+            {
+                return null;
+            }
+
+            return MapearProveedor(dr);
+        }
+
         private Proveedor530BA MapearProveedor(DataRow row)
         {
             return new Proveedor530BA

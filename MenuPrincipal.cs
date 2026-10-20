@@ -91,6 +91,7 @@ namespace Servicios
             clientesToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Maestro Cliente");
             verFacturasToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
             facturaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
+            solicitarCotizacionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Generar Solicitud Cotizacion");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,6 +168,8 @@ namespace Servicios
             productosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProductos");
             clientesToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuClientes");
             ventasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVentas");
+            comprasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuCompras");
+            solicitarCotizacionToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuSolicitarCotizacion");
             españolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEspanol");
             englishToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEnglish");
         }
@@ -243,6 +246,12 @@ namespace Servicios
         private void proveedoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GestionProveedor form = new GestionProveedor();
+            form.Show();
+        }
+
+        private void solicitarCotizacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SolicitarCotizacion form = new SolicitarCotizacion();
             form.Show();
         }
     }
