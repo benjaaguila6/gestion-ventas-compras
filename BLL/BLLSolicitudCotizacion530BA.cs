@@ -15,7 +15,6 @@ namespace BLL
     public class BLLSolicitudCotizacion530BA
     {
         DALSolicitudCotizacion dal = new DALSolicitudCotizacion();
-        BLLProveedor530BA bllProveedor = new BLLProveedor530BA();
         BitacoraEventosService bit = new BitacoraEventosService();
 
         public int GenerarSolicitud(int idProveedor, List<ProductoCotizacion530BA> items)
@@ -69,6 +68,73 @@ namespace BLL
             bit.registrarEvento(dniAutor, "Se generó la solicitud de cotización N° " + idSolicitud, Criticidad530BA.Medio, Modulos530BA.Compras);
 
             return idSolicitud;
+        }
+
+        public List<SolicitudCotizacion530BA> ObtenerSolicitudesPendientes()
+        {
+            DataTable dt = dal.ObtenerSolicitudesPendientes();
+            List<SolicitudCotizacion530BA> lista = new List<SolicitudCotizacion530BA>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                lista.Add(MapearSolicitud(row));
+            }
+            return lista;
+        }
+
+        /// <summary>
+        /// Arma el texto que se muestra en el ComboBox de solicitudes, usando el idioma activo.
+        /// </summary>
+        public string DescribirSolicitud(SolicitudCotizacion530BA solicitud)
+        {
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            return string.Format(
+                idioma.Translate("Solicitud.formatoDescripcion"),
+                solicitud.Id,
+                solicitud.ProveedorRazonSocial,
+                solicitud.Fecha.ToString("dd/MM/yyyy"));
+        }
+
+        public List<ProductoCotizacion530BA> ObtenerProductosPorSolicitud(int idSolicitud)
+        {
+            DataTable dt = dal.ObtenerProductosPorSolicitud(idSolicitud);
+            List<ProductoCotizacion530BA> lista = new List<ProductoCotizacion530BA>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                lista.Add(MapearProducto(row));
+            }
+            return lista;
+        }
+
+        private SolicitudCotizacion530BA MapearSolicitud(DataRow row)
+        {
+            SolicitudCotizacion530BA solicitud = new SolicitudCotizacion530BA
+            {
+                Id = Convert.ToInt32(row["Id"]),
+                IdProveedor = Convert.ToInt32(row["IdProveedor"]),
+                Fecha = Convert.ToDateTime(row["Fecha"]),
+                DVH = row["DVH"] != DBNull.Value ? Convert.ToInt64(row["DVH"]) : 0,
+                ProveedorRazonSocial = row["RazonSocial"].ToString()
+            };
+
+            solicitud.DescripcionAmigable = DescribirSolicitud(solicitud);
+
+            return solicitud;
+        }
+
+        private ProductoCotizacion530BA MapearProducto(DataRow row)
+        {
+            return new ProductoCotizacion530BA
+            {
+                Id = Convert.ToInt32(row["Id"]),
+                IdSolicitud = Convert.ToInt32(row["IdSolicitud"]),
+                codProducto = Convert.ToInt32(row["codProducto"]),
+                Cantidad = Convert.ToInt32(row["Cantidad"]),
+                DVH = row["DVH"] != DBNull.Value ? Convert.ToInt64(row["DVH"]) : 0,
+                NombreProducto = row["NombreProducto"].ToString()
+            };
         }
     }
 }
