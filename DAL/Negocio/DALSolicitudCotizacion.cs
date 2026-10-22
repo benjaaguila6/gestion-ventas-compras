@@ -66,6 +66,31 @@ namespace DAL.Negocio
             }
         }
 
+        public DataTable ObtenerSolicitudesPendientes()
+        {
+            string query = @"SELECT s.Id, s.IdProveedor, s.Fecha, s.DVH, p.RazonSocial 
+                             FROM SolicitudCotizacion s
+                             INNER JOIN Proveedor p ON s.IdProveedor = p.Id
+                             ORDER BY s.Fecha DESC";
+
+            return _dal.executeDataTable(query);
+        }
+
+        public DataTable ObtenerProductosPorSolicitud(int idSolicitud)
+        {
+            string query = @"SELECT pc.Id, pc.IdSolicitud, pc.codProducto, pc.Cantidad, pc.DVH, pr.Nombre as NombreProducto
+                             FROM ProductoCotizacion pc
+                             INNER JOIN Producto pr ON pc.codProducto = pr.codProducto
+                             WHERE pc.IdSolicitud = @IdSolicitud";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@IdSolicitud", idSolicitud }
+            };
+
+            return _dal.executeDataTable(query, parametros);
+        }
+
         public void ActualizarDVHProductoCotizacion(int idDetalle, long dvh)
         {
             string query = "UPDATE ProductoCotizacion SET DVH = @dvh WHERE Id = @id";

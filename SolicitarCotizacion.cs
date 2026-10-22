@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BE;
 using BLL;
+using Services;
 using Services.Modelos.Idioma;
 using Services_530BA;
 
@@ -22,27 +23,22 @@ namespace Servicios
             cargarProveedores();
             cargarProductos();
             refrescarGrilla();
+
+            ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
             actualizarIdioma();
         }
 
         private void cargarProveedores()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             List<Proveedor530BA> proveedores = bllProveedor.ObtenerTodos();
 
             dgvProveedores.DataSource = null;
-            dgvProveedores.DataSource = proveedores.Where(p => p.EstaRegistradoDefinitivamente);
+            dgvProveedores.DataSource = proveedores; /*.Where(p => p.EstaRegistradoDefinitivamente);*/
 
             dgvProveedores.Columns["Id"].Visible = false;
             dgvProveedores.Columns["EstaRegistradoDefinitivamente"].Visible = false;
-
-            dgvProveedores.Columns["RazonSocial"].HeaderText = "Razón Social";
-            dgvProveedores.Columns["Cuit"].HeaderText = "CUIT";
-            dgvProveedores.Columns["Email"].HeaderText = "Correo Electrónico";
-            dgvProveedores.Columns["Telefono"].HeaderText = "Teléfono";
-            dgvProveedores.Columns["Direccion"].HeaderText = "Dirección";
-            dgvProveedores.Columns["CVU"].HeaderText = "CVU";
-            dgvProveedores.Columns["Estado"].HeaderText = "Fase de Registro";
-            dgvProveedores.Columns["Activo"].HeaderText = "Activo";
 
             dgvProveedores.Columns["RazonSocial"].DisplayIndex = 0;
             dgvProveedores.Columns["Cuit"].DisplayIndex = 5;
@@ -53,7 +49,7 @@ namespace Servicios
             dgvProveedores.Columns["Estado"].DisplayIndex = 3;
             dgvProveedores.Columns["Activo"].DisplayIndex = 4;
 
-            
+            TraducirColumnasProveedor(t);
         }
 
         private void cargarProductos()
@@ -62,16 +58,18 @@ namespace Servicios
 
             List<Producto530BA> productos = bllProducto.ObtenerTodos();
 
+            dgvProductos.AutoGenerateColumns = false;
+
             dgvProductos.DataSource = null;
             dgvProductos.DataSource = productos;
 
-            dgvProductos.AutoGenerateColumns = false;
-
             dgvProductos.Columns.Clear();
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colNombre"), DataPropertyName = "nombre" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colExistencia"), DataPropertyName = "existencia" });
-            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = t.Translate("GestionProducto.colPrecioUnitario"), DataPropertyName = "precioUnitario" });
-            dgvProductos.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = t.Translate("GestionProducto.colActivo"), DataPropertyName = "Activo" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { Name = "nombre", HeaderText = string.Empty, DataPropertyName = "nombre" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { Name = "existencia", HeaderText = string.Empty, DataPropertyName = "existencia" });
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn { Name = "precioUnitario", HeaderText = string.Empty, DataPropertyName = "precioUnitario" });
+            dgvProductos.Columns.Add(new DataGridViewCheckBoxColumn { Name = "Activo", HeaderText = string.Empty, DataPropertyName = "Activo" });
+
+            TraducirColumnasProducto(t);
         }
 
         private void btnAgregarItem_Click(object sender, EventArgs e)
@@ -164,9 +162,13 @@ namespace Servicios
 
         private void refrescarGrilla()
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             dgvItems.DataSource = null;
             dgvItems.DataSource = items.ToList();
             dgvItems.CurrentCell = null;
+
+            TraducirColumnasDetalle(t);
         }
 
 
@@ -179,13 +181,41 @@ namespace Servicios
             gbProducto.Text = t.Translate("SolicitarCotizacion.gbProducto");
             gbDetalle.Text = t.Translate("SolicitarCotizacion.gbDetalle");
             labelCantidad.Text = t.Translate("SolicitarCotizacion.labelCantidad");
+            button1.Text = t.Translate("SolicitarCotizacion.btnPrerregistrar");
             btnAgregarItem.Text = t.Translate("SolicitarCotizacion.btnAgregar");
             btnQuitarItem.Text = t.Translate("SolicitarCotizacion.btnQuitar");
             btnFinalizar.Text = t.Translate("SolicitarCotizacion.btnFinalizar");
 
-            if (dgvItems.Columns["codProducto"] != null) dgvItems.Columns["codProducto"].HeaderText = t.Translate("SolicitarCotizacion.colCodProducto");
-            if (dgvItems.Columns["Nombre"] != null) dgvItems.Columns["Nombre"].HeaderText = t.Translate("SolicitarCotizacion.colProducto");
-            if (dgvItems.Columns["Cantidad"] != null) dgvItems.Columns["Cantidad"].HeaderText = t.Translate("SolicitarCotizacion.colCantidad");
+            TraducirColumnasDetalle(t);
+            TraducirColumnasProveedor(t);
+            TraducirColumnasProducto(t);
+        }
+
+        private void TraducirColumnasDetalle(IdiomaManager idioma)
+        {
+            if (dgvItems.Columns["codProducto"] != null) dgvItems.Columns["codProducto"].HeaderText = idioma.Translate("SolicitarCotizacion.colCodProducto");
+            if (dgvItems.Columns["Nombre"] != null) dgvItems.Columns["Nombre"].HeaderText = idioma.Translate("SolicitarCotizacion.colProducto");
+            if (dgvItems.Columns["Cantidad"] != null) dgvItems.Columns["Cantidad"].HeaderText = idioma.Translate("SolicitarCotizacion.colCantidad");
+        }
+
+        private void TraducirColumnasProveedor(IdiomaManager idioma)
+        {
+            if (dgvProveedores.Columns["RazonSocial"] != null) dgvProveedores.Columns["RazonSocial"].HeaderText = idioma.Translate("Proveedor.colRazonSocial");
+            if (dgvProveedores.Columns["Cuit"] != null) dgvProveedores.Columns["Cuit"].HeaderText = idioma.Translate("Proveedor.colCuit");
+            if (dgvProveedores.Columns["Email"] != null) dgvProveedores.Columns["Email"].HeaderText = idioma.Translate("Proveedor.colEmail");
+            if (dgvProveedores.Columns["Telefono"] != null) dgvProveedores.Columns["Telefono"].HeaderText = idioma.Translate("Proveedor.colTelefono");
+            if (dgvProveedores.Columns["Direccion"] != null) dgvProveedores.Columns["Direccion"].HeaderText = idioma.Translate("Proveedor.colDireccion");
+            if (dgvProveedores.Columns["CVU"] != null) dgvProveedores.Columns["CVU"].HeaderText = idioma.Translate("Proveedor.colCvu");
+            if (dgvProveedores.Columns["Estado"] != null) dgvProveedores.Columns["Estado"].HeaderText = idioma.Translate("Proveedor.colEstado");
+            if (dgvProveedores.Columns["Activo"] != null) dgvProveedores.Columns["Activo"].HeaderText = idioma.Translate("Proveedor.colActivo");
+        }
+
+        private void TraducirColumnasProducto(IdiomaManager idioma)
+        {
+            if (dgvProductos.Columns["nombre"] != null) dgvProductos.Columns["nombre"].HeaderText = idioma.Translate("GestionProducto.colNombre");
+            if (dgvProductos.Columns["existencia"] != null) dgvProductos.Columns["existencia"].HeaderText = idioma.Translate("GestionProducto.colExistencia");
+            if (dgvProductos.Columns["precioUnitario"] != null) dgvProductos.Columns["precioUnitario"].HeaderText = idioma.Translate("GestionProducto.colPrecioUnitario");
+            if (dgvProductos.Columns["Activo"] != null) dgvProductos.Columns["Activo"].HeaderText = idioma.Translate("GestionProducto.colActivo");
         }
 
         private void button1_Click(object sender, EventArgs e)

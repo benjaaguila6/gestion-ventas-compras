@@ -170,6 +170,9 @@ namespace Servicios
             ventasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVentas");
             comprasToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuCompras");
             solicitarCotizacionToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuSolicitarCotizacion");
+            generarOrdenCompraToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuGenerarOrdenCompra");
+            bitacoraCambiosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuBitacoraCambios");
+            proveedoresToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProveedores");
             españolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEspanol");
             englishToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEnglish");
         }
@@ -252,6 +255,12 @@ namespace Servicios
         private void solicitarCotizacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SolicitarCotizacion form = new SolicitarCotizacion();
+            form.Show();
+        }
+
+        private void generarOrdenCompraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OrdenCompra form = new OrdenCompra();
             form.Show();
         }
     }
