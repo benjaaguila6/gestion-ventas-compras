@@ -49,10 +49,12 @@
     <Compile Include="Idioma530BA.cs" />
     <Compile Include="Factura530BA.cs" />
     <Compile Include="ItemFactura530BA.cs" />
+    <Compile Include="OrdenCompra530BA.cs" />
     <Compile Include="Pago530BA.cs" />
     <Compile Include="Producto530BA.cs" />
     <Compile Include="ProductoHistorial530BA.cs" />
     <Compile Include="ProductoCotizacion530BA.cs" />
+    <Compile Include="ProductoOC530BA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedor530BA.cs" />
     <Compile Include="SolicitudCotizacion530BA.cs" />

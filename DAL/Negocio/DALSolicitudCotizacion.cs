@@ -78,7 +78,8 @@ namespace DAL.Negocio
 
         public DataTable ObtenerProductosPorSolicitud(int idSolicitud)
         {
-            string query = @"SELECT pc.Id, pc.IdSolicitud, pc.codProducto, pc.Cantidad, pc.DVH, pr.Nombre as NombreProducto
+            string query = @"SELECT pc.Id, pc.IdSolicitud, pc.codProducto, pc.Cantidad, pc.DVH, pr.Nombre as NombreProducto,
+                                    pr.PrecioUnitario as PrecioUnitario
                              FROM ProductoCotizacion pc
                              INNER JOIN Producto pr ON pc.codProducto = pr.codProducto
                              WHERE pc.IdSolicitud = @IdSolicitud";
@@ -89,6 +90,35 @@ namespace DAL.Negocio
             };
 
             return _dal.executeDataTable(query, parametros);
+        }
+
+        public DataTable ObtenerSolicitudPorId(int idSolicitud)
+        {
+            string query = @"SELECT s.Id, s.IdProveedor, s.Fecha, s.DVH, p.RazonSocial
+                             FROM SolicitudCotizacion s
+                             INNER JOIN Proveedor p ON s.IdProveedor = p.Id
+                             WHERE s.Id = @IdSolicitud";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@IdSolicitud", idSolicitud }
+            };
+
+            return _dal.executeDataTable(query, parametros);
+        }
+
+        public int EliminarSolicitud(int idSolicitud)
+        {
+            string query = @"DELETE FROM ProductoCotizacion WHERE IdSolicitud = @IdSolicitud;
+                             DELETE FROM SolicitudCotizacion WHERE Id = @IdSolicitud;
+                             SELECT @@ROWCOUNT;";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@IdSolicitud", idSolicitud }
+            };
+
+            return Convert.ToInt32(_dal.executeScalar(query, parametros));
         }
 
         public void ActualizarDVHProductoCotizacion(int idDetalle, long dvh)

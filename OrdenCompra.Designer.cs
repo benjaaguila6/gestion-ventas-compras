@@ -162,6 +162,7 @@
             this.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.Name = "OrdenCompra";
             this.Text = "OrdenCompra";
+            this.Load += new System.EventHandler(this.OrdenCompra_Load);
             this.gbCotizaciones.ResumeLayout(false);
             this.gbDetalles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();

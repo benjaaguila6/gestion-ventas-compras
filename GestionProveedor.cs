@@ -101,6 +101,8 @@ namespace Servicios
             txtRazonSocial.Text = fila.Cells["RazonSocial"].Value.ToString();
             txtEmail.Text = fila.Cells["Email"].Value.ToString();
             txtTelefono.Text = fila.Cells["Telefono"].Value.ToString();
+
+            
             //txtCuit.Text = fila.Cells["Cuit"].Value.ToString();
             //txtCVU.Text = fila.Cells["CVU"].Value.ToString();
             //txtDireccion.Text = fila.Cells["Direccion"].Value.ToString();
@@ -111,9 +113,13 @@ namespace Servicios
             btnGuardar.Enabled = true;
             btnCancelar.Enabled = true;
 
-            txtEmail.Enabled = false;
-            txtRazonSocial.Enabled = false;
-            txtCuit.Enabled = false;
+            if (!rbRegistrar.Checked)
+            {
+                txtEmail.Enabled = false;
+                txtRazonSocial.Enabled = false;
+                txtCuit.Enabled = false;
+            }
+            
         }
 
         private void btnActDesact_Click(object sender, EventArgs e)
