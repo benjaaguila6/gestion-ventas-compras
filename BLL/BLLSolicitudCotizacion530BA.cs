@@ -108,6 +108,35 @@ namespace BLL
             return lista;
         }
 
+        public SolicitudCotizacion530BA ObtenerPorId(int idSolicitud)
+        {
+            DataTable dt = dal.ObtenerSolicitudPorId(idSolicitud);
+
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            return MapearSolicitud(dt.Rows[0]);
+        }
+
+        /// <summary>
+        /// Elimina la solicitud porque ya fue convertida en orden de compra.
+        /// Debe llamarse después de persistir la orden: si la solicitud ya no
+        /// existe, se informa para no duplicar órdenes por un doble clic.
+        /// </summary>
+        public void EliminarSolicitud(int idSolicitud)
+        {
+            var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
+
+            int filas = dal.EliminarSolicitud(idSolicitud);
+
+            if (filas != 1)
+            {
+                throw new Exception(idioma.Translate("ExcSolicitudYaProcesada"));
+            }
+        }
+
         private SolicitudCotizacion530BA MapearSolicitud(DataRow row)
         {
             SolicitudCotizacion530BA solicitud = new SolicitudCotizacion530BA
@@ -133,7 +162,8 @@ namespace BLL
                 codProducto = Convert.ToInt32(row["codProducto"]),
                 Cantidad = Convert.ToInt32(row["Cantidad"]),
                 DVH = row["DVH"] != DBNull.Value ? Convert.ToInt64(row["DVH"]) : 0,
-                NombreProducto = row["NombreProducto"].ToString()
+                NombreProducto = row["NombreProducto"].ToString(),
+                PrecioUnitario = row["PrecioUnitario"] != DBNull.Value ? Convert.ToDecimal(row["PrecioUnitario"]) : (decimal?)null
             };
         }
     }

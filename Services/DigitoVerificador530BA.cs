@@ -24,6 +24,7 @@ namespace Services
         static DALProducto530BA dalProducto = new DALProducto530BA();
         static DALFactura dalFactura = new DALFactura();
         static DALSolicitudCotizacion dalSolicitud = new DALSolicitudCotizacion();
+        static DALOrdenCompra dalOrdenCompra = new DALOrdenCompra();
 
         public static long CalcularDVH(string cadena)
         {
@@ -265,6 +266,59 @@ namespace Services
             }
         }
 
+        private static long CalcularDVHOrdenCompra(DataRow row)
+        {
+            string cadena = row["IdProveedor"].ToString() + row["Recibido"].ToString() + row["FechaEmision"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHOrdenCompra()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalOrdenCompra.ObtenerTodas().Rows) suma += CalcularDVHOrdenCompra(row);
+            return suma;
+        }
+
+        private static void RepararTodoOrdenCompra()
+        {
+            foreach (DataRow row in dalOrdenCompra.ObtenerTodas().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHOrdenCompra(row);
+                if (guardado != calculado) dalOrdenCompra.ActualizarDVHOrdenCompra(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
+        private static long CalcularDVHProductoOC(DataRow row)
+        {
+            string cadena = row["IdOrden"].ToString() + row["codProducto"].ToString() + row["Cantidad"].ToString()
+                + row["Precio"].ToString();
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHProductoOC()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalOrdenCompra.ObtenerProductos().Rows) suma += CalcularDVHProductoOC(row);
+            return suma;
+        }
+
+        private static void RepararTodoProductoOC()
+        {
+            foreach (DataRow row in dalOrdenCompra.ObtenerProductos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHProductoOC(row);
+                if (guardado != calculado)
+                {
+                    dalOrdenCompra.ActualizarDVHProductoOC(
+                        Convert.ToInt32(row["IdOrden"]),
+                        Convert.ToInt32(row["codProducto"]),
+                        calculado);
+                }
+            }
+        }
+
         private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
         {
             DataRow filaControl = dalControl.ObtenerFila(nombreTabla);
@@ -299,6 +353,8 @@ namespace Services
         public static bool VerificarDetalleFactura() => VerificarTabla("DetalleFactura", ObtenerSumaDVHDetalleFactura, RepararTodoDetalleFactura);
         public static bool VerificarSolicitudCotizacion() => VerificarTabla("SolicitudCotizacion", ObtenerSumaDVHSolicitudCotizacion, RepararTodoSolicitudCotizacion);
         public static bool VerificarProductoCotizacion() => VerificarTabla("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion, RepararTodoProductoCotizacion);
+        public static bool VerificarOrdenCompra() => VerificarTabla("OrdenCompra", ObtenerSumaDVHOrdenCompra, RepararTodoOrdenCompra);
+        public static bool VerificarProductoOC() => VerificarTabla("Producto_OC", ObtenerSumaDVHProductoOC, RepararTodoProductoOC);
 
         public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
         public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
@@ -310,6 +366,8 @@ namespace Services
         public static void RepararDetalleFactura() { RepararTodoDetalleFactura(); GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura()); Registrar("DetalleFactura"); }
         public static void RepararSolicitudCotizacion() { RepararTodoSolicitudCotizacion(); GuardarOActualizarDVV("SolicitudCotizacion", ObtenerSumaDVHSolicitudCotizacion()); Registrar("SolicitudCotizacion"); }
         public static void RepararProductoCotizacion() { RepararTodoProductoCotizacion(); GuardarOActualizarDVV("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion()); Registrar("ProductoCotizacion"); }
+        public static void RepararOrdenCompra() { RepararTodoOrdenCompra(); GuardarOActualizarDVV("OrdenCompra", ObtenerSumaDVHOrdenCompra()); Registrar("OrdenCompra"); }
+        public static void RepararProductoOC() { RepararTodoProductoOC(); GuardarOActualizarDVV("Producto_OC", ObtenerSumaDVHProductoOC()); Registrar("Producto_OC"); }
 
         public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
 
@@ -335,5 +393,7 @@ namespace Services
         public static void ActualizarDVVDetalleFactura() => GuardarOActualizarDVV("DetalleFactura", ObtenerSumaDVHDetalleFactura());
         public static void ActualizarDVVSolicitudCotizacion() => GuardarOActualizarDVV("SolicitudCotizacion", ObtenerSumaDVHSolicitudCotizacion());
         public static void ActualizarDVVProductoCotizacion() => GuardarOActualizarDVV("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion());
+        public static void ActualizarDVVOrdenCompra() => GuardarOActualizarDVV("OrdenCompra", ObtenerSumaDVHOrdenCompra());
+        public static void ActualizarDVVProductoOC() => GuardarOActualizarDVV("Producto_OC", ObtenerSumaDVHProductoOC());
     }
 }

@@ -17,5 +17,12 @@ namespace BE
 
         // Propiedad de navegación UI
         public string NombreProducto { get; set; }
+
+        // Precio vigente del producto al momento de generar la orden de compra.
+        // No pertenece a ProductoCotizacion: se toma de Producto.PrecioUnitario.
+        public decimal? PrecioUnitario { get; set; }
+
+        // Propiedad calculada para la grilla de pago.
+        public decimal Subtotal => Cantidad * (PrecioUnitario ?? 0m);
     }
 }

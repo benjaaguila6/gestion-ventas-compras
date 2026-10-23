@@ -48,6 +48,7 @@
     <Compile Include="BLLFamilia.cs" />
     <Compile Include="BLLIdioma530BA.cs" />
     <Compile Include="BLLPatente.cs" />
+    <Compile Include="BLLOrdenCompra530BA.cs" />
     <Compile Include="BLLProducto530BA.cs" />
     <Compile Include="BLLProductoHistorial530BA.cs" />
     <Compile Include="BLLProveedor530BA.cs" />

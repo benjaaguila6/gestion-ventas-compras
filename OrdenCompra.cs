@@ -164,6 +164,12 @@ namespace Servicios
             // 1. Verificamos el estado del proveedor
             var proveedor = bllProveedor.ObtenerPorId(solicitudSeleccionada.IdProveedor);
 
+            if (proveedor == null)
+            {
+                MessageBox.Show(idioma.Translate("GenerarOC.msgProveedorIncompleto"), idioma.Translate("GenerarOC.titleAtencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // 2. Si no está registrado definitivamente, disparamos el flujo existente
             if (!proveedor.EstaRegistradoDefinitivamente)
             {
@@ -177,10 +183,33 @@ namespace Servicios
                 proveedor = bllProveedor.ObtenerPorId(solicitudSeleccionada.IdProveedor);
 
                 // Si el usuario canceló la pantalla o falló, frenamos el flujo de pago
-                if (!proveedor.EstaRegistradoDefinitivamente)
+                if (proveedor == null || !proveedor.EstaRegistradoDefinitivamente)
                 {
                     return;
                 }
+            }
+
+            // 3. Confirmamos la edición pendiente de la grilla antes de leer las cantidades
+            dgvProductos.EndEdit();
+
+            List<ProductoCotizacion530BA> lineas = listaProductosMemoria.ToList();
+
+            try
+            {
+                using (PagarOrdenCompra frmPago = new PagarOrdenCompra(solicitudSeleccionada.Id, proveedor.RazonSocial, lineas))
+                {
+                    if (frmPago.ShowDialog(this) == DialogResult.OK)
+                    {
+                        // La solicitud fue reemplazada por la orden: recargamos el combo.
+                        listaProductosMemoria = null;
+                        dgvProductos.DataSource = null;
+                        CargarSolicitudes();
+                    }
+                }
+            }
+            finally
+            {
+                ActualizarEstadoBotones();
             }
         }
 
@@ -225,6 +254,11 @@ namespace Servicios
             cmbSolicitudes.SelectedIndex = indiceSeleccionado;
 
             cmbSolicitudes.SelectedIndexChanged += cmbSolicitudes_SelectedIndexChanged;
+        }
+
+        private void OrdenCompra_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

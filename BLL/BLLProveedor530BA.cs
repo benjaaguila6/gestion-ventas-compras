@@ -68,19 +68,19 @@ namespace BLL
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
-            if (string.IsNullOrWhiteSpace(proveedor.Cuit) || proveedor.Cuit.Length != 11)
+            if (string.IsNullOrWhiteSpace(cuit))
             {
                 throw new Exception(idioma.Translate("ExcProveedorCuitInvalido"));
             }
                 
 
-            if (string.IsNullOrWhiteSpace(proveedor.CVU) || proveedor.CVU.Length != 22)
+            if (string.IsNullOrWhiteSpace(cvu))
             {
                 throw new Exception(idioma.Translate("ExcProveedorCvuInvalido"));
             }
                 
 
-            if (string.IsNullOrWhiteSpace(proveedor.Direccion))
+            if (string.IsNullOrWhiteSpace(direccion))
             {
                 throw new Exception(idioma.Translate("ExcProveedorDireccionObligatoria"));
             }
@@ -91,6 +91,12 @@ namespace BLL
             {
                 throw new Exception(idioma.Translate("ExcProveedorYaRegistrado"));
             }
+
+            // El DAL persiste estos datos desde la entidad: hay que volcarlos aca,
+            // porque el proveedor viene de la grilla con esos campos en null.
+            proveedor.Cuit = cuit;
+            proveedor.Direccion = direccion;
+            proveedor.CVU = cvu;
 
             // 3. Actualizar
             dal.RegistrarDefinitivo(proveedor);
@@ -104,7 +110,6 @@ namespace BLL
             {
                 throw new Exception(idioma.Translate("ExcProveedorCvuInvalido"));
             }
-
 
             if (string.IsNullOrWhiteSpace(direccion))
             {
