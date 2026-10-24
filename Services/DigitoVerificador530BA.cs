@@ -292,7 +292,7 @@ namespace Services
         private static long CalcularDVHProductoOC(DataRow row)
         {
             string cadena = row["IdOrden"].ToString() + row["codProducto"].ToString() + row["Cantidad"].ToString()
-                + row["Precio"].ToString();
+                + row["CantidadRecibida"].ToString() + row["Precio"].ToString();
             return CalcularDVH(cadena);
         }
 

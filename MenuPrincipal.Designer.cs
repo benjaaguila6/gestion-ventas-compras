@@ -57,6 +57,7 @@
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.generarOrdenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRegistrarIngresoProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -248,7 +249,8 @@
             // 
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.solicitarCotizacionToolStripMenuItem,
-            this.generarOrdenCompraToolStripMenuItem});
+            this.generarOrdenCompraToolStripMenuItem,
+            this.menuRegistrarIngresoProductosToolStripMenuItem});
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(146, 41);
             this.comprasToolStripMenuItem.Text = "Compras";
@@ -299,6 +301,13 @@
             this.generarOrdenCompraToolStripMenuItem.Size = new System.Drawing.Size(437, 46);
             this.generarOrdenCompraToolStripMenuItem.Text = "Generar Orden Compra";
             this.generarOrdenCompraToolStripMenuItem.Click += new System.EventHandler(this.generarOrdenCompraToolStripMenuItem_Click);
+            // 
+            // menuRegistrarIngresoProductosToolStripMenuItem
+            // 
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Name = "menuRegistrarIngresoProductosToolStripMenuItem";
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Size = new System.Drawing.Size(437, 46);
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Text = "Registrar ingreso de productos";
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Click += new System.EventHandler(this.menuRegistrarIngresoProductosToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -351,5 +360,6 @@
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem solicitarCotizacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generarOrdenCompraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuRegistrarIngresoProductosToolStripMenuItem;
     }
 }

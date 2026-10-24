@@ -156,6 +156,12 @@
     <Compile Include="PagarOrdenCompra.Designer.cs">
       <DependentUpon>PagarOrdenCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="RecepcionProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecepcionProductos.Designer.cs">
+      <DependentUpon>RecepcionProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepararInconsistencias.cs">
@@ -235,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PagarOrdenCompra.resx">
       <DependentUpon>PagarOrdenCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecepcionProductos.resx">
+      <DependentUpon>RecepcionProductos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
