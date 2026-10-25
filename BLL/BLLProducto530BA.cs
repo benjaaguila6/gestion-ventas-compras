@@ -86,6 +86,37 @@ namespace BLL
             dal.DesactivarProducto(codProducto);
         }
 
+        public void AumentarStock(int codProducto, int cantidad)
+        {
+            var idioma = Services_530BA.ServiceSessionManager530BA.getIntancia().Idioma;
+
+            if (cantidad < 0)
+            {
+                throw new Exception(idioma.Translate("ExcRecepcionCantidadInvalida"));
+            }
+
+            if (cantidad == 0)
+            {
+                return;
+            }
+
+            DataRow dr = dal.ObtenerPorCodProducto(codProducto);
+
+            if (dr == null)
+            {
+                throw new Exception(idioma.Translate("ExcProductoNoEncontrado"));
+            }
+
+            int filas = dal.AumentarStock(codProducto, cantidad);
+
+            if (filas != 1)
+            {
+                throw new Exception(idioma.Translate("ExcProductoNoEncontrado"));
+            }
+
+            RecalcularDVHProducto(codProducto);
+        }
+
         public void DescontarStock(int codProducto, int cantidad)
         {
             dal.DescontarStock(codProducto, cantidad);

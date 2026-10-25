@@ -49,6 +49,91 @@ namespace DAL.Negocio
             }
         }
 
+        public DataTable ObtenerOrdenes()
+        {
+            string query = @"SELECT o.Id, o.IdProveedor, o.Recibido, o.FechaEmision, o.DVH, p.RazonSocial,
+                                    CASE WHEN o.Recibido = 1 THEN 2
+                                         WHEN EXISTS (SELECT 1 FROM Producto_OC po
+                                                      WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0) THEN 1
+                                         ELSE 0 END AS EstadoRecepcion
+                             FROM OrdenCompra o
+                             INNER JOIN Proveedor p ON o.IdProveedor = p.Id
+                             ORDER BY o.FechaEmision DESC, o.Id DESC";
+
+            return _dal.executeDataTable(query);
+        }
+
+        public DataTable ObtenerOrdenPorId(int idOrden)
+        {
+            string query = @"SELECT o.Id, o.IdProveedor, o.Recibido, o.FechaEmision, o.DVH, p.RazonSocial,
+                                    CASE WHEN o.Recibido = 1 THEN 2
+                                         WHEN EXISTS (SELECT 1 FROM Producto_OC po
+                                                      WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0) THEN 1
+                                         ELSE 0 END AS EstadoRecepcion
+                             FROM OrdenCompra o
+                             INNER JOIN Proveedor p ON o.IdProveedor = p.Id
+                             WHERE o.Id = @idOrden";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@idOrden", idOrden }
+            };
+
+            DataTable dt = _dal.executeDataTable(query, parametros);
+
+            return dt.Rows.Count > 0 ? dt : null;
+        }
+
+        public DataTable ObtenerProductosPorOrden(int idOrden)
+        {
+            string query = @"SELECT po.IdOrden, po.codProducto, po.Cantidad, po.CantidadRecibida, po.Precio, po.DVH,
+                                    pr.Nombre AS NombreProducto
+                             FROM Producto_OC po
+                             INNER JOIN Producto pr ON po.codProducto = pr.codProducto
+                             WHERE po.IdOrden = @idOrden
+                             ORDER BY pr.Nombre";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@idOrden", idOrden }
+            };
+
+            return _dal.executeDataTable(query, parametros);
+        }
+
+        public int ActualizarCantidadRecibidaProductoOC(int idOrden, int codProducto, int cantidadRecibida, long dvh)
+        {
+            string query = @"UPDATE Producto_OC
+                             SET CantidadRecibida = @cantidadRecibida, DVH = @dvh
+                             WHERE IdOrden = @idOrden AND codProducto = @codProducto
+                               AND @cantidadRecibida <= Cantidad";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@idOrden", idOrden },
+                { "@codProducto", codProducto },
+                { "@cantidadRecibida", cantidadRecibida },
+                { "@dvh", dvh }
+            };
+
+            return _dal.executeNonQuery(query, parametros);
+        }
+
+        public int MarcarComoRecibida(int idOrden, long dvh)
+        {
+            string query = @"UPDATE OrdenCompra
+                             SET Recibido = 1, DVH = @dvh
+                             WHERE Id = @idOrden AND Recibido = 0";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@idOrden", idOrden },
+                { "@dvh", dvh }
+            };
+
+            return _dal.executeNonQuery(query, parametros);
+        }
+
         public void ActualizarDVHOrdenCompra(int idOrden, long dvh)
         {
             string query = "UPDATE OrdenCompra SET DVH = @dvh WHERE Id = @id";

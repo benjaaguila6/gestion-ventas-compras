@@ -16,6 +16,7 @@ namespace BE
 
         // Propiedades de navegación / UI (No persisten directo en la tabla OrdenCompra)
         public string ProveedorRazonSocial { get; set; }
+        public int EstadoRecepcion { get; set; }
         public List<ProductoOC530BA> Productos { get; set; } = new List<ProductoOC530BA>();
     }
 }
