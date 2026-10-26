@@ -162,6 +162,12 @@
     <Compile Include="RecepcionProductos.Designer.cs">
       <DependentUpon>RecepcionProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="VerRecibos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerRecibos.Designer.cs">
+      <DependentUpon>VerRecibos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepararInconsistencias.cs">
@@ -244,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RecepcionProductos.resx">
       <DependentUpon>RecepcionProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerRecibos.resx">
+      <DependentUpon>VerRecibos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
