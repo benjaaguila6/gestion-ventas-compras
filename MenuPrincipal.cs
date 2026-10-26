@@ -92,6 +92,10 @@ namespace Servicios
             verFacturasToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
             facturaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Facturas");
             solicitarCotizacionToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Generar Solicitud Cotizacion");
+            proveedoresToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Patente Proveedor");
+            generarOrdenCompraToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Generar Orden de Compra");
+            menuRegistrarIngresoProductosToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Registrar Ingreso de Mercaderia");
+            remitoEntregaToolStripMenuItem.Enabled = ServiceSessionManager530BA.getIntancia().TienePermiso("Ver Remitos");
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -172,7 +176,7 @@ namespace Servicios
             solicitarCotizacionToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuSolicitarCotizacion");
             generarOrdenCompraToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuGenerarOrdenCompra");
             menuRegistrarIngresoProductosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuRegistrarIngresoProductos");
-            verRecibosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVerRecibos");
+            //verRecibosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuVerRecibos");
             bitacoraCambiosToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuBitacoraCambios");
             proveedoresToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuProveedores");
             españolToolStripMenuItem.Text = t.Translate("MenuPrincipal.menuEspanol");

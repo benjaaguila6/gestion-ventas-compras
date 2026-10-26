@@ -298,6 +298,7 @@
   "SolicitarCotizacion.colCodProducto": "Code",
   "SolicitarCotizacion.colProducto": "Product",
   "SolicitarCotizacion.colCantidad": "Quantity",
+  "SolicitarCotizacion.colPrecioUnitario": "Unit Price",
   "SolicitarCotizacion.msgFaltaProveedor": "You must select a supplier.",
   "SolicitarCotizacion.msgFaltaProducto": "You must select a product.",
   "SolicitarCotizacion.msgCantidadInvalida": "The quantity must be a number greater than zero.",
@@ -308,6 +309,7 @@
   "SolicitarCotizacion.titleAviso": "Notice",
   "SolicitarCotizacion.titleError": "Error",
   "SolicitarCotizacion.btnPrerregistrar": "PRE-REGISTER",
+  "SolicitarCotizacion.msgIngresePrecioUnitario": "Please enter the quoted unit price of the product.",
 
   "ExcProveedorNoRegistrado": "The supplier does not exist or is not fully registered.",
   "ExcTelefonoObligatorio": "Phone number is required.",

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -57,6 +58,8 @@ namespace Servicios
                 HeaderText = "Cant. Solicitada",
                 ReadOnly = false
             });
+
+
         }
 
         private void CargarSolicitudes()
@@ -76,6 +79,8 @@ namespace Servicios
 
         private void cmbSolicitudes_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+
             if (!(cmbSolicitudes.SelectedItem is SolicitudCotizacion530BA solicitudSeleccionada))
             {
                 return;
@@ -85,6 +90,13 @@ namespace Servicios
 
             listaProductosMemoria = new BindingList<ProductoCotizacion530BA>(productos);
             dgvProductos.DataSource = listaProductosMemoria;
+
+            dgvProductos.Columns["Id"].Visible = false;
+            dgvProductos.Columns["IdSolicitud"].Visible = false;
+            dgvProductos.Columns["Nombre"].Visible = false;
+            dgvProductos.Columns["DVH"].Visible = false;
+
+            if (dgvProductos.Columns["PrecioUnitario"] != null) dgvProductos.Columns["PrecioUnitario"].HeaderText = t.Translate("SolicitarCotizacion.colPrecioUnitario");
 
             ActualizarEstadoBotones();
         }
@@ -228,6 +240,7 @@ namespace Servicios
             if (dgvProductos.Columns["codProducto"] != null) dgvProductos.Columns["codProducto"].HeaderText = t.Translate("GenerarOC.colCodProducto");
             if (dgvProductos.Columns["NombreProducto"] != null) dgvProductos.Columns["NombreProducto"].HeaderText = t.Translate("GenerarOC.colProducto");
             if (dgvProductos.Columns["Cantidad"] != null) dgvProductos.Columns["Cantidad"].HeaderText = t.Translate("GenerarOC.colCantidad");
+           
 
             ActualizarDescripcionesSolicitudes();
         }

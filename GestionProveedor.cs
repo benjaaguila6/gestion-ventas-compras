@@ -83,11 +83,24 @@ namespace Servicios
 
             if (rbRegistrar.Checked)
             {
-                DataGridViewRow fila = dgvProveedor.CurrentRow;
+                Proveedor530BA proveedor = (Proveedor530BA)dgvProveedor.CurrentRow.DataBoundItem;
 
-                txtRazonSocial.Text = fila.Cells["RazonSocial"].Value.ToString();
-                txtEmail.Text = fila.Cells["Email"].Value.ToString();
-                txtTelefono.Text = fila.Cells["Telefono"].Value.ToString();
+                txtRazonSocial.Text = proveedor.RazonSocial;
+                txtEmail.Text = proveedor.Email;
+                txtTelefono.Text = proveedor.Telefono;
+
+                if (proveedor.Cuit != null)
+                {
+                    txtCuit.Text = proveedor.Cuit;
+                }
+                if (proveedor.CVU != null)
+                {
+                    txtCVU.Text = proveedor.CVU;
+                }
+                if (proveedor.Direccion != null)
+                {
+                    txtDireccion.Text = proveedor.Direccion;
+                }
             }
             
         }
@@ -97,16 +110,25 @@ namespace Servicios
             gbDatos.Visible = true;
             ModoActual = ModoOperacion.Modificar;
 
-            DataGridViewRow fila = dgvProveedor.CurrentRow;
+            Proveedor530BA proveedor = (Proveedor530BA)dgvProveedor.CurrentRow.DataBoundItem;
 
-            txtRazonSocial.Text = fila.Cells["RazonSocial"].Value.ToString();
-            txtEmail.Text = fila.Cells["Email"].Value.ToString();
-            txtTelefono.Text = fila.Cells["Telefono"].Value.ToString();
+            txtRazonSocial.Text = proveedor.RazonSocial;
+            txtEmail.Text = proveedor.Email;
+            txtTelefono.Text = proveedor.Telefono;
 
+            if(proveedor.Cuit != null)
+            {
+                txtCuit.Text = proveedor.Cuit;
+            }
+            if(proveedor.CVU != null)
+            {
+                txtCVU.Text = proveedor.CVU;
+            } 
+            if(proveedor.Direccion != null)
+            {
+                txtDireccion.Text = proveedor.Direccion;
+            }
             
-            //txtCuit.Text = fila.Cells["Cuit"].Value.ToString();
-            //txtCVU.Text = fila.Cells["CVU"].Value.ToString();
-            //txtDireccion.Text = fila.Cells["Direccion"].Value.ToString();
 
             btnAgregar.Enabled = false;
             btnModificar.Enabled = false;
@@ -114,13 +136,9 @@ namespace Servicios
             btnGuardar.Enabled = true;
             btnCancelar.Enabled = true;
 
-            if (!rbRegistrar.Checked)
-            {
-                txtEmail.Enabled = false;
-                txtRazonSocial.Enabled = false;
-                txtCuit.Enabled = false;
-            }
-            
+            txtEmail.Enabled = false;
+            txtRazonSocial.Enabled = false;
+            txtCuit.Enabled = false;
         }
 
         private void btnActDesact_Click(object sender, EventArgs e)
@@ -192,12 +210,29 @@ namespace Servicios
                 }
 
                 ModoActual = ModoOperacion.Ninguno;
-                gbDatos.Visible = false;
+
+                btnGuardar.Enabled = false;
+                btnCancelar.Enabled = false;
+
                 btnAgregar.Enabled = true;
                 btnModificar.Enabled = true;
                 btnActDesact.Enabled = true;
-                btnGuardar.Enabled = false;
-                btnCancelar.Enabled = false;
+
+                gbDatos.Visible = false;
+
+                txtCuit.Enabled = true;
+                txtDireccion.Enabled = true;
+                txtCVU.Enabled = true;
+                txtRazonSocial.Enabled = true;
+                txtTelefono.Enabled = true;
+                txtEmail.Enabled = true;
+
+                txtCuit.Text = "";
+                txtDireccion.Text = "";
+                txtCVU.Text = "";
+                txtRazonSocial.Text = "";
+                txtTelefono.Text = "";
+                txtEmail.Text = "";
 
                 cargarGrilla();
             }

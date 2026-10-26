@@ -289,6 +289,7 @@
   "SolicitarCotizacion.labelProveedor": "Proveedor",
   "SolicitarCotizacion.labelProducto": "Producto",
   "SolicitarCotizacion.labelCantidad": "Cantidad",
+  "SolicitarCotizacion.colPrecioUnitario": "Precio Unitario",
   "SolicitarCotizacion.btnAgregar": "AGREGAR",
   "SolicitarCotizacion.btnQuitar": "QUITAR",
   "SolicitarCotizacion.btnFinalizar": "FINALIZAR",
@@ -305,6 +306,7 @@
   "SolicitarCotizacion.titleAviso": "Aviso",
   "SolicitarCotizacion.titleError": "Error",
   "SolicitarCotizacion.btnPrerregistrar": "PREREGISTRAR",
+  "SolicitarCotizacion.msgIngresePrecioUnitario": "Ingrese el precio unitario cotizado del producto.",
 
   "ExcProveedorNoRegistrado": "El proveedor no existe o no está registrado definitivamente.",
   "ExcTelefonoObligatorio": "El teléfono es obligatorio.",

@@ -86,10 +86,10 @@ namespace Servicios
         {
             proveedoresCargados = bllProveedor.ObtenerTodos();
             proveedoresCargados.Insert(0, new Proveedor530BA { Id = 0, RazonSocial = "Todos los proveedores" });
-
-            cboProveedor.DataSource = proveedoresCargados;
+            
             cboProveedor.DisplayMember = "RazonSocial";
             cboProveedor.ValueMember = "Id";
+            cboProveedor.DataSource = proveedoresCargados;
 
 
             cboEstado.Items.Clear();

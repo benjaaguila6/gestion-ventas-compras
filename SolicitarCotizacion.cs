@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BE;
 using BLL;
+using Microsoft.VisualBasic;
 using Services;
 using Services.Modelos.Idioma;
 using Services_530BA;
@@ -39,6 +40,7 @@ namespace Servicios
 
             dgvProveedores.Columns["Id"].Visible = false;
             dgvProveedores.Columns["EstaRegistradoDefinitivamente"].Visible = false;
+            dgvProveedores.Columns["DVH"].Visible = false;
 
             dgvProveedores.Columns["RazonSocial"].DisplayIndex = 0;
             dgvProveedores.Columns["Cuit"].DisplayIndex = 5;
@@ -97,13 +99,20 @@ namespace Servicios
                     return;
                 }
 
+                string inputPrecio = Interaction.InputBox(t.Translate("SolicitarCotizacion.msgIngresePrecioUnitario"), t.Translate("SolicitarCotizacion.titleAviso"));
+
+                if (!decimal.TryParse(inputPrecio, out decimal precioUnitario) || precioUnitario <= 0)
+                {
+                    return;
+                }
+
                 if (items.Any(i => i.codProducto == codProducto))
                 {
                     MessageBox.Show(t.Translate("SolicitarCotizacion.msgProductoDuplicado"), t.Translate("SolicitarCotizacion.titleAviso"));
                     return;
                 }
 
-                items.Add(new ProductoCotizacion530BA { codProducto = codProducto, Nombre = nombre, Cantidad = cantidad });
+                items.Add(new ProductoCotizacion530BA { codProducto = codProducto, Nombre = nombre, Cantidad = cantidad, PrecioUnitario = precioUnitario });
 
                 refrescarGrilla();
                 txtCantidad.Text = "";
@@ -168,6 +177,13 @@ namespace Servicios
             dgvItems.DataSource = items.ToList();
             dgvItems.CurrentCell = null;
 
+            dgvItems.Columns["Id"].Visible = false;
+            dgvItems.Columns["IdSolicitud"].Visible = false;
+            dgvItems.Columns["DVH"].Visible = false;
+            dgvItems.Columns["NombreProducto"].Visible = false;
+            //dgvItems.Columns["PrecioUnitario"].Visible = false;
+            //dgvItems.Columns["Subtotal"].Visible = false;
+
             TraducirColumnasDetalle(t);
         }
 
@@ -196,6 +212,7 @@ namespace Servicios
             if (dgvItems.Columns["codProducto"] != null) dgvItems.Columns["codProducto"].HeaderText = idioma.Translate("SolicitarCotizacion.colCodProducto");
             if (dgvItems.Columns["Nombre"] != null) dgvItems.Columns["Nombre"].HeaderText = idioma.Translate("SolicitarCotizacion.colProducto");
             if (dgvItems.Columns["Cantidad"] != null) dgvItems.Columns["Cantidad"].HeaderText = idioma.Translate("SolicitarCotizacion.colCantidad");
+            if (dgvItems.Columns["PrecioUnitario"] != null) dgvItems.Columns["PrecioUnitario"].HeaderText = idioma.Translate("SolicitarCotizacion.colPrecioUnitario");
         }
 
         private void TraducirColumnasProveedor(IdiomaManager idioma)

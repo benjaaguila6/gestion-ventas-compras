@@ -38,5 +38,10 @@ namespace BE
 
         // Propiedad calculada útil para validaciones rápidas en UI o BLL
         public bool EstaRegistradoDefinitivamente => Estado == "Registrado";
+
+        public override string ToString()
+        {
+            return RazonSocial ?? string.Empty;
+        }
     }
 }
