@@ -157,6 +157,49 @@ namespace DAL.Negocio
             _dal.executeNonQuery(query, parametros);
         }
 
+        public DataTable ObtenerRecibos()
+        {
+            string query = @"SELECT o.Id, o.IdProveedor, o.Recibido, o.FechaEmision, o.DVH, p.RazonSocial,
+                                    p.Cuit AS ProveedorCuit, p.Direccion AS ProveedorDireccion,
+                                    (SELECT SUM(po.CantidadRecibida) FROM Producto_OC po WHERE po.IdOrden = o.Id) AS UnidadesRecibidas,
+                                    CASE
+                                        WHEN NOT EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida < po.Cantidad) THEN 2
+                                        WHEN EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0) THEN 1
+                                        ELSE 0
+                                    END AS EstadoRecepcion
+                             FROM OrdenCompra o
+                             INNER JOIN Proveedor p ON o.IdProveedor = p.Id
+                             WHERE EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0)
+                             ORDER BY o.FechaEmision DESC, o.Id DESC";
+
+            return _dal.executeDataTable(query);
+        }
+
+        public DataTable ObtenerReciboPorId(int idOrden)
+        {
+            string query = @"SELECT o.Id, o.IdProveedor, o.Recibido, o.FechaEmision, o.DVH, p.RazonSocial,
+                                    p.Cuit AS ProveedorCuit, p.Direccion AS ProveedorDireccion,
+                                    (SELECT SUM(po.CantidadRecibida) FROM Producto_OC po WHERE po.IdOrden = o.Id) AS UnidadesRecibidas,
+                                    CASE
+                                        WHEN NOT EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida < po.Cantidad) THEN 2
+                                        WHEN EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0) THEN 1
+                                        ELSE 0
+                                    END AS EstadoRecepcion
+                             FROM OrdenCompra o
+                             INNER JOIN Proveedor p ON o.IdProveedor = p.Id
+                             WHERE o.Id = @idOrden
+                               AND EXISTS (SELECT 1 FROM Producto_OC po WHERE po.IdOrden = o.Id AND po.CantidadRecibida > 0)";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@idOrden", idOrden }
+            };
+
+            DataTable dt = _dal.executeDataTable(query, parametros);
+
+            return dt.Rows.Count > 0 ? dt : null;
+        }
+
         public DataTable ObtenerTodas()
         {
             return _dal.executeDataTable("SELECT * FROM OrdenCompra");

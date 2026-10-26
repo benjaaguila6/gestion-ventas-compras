@@ -52,12 +52,14 @@
             this.verFacturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solicitarCotizacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generarOrdenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRegistrarIngresoProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verRecibosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.facturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.generarOrdenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuRegistrarIngresoProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remitoEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -250,7 +252,8 @@
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.solicitarCotizacionToolStripMenuItem,
             this.generarOrdenCompraToolStripMenuItem,
-            this.menuRegistrarIngresoProductosToolStripMenuItem});
+            this.menuRegistrarIngresoProductosToolStripMenuItem,
+            this.verRecibosToolStripMenuItem});
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(146, 41);
             this.comprasToolStripMenuItem.Text = "Compras";
@@ -258,14 +261,36 @@
             // solicitarCotizacionToolStripMenuItem
             // 
             this.solicitarCotizacionToolStripMenuItem.Name = "solicitarCotizacionToolStripMenuItem";
-            this.solicitarCotizacionToolStripMenuItem.Size = new System.Drawing.Size(437, 46);
+            this.solicitarCotizacionToolStripMenuItem.Size = new System.Drawing.Size(529, 46);
             this.solicitarCotizacionToolStripMenuItem.Text = "Solicitar Cotizacion";
             this.solicitarCotizacionToolStripMenuItem.Click += new System.EventHandler(this.solicitarCotizacionToolStripMenuItem_Click);
+            // 
+            // generarOrdenCompraToolStripMenuItem
+            // 
+            this.generarOrdenCompraToolStripMenuItem.Name = "generarOrdenCompraToolStripMenuItem";
+            this.generarOrdenCompraToolStripMenuItem.Size = new System.Drawing.Size(529, 46);
+            this.generarOrdenCompraToolStripMenuItem.Text = "Generar Orden Compra";
+            this.generarOrdenCompraToolStripMenuItem.Click += new System.EventHandler(this.generarOrdenCompraToolStripMenuItem_Click);
+            // 
+            // menuRegistrarIngresoProductosToolStripMenuItem
+            // 
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Name = "menuRegistrarIngresoProductosToolStripMenuItem";
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Size = new System.Drawing.Size(529, 46);
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Text = "Registrar ingreso de productos";
+            this.menuRegistrarIngresoProductosToolStripMenuItem.Click += new System.EventHandler(this.menuRegistrarIngresoProductosToolStripMenuItem_Click);
+            // 
+            // verRecibosToolStripMenuItem
+            // 
+            this.verRecibosToolStripMenuItem.Name = "verRecibosToolStripMenuItem";
+            this.verRecibosToolStripMenuItem.Size = new System.Drawing.Size(529, 46);
+            this.verRecibosToolStripMenuItem.Text = "Ver Recibos";
+            this.verRecibosToolStripMenuItem.Click += new System.EventHandler(this.verRecibosToolStripMenuItem_Click);
             // 
             // reportesToolStripMenuItem
             // 
             this.reportesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.facturaToolStripMenuItem});
+            this.facturaToolStripMenuItem,
+            this.remitoEntregaToolStripMenuItem});
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
             this.reportesToolStripMenuItem.Size = new System.Drawing.Size(146, 41);
             this.reportesToolStripMenuItem.Text = "Reportes";
@@ -273,7 +298,7 @@
             // facturaToolStripMenuItem
             // 
             this.facturaToolStripMenuItem.Name = "facturaToolStripMenuItem";
-            this.facturaToolStripMenuItem.Size = new System.Drawing.Size(243, 46);
+            this.facturaToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
             this.facturaToolStripMenuItem.Text = "Factura";
             this.facturaToolStripMenuItem.Click += new System.EventHandler(this.facturaToolStripMenuItem_Click);
             // 
@@ -295,19 +320,12 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Bienvenido: !";
             // 
-            // generarOrdenCompraToolStripMenuItem
+            // remitoEntregaToolStripMenuItem
             // 
-            this.generarOrdenCompraToolStripMenuItem.Name = "generarOrdenCompraToolStripMenuItem";
-            this.generarOrdenCompraToolStripMenuItem.Size = new System.Drawing.Size(437, 46);
-            this.generarOrdenCompraToolStripMenuItem.Text = "Generar Orden Compra";
-            this.generarOrdenCompraToolStripMenuItem.Click += new System.EventHandler(this.generarOrdenCompraToolStripMenuItem_Click);
-            // 
-            // menuRegistrarIngresoProductosToolStripMenuItem
-            // 
-            this.menuRegistrarIngresoProductosToolStripMenuItem.Name = "menuRegistrarIngresoProductosToolStripMenuItem";
-            this.menuRegistrarIngresoProductosToolStripMenuItem.Size = new System.Drawing.Size(437, 46);
-            this.menuRegistrarIngresoProductosToolStripMenuItem.Text = "Registrar ingreso de productos";
-            this.menuRegistrarIngresoProductosToolStripMenuItem.Click += new System.EventHandler(this.menuRegistrarIngresoProductosToolStripMenuItem_Click);
+            this.remitoEntregaToolStripMenuItem.Name = "remitoEntregaToolStripMenuItem";
+            this.remitoEntregaToolStripMenuItem.Size = new System.Drawing.Size(359, 46);
+            this.remitoEntregaToolStripMenuItem.Text = "Remito Entrega";
+            this.remitoEntregaToolStripMenuItem.Click += new System.EventHandler(this.remitoEntregaToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -361,5 +379,7 @@
         private System.Windows.Forms.ToolStripMenuItem solicitarCotizacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generarOrdenCompraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuRegistrarIngresoProductosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verRecibosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem remitoEntregaToolStripMenuItem;
     }
 }

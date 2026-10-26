@@ -181,6 +181,38 @@ namespace BLL
             return productos;
         }
 
+        public List<OrdenCompra530BA> ObtenerRecibos()
+        {
+            DataTable dt = dalOrden.ObtenerRecibos();
+            List<OrdenCompra530BA> recibos = new List<OrdenCompra530BA>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                recibos.Add(MapearRecibo(row));
+            }
+
+            return recibos;
+        }
+
+        public OrdenCompra530BA ObtenerReciboPorId(int idOrden)
+        {
+            DataTable dt = dalOrden.ObtenerReciboPorId(idOrden);
+
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            return MapearRecibo(dt.Rows[0]);
+        }
+
+        public List<ProductoOC530BA> ObtenerProductosRecibidosPorOrden(int idOrden)
+        {
+            return ObtenerProductosPorOrden(idOrden)
+                .Where(p => p.CantidadRecibida > 0)
+                .ToList();
+        }
+
         public bool RegistrarRecepcion(int idOrden, List<ProductoOC530BA> entregas)
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
@@ -338,6 +370,23 @@ namespace BLL
                 Precio = Convert.ToDecimal(row["Precio"]),
                 DVH = row["DVH"] != DBNull.Value ? Convert.ToInt64(row["DVH"]) : 0,
                 NombreProducto = row["NombreProducto"].ToString()
+            };
+        }
+
+        private OrdenCompra530BA MapearRecibo(DataRow row)
+        {
+            return new OrdenCompra530BA
+            {
+                Id = Convert.ToInt32(row["Id"]),
+                IdProveedor = Convert.ToInt32(row["IdProveedor"]),
+                Recibido = Convert.ToBoolean(row["Recibido"]),
+                FechaEmision = Convert.ToDateTime(row["FechaEmision"]),
+                DVH = row["DVH"] != DBNull.Value ? Convert.ToInt64(row["DVH"]) : 0,
+                ProveedorRazonSocial = row["RazonSocial"].ToString(),
+                ProveedorCuit = row["ProveedorCuit"] != DBNull.Value ? row["ProveedorCuit"].ToString() : null,
+                ProveedorDireccion = row["ProveedorDireccion"] != DBNull.Value ? row["ProveedorDireccion"].ToString() : null,
+                UnidadesRecibidas = row["UnidadesRecibidas"] != DBNull.Value ? Convert.ToInt32(row["UnidadesRecibidas"]) : 0,
+                EstadoRecepcion = row["EstadoRecepcion"] != DBNull.Value ? Convert.ToInt32(row["EstadoRecepcion"]) : 0
             };
         }
     }
