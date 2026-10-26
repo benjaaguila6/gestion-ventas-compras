@@ -27,6 +27,7 @@ namespace BE
         public string RazonSocial { get; set; }
         public string Telefono { get; set; }
         public bool Activo { get; set; }
+        public long DVH { get; set; }
 
         // Estos campos admiten null
         public string Cuit { get; set; }

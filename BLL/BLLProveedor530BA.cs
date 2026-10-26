@@ -1,5 +1,7 @@
 ﻿using BE;
+using BE.Enum;
 using DAL.Negocio;
+using Services;
 using Services_530BA;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace BLL
     public class BLLProveedor530BA
     {
         DALProveedor dal = new DALProveedor();
+        BitacoraEventosService bit = new BitacoraEventosService();
 
         public List<Proveedor530BA> ObtenerTodos()
         {
@@ -62,6 +65,13 @@ namespace BLL
             };
 
             dal.PreRegistrarProveedor(proveedor);
+
+            long dvh = CalcularDVHProveedor(razonsocial, email, telefono, null, null, null);
+
+            DigitoVerificador530BA.ActualizarDVVProveedor();
+
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se preregistro un proveedor", Criticidad530BA.Medio, Modulos530BA.Compras);
         }
 
         public void CompletarRegistro(Proveedor530BA proveedor, string cuit, string direccion, string cvu)
@@ -100,13 +110,21 @@ namespace BLL
 
             // 3. Actualizar
             dal.RegistrarDefinitivo(proveedor);
+
+            long dvh = CalcularDVHProveedor(provExistente.RazonSocial, provExistente.Email, provExistente.Telefono, cuit, direccion, cvu);
+
+            DigitoVerificador530BA.ActualizarDVVProveedor();
+
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se completo el registro del proveedor: " + proveedor.Id, Criticidad530BA.Alto, Modulos530BA.Compras);
+
         }
 
         public void ModificarProveedor(int idProveedor, string telefono, string direccion, string cvu)
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
 
-            if (string.IsNullOrWhiteSpace(cvu) || cvu.Length != 22)
+            if (string.IsNullOrWhiteSpace(cvu))
             {
                 throw new Exception(idioma.Translate("ExcProveedorCvuInvalido"));
             }
@@ -122,11 +140,20 @@ namespace BLL
             }
 
             dal.ModificarProveedor(idProveedor, telefono, direccion, cvu);
+
+            RecalcularDVHProveedor(idProveedor);
+
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se modifico el proveedor: " + idProveedor, Criticidad530BA.Medio, Modulos530BA.Compras);
+
         }
 
         public void ActivarDesactivar(int idProveedor)
         {
             dal.CambiarEstadoActivo(idProveedor);
+
+            string dniAutor = ServiceSessionManager530BA.getIntancia().usuarioActivo.DNI;
+            bit.registrarEvento(dniAutor, "Se cambio el estado a el proveedor: " + idProveedor, Criticidad530BA.Alto, Modulos530BA.Compras);
         }
 
         public Proveedor530BA ObtenerPorId(int idProveedor)
@@ -139,6 +166,36 @@ namespace BLL
             }
 
             return MapearProveedor(dr);
+        }
+
+        private long CalcularDVHProveedor(string razonSocial, string email, string telefono, string cuit, string direccion, string cvu)
+        {
+            string cadena = (razonSocial ?? "")
+                          + (email ?? "")
+                          + (telefono ?? "")
+                          + (cuit ?? "")
+                          + (direccion ?? "")
+                          + (cvu ?? "");
+
+            return DigitoVerificador530BA.CalcularDVH(cadena);
+        }
+
+        public void RecalcularDVHProveedor(int idProveedor)
+        {
+            DataRow row = dal.ObtenerPorId(idProveedor);
+            if (row == null) return;
+
+            string razonSocial = Convert.ToString(row["RazonSocial"]);
+            string email = Convert.ToString(row["Email"]);
+            string telefono = Convert.ToString(row["Telefono"]);
+            string cuit = row["Cuit"] != DBNull.Value ? Convert.ToString(row["Cuit"]) : null;
+            string direccion = row["Direccion"] != DBNull.Value ? Convert.ToString(row["Direccion"]) : null;
+            string cvu = row["CVU"] != DBNull.Value ? Convert.ToString(row["CVU"]) : null;
+
+            long nuevoDVH = CalcularDVHProveedor(razonSocial, email, telefono, cuit, direccion, cvu);
+
+            dal.ActualizarDVH(idProveedor, nuevoDVH);
+            Services.DigitoVerificador530BA.ActualizarDVVProveedor();
         }
 
         private Proveedor530BA MapearProveedor(DataRow row)

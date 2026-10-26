@@ -23,6 +23,7 @@ namespace Services
         static DALCliente dalCliente = new DALCliente();
         static DALProducto530BA dalProducto = new DALProducto530BA();
         static DALFactura dalFactura = new DALFactura();
+        static DALProveedor dalProveedor = new DALProveedor();
         static DALSolicitudCotizacion dalSolicitud = new DALSolicitudCotizacion();
         static DALOrdenCompra dalOrdenCompra = new DALOrdenCompra();
 
@@ -319,6 +320,38 @@ namespace Services
             }
         }
 
+        private static long CalcularDVHProveedor(DataRow row)
+        {
+            // Concatená los campos representativos de la entidad Proveedor
+            string cadena = row["Id"].ToString()
+                + row["RazonSocial"].ToString()
+                + row["CUIT"].ToString()
+                + row["Email"].ToString()
+                + row["Telefono"].ToString()
+                + row["Direccion"].ToString();
+
+            return CalcularDVH(cadena);
+        }
+
+        private static long ObtenerSumaDVHProveedor()
+        {
+            long suma = 0;
+            foreach (DataRow row in dalProveedor.ObtenerTodos().Rows)
+                suma += CalcularDVHProveedor(row);
+            return suma;
+        }
+
+        private static void RepararTodoProveedor()
+        {
+            foreach (DataRow row in dalProveedor.ObtenerTodos().Rows)
+            {
+                long guardado = row["DVH"] == DBNull.Value ? 0 : Convert.ToInt64(row["DVH"]);
+                long calculado = CalcularDVHProveedor(row);
+                if (guardado != calculado)
+                    dalProveedor.ActualizarDVH(Convert.ToInt32(row["Id"]), calculado);
+            }
+        }
+
         private static bool VerificarTabla(string nombreTabla, Func<long> obtenerSuma, Action reparar)
         {
             DataRow filaControl = dalControl.ObtenerFila(nombreTabla);
@@ -355,6 +388,7 @@ namespace Services
         public static bool VerificarProductoCotizacion() => VerificarTabla("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion, RepararTodoProductoCotizacion);
         public static bool VerificarOrdenCompra() => VerificarTabla("OrdenCompra", ObtenerSumaDVHOrdenCompra, RepararTodoOrdenCompra);
         public static bool VerificarProductoOC() => VerificarTabla("Producto_OC", ObtenerSumaDVHProductoOC, RepararTodoProductoOC);
+        public static bool VerificarProveedor() => VerificarTabla("Proveedor", ObtenerSumaDVHProveedor, RepararTodoProveedor);
 
         public static void RepararUsuario() { RepararTodoUsuario(); GuardarOActualizarDVV("Usuario", ObtenerSumaDVHUsuario()); Registrar("Usuario"); }
         public static void RepararRol() { RepararTodoRol(); GuardarOActualizarDVV("Rol", ObtenerSumaDVHRol()); Registrar("Rol"); }
@@ -368,6 +402,7 @@ namespace Services
         public static void RepararProductoCotizacion() { RepararTodoProductoCotizacion(); GuardarOActualizarDVV("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion()); Registrar("ProductoCotizacion"); }
         public static void RepararOrdenCompra() { RepararTodoOrdenCompra(); GuardarOActualizarDVV("OrdenCompra", ObtenerSumaDVHOrdenCompra()); Registrar("OrdenCompra"); }
         public static void RepararProductoOC() { RepararTodoProductoOC(); GuardarOActualizarDVV("Producto_OC", ObtenerSumaDVHProductoOC()); Registrar("Producto_OC"); }
+        public static void RepararProveedor() { RepararTodoProveedor(); GuardarOActualizarDVV("Proveedor", ObtenerSumaDVHProveedor()); Registrar("Proveedor"); }
 
         public static void RealizarRestore(string ruta) => dalBackup.realizarRestore(ruta);
 
@@ -395,5 +430,6 @@ namespace Services
         public static void ActualizarDVVProductoCotizacion() => GuardarOActualizarDVV("ProductoCotizacion", ObtenerSumaDVHProductoCotizacion());
         public static void ActualizarDVVOrdenCompra() => GuardarOActualizarDVV("OrdenCompra", ObtenerSumaDVHOrdenCompra());
         public static void ActualizarDVVProductoOC() => GuardarOActualizarDVV("Producto_OC", ObtenerSumaDVHProductoOC());
+        public static void ActualizarDVVProveedor() => GuardarOActualizarDVV("Proveedor", ObtenerSumaDVHProveedor());
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -103,6 +104,19 @@ namespace DAL.Negocio
             var parametros = new Dictionary<string, object>
             {
                 { "@Id", idProveedor }
+            };
+
+            dal.executeNonQuery(query, parametros);
+        }
+
+        public void ActualizarDVH(int id, long dvh)
+        {
+            string query = "UPDATE Proveedor SET DVH = @DVH WHERE Id = @Id";
+
+            var parametros = new Dictionary<string, object>
+            {
+                {"@DVH", dvh },
+                {"@Id", id }
             };
 
             dal.executeNonQuery(query, parametros);

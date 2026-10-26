@@ -16,7 +16,7 @@ namespace Servicios
 {
     public partial class RepararInconsistencias : Form, IIdiomaObserver
     {
-        private bool usuarioOk, rolOk, familiaOk, patenteOk, clienteOk, productoOk;
+        private bool usuarioOk, rolOk, familiaOk, patenteOk, clienteOk, productoOk, solicitudCOK, solicitudProductoOK, ordenProductoOK, proveedorOk, ordenCompraOK;
 
         private void btnRecalcular_Click(object sender, EventArgs e)
         {
@@ -30,6 +30,11 @@ namespace Servicios
                 if (!patenteOk) DigitoVerificador530BA.RepararPatente();
                 if (!clienteOk) DigitoVerificador530BA.RepararCliente();
                 if (!productoOk) DigitoVerificador530BA.RepararProducto();
+                if (!solicitudCOK) DigitoVerificador530BA.RepararSolicitudCotizacion();
+                if (!solicitudProductoOK) DigitoVerificador530BA.RepararProductoCotizacion();
+                if (!ordenProductoOK) DigitoVerificador530BA.RepararProductoOC();
+                if (!proveedorOk) DigitoVerificador530BA.RepararProveedor();
+                if (!ordenCompraOK) DigitoVerificador530BA.RepararOrdenCompra();
 
                 MessageBox.Show(idioma.Translate("MsgReparacionExitosa"));
 
@@ -75,7 +80,7 @@ namespace Servicios
             }
         }
 
-        public RepararInconsistencias(bool usuarioOk, bool rolOk, bool familiaOk, bool patenteOk, bool clienteOk, bool productoOk)
+        public RepararInconsistencias(bool usuarioOk, bool rolOk, bool familiaOk, bool patenteOk, bool clienteOk, bool productoOk, bool solicitudOK, bool solictudProductoOK, bool ordenProductoOK, bool proveedorOK, bool ordenCompraOK)
         {
             InitializeComponent();
 
@@ -85,6 +90,11 @@ namespace Servicios
             this.patenteOk = patenteOk;
             this.clienteOk = clienteOk;
             this.productoOk = productoOk;
+            this.solicitudCOK = solicitudOK;
+            this.solicitudProductoOK = solictudProductoOK;
+            this.ordenProductoOK = solictudProductoOK;
+            this.proveedorOk = proveedorOK;
+            this.ordenCompraOK = ordenCompraOK;
 
             ServiceSessionManager530BA.getIntancia().Idioma.Suscribir(this);
 

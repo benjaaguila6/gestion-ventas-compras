@@ -39,6 +39,7 @@ namespace Servicios
 
             dgvProveedor.Columns["Id"].Visible = false;
             dgvProveedor.Columns["EstaRegistradoDefinitivamente"].Visible = false;
+            dgvProveedor.Columns["DVH"].Visible = false;
 
             dgvProveedor.Columns["RazonSocial"].DisplayIndex = 0;
             dgvProveedor.Columns["Cuit"].DisplayIndex = 5;

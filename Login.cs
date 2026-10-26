@@ -55,9 +55,13 @@ namespace Servicios
                 bool patenteOk = DigitoVerificador530BA.VerificarPatente();
                 bool clienteOk = DigitoVerificador530BA.VerificarCliente();
                 bool productoOk = DigitoVerificador530BA.VerificarProducto();
+                bool solicitudCOK = DigitoVerificador530BA.VerificarSolicitudCotizacion();
+                bool solicitudProductoOK = DigitoVerificador530BA.VerificarProductoCotizacion();
+                bool ordenProductoOK = DigitoVerificador530BA.VerificarProductoOC();
+                bool proveedorOk = DigitoVerificador530BA.VerificarProveedor();
+                bool ordenCompraOK = DigitoVerificador530BA.VerificarOrdenCompra();
 
-
-                if (!usuarioOk || !rolOk || !familiaOk || !patenteOk || !clienteOk || !productoOk)
+                if (!usuarioOk || !rolOk || !familiaOk || !patenteOk || !clienteOk || !productoOk || !solicitudCOK || !solicitudProductoOK || !ordenProductoOK || !proveedorOk || !ordenCompraOK)
                 {
                     if (ServiceSessionManager530BA.getIntancia().usuarioActivo.Rol.Id != 1)
                     {
@@ -69,7 +73,7 @@ namespace Servicios
 
                     }
                     this.Hide();
-                    RepararInconsistencias pantalla = new RepararInconsistencias(usuarioOk, rolOk, familiaOk, patenteOk, clienteOk, productoOk);
+                    RepararInconsistencias pantalla = new RepararInconsistencias(usuarioOk, rolOk, familiaOk, patenteOk, clienteOk, productoOk, solicitudCOK, solicitudProductoOK, ordenProductoOK, proveedorOk, ordenCompraOK);
                     pantalla.FormClosed += (s, args) => RestaurarIdiomaLogin();
                     pantalla.Show();
                     return;
