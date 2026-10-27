@@ -12,7 +12,7 @@ namespace Services
     public class IdiomaManager
     {
         private List<IIdiomaObserver> _observers = new List<IIdiomaObserver>();
-        private Dictionary<string, string> traducciones;
+        private Dictionary<string, string> traducciones = new Dictionary<string, string>();
 
         public void Suscribir(IIdiomaObserver observer)
         {
@@ -57,6 +57,7 @@ namespace Services
 
         public string Translate(string key)
         {
+            if (traducciones == null) return key;
             return traducciones.TryGetValue(key, out string value) ? value : key; //toma lo que le pasamos y devuelve su traduccion guardado en el JSON
         }
     }

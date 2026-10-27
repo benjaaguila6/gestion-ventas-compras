@@ -229,9 +229,6 @@ namespace Servicios
             // 
             // gbRecibos
             // 
-            this.gbRecibos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRecibos.Controls.Add(this.dgvRecibos);
             this.gbRecibos.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbRecibos.Location = new System.Drawing.Point(29, 237);
@@ -315,8 +312,8 @@ namespace Servicios
         private System.Windows.Forms.DateTimePicker dtpFechaHasta;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.GroupBox gbRecibos;
         private System.Windows.Forms.DataGridView dgvRecibos;
         private System.Windows.Forms.Button btnImprimirRemito;
+        private System.Windows.Forms.GroupBox gbRecibos;
     }
 }

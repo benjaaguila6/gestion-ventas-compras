@@ -604,8 +604,13 @@ namespace Servicios
 
         public void actualizarIdioma()
         {
-            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+            // 1. Evitar ejecución si el formulario ya fue cerrado o liberado
+            if (this.IsDisposed || this.Disposing) return;
 
+            var t = ServiceSessionManager530BA.getIntancia().Idioma;
+            if (t == null) return;
+
+            // Traducción de textos básicos
             this.Text = t.Translate("VerRecibos.formTitle");
             lblInstruccion.Text = t.Translate("VerRecibos.lblInstruccion");
             gbFiltros.Text = t.Translate("VerRecibos.gbFiltros");
@@ -620,20 +625,26 @@ namespace Servicios
             gbRecibos.Text = t.Translate("VerRecibos.gbRecibos");
             btnImprimirRemito.Text = t.Translate("VerRecibos.btnImprimir");
 
-            dgvRecibos.Columns["Id"].HeaderText = t.Translate("VerRecibos.colNumeroOrden");
-            dgvRecibos.Columns["FechaEmision"].HeaderText = t.Translate("VerRecibos.colFecha");
-            dgvRecibos.Columns["ProveedorRazonSocial"].HeaderText = t.Translate("VerRecibos.colProveedor");
-            dgvRecibos.Columns["ProveedorCuit"].HeaderText = t.Translate("VerRecibos.colCuit");
-            dgvRecibos.Columns["Estado"].HeaderText = t.Translate("VerRecibos.colEstadoEntrega");
-            dgvRecibos.Columns["UnidadesRecibidas"].HeaderText = t.Translate("VerRecibos.colUnidadesRecibidas");
+            // 2. Traducción segura de columnas de la grilla
+            ActualizarHeaderColumna(dgvRecibos, "Id", t.Translate("VerRecibos.colNumeroOrden"));
+            ActualizarHeaderColumna(dgvRecibos, "FechaEmision", t.Translate("VerRecibos.colFecha"));
+            ActualizarHeaderColumna(dgvRecibos, "ProveedorRazonSocial", t.Translate("VerRecibos.colProveedor"));
+            ActualizarHeaderColumna(dgvRecibos, "ProveedorCuit", t.Translate("VerRecibos.colCuit"));
+            ActualizarHeaderColumna(dgvRecibos, "Estado", t.Translate("VerRecibos.colEstadoEntrega"));
+            ActualizarHeaderColumna(dgvRecibos, "UnidadesRecibidas", t.Translate("VerRecibos.colUnidadesRecibidas"));
 
-            int indiceEstado = cboEstado.SelectedIndex < 0 ? 0 : cboEstado.SelectedIndex;
-            cboEstado.Items[0] = t.Translate("VerRecibos.estadoTodos");
-            cboEstado.Items[1] = t.Translate("VerRecibos.estadoParcial");
-            cboEstado.Items[2] = t.Translate("VerRecibos.estadoCompleta");
-            cboEstado.SelectedIndex = indiceEstado;
+            // 3. Traducción segura de cboEstado
+            if (cboEstado.DataSource == null && cboEstado.Items.Count >= 3)
+            {
+                int indiceEstado = cboEstado.SelectedIndex < 0 ? 0 : cboEstado.SelectedIndex;
+                cboEstado.Items[0] = t.Translate("VerRecibos.estadoTodos");
+                cboEstado.Items[1] = t.Translate("VerRecibos.estadoParcial");
+                cboEstado.Items[2] = t.Translate("VerRecibos.estadoCompleta");
+                cboEstado.SelectedIndex = indiceEstado;
+            }
 
-            if (proveedoresCargados.Count > 0)
+            // 4. Traducción segura de proveedores (verificando null)
+            if (proveedoresCargados != null && proveedoresCargados.Count > 0)
             {
                 int idSeleccionado = cboProveedor.SelectedItem is Proveedor530BA seleccionado ? seleccionado.Id : 0;
                 proveedoresCargados[0].RazonSocial = t.Translate("VerRecibos.proveedorTodos");
@@ -643,6 +654,14 @@ namespace Servicios
             }
 
             dgvRecibos.Refresh();
+        }
+
+        private void ActualizarHeaderColumna(DataGridView dgv, string nombreColumna, string texto)
+        {
+            if (dgv.Columns.Contains(nombreColumna) && dgv.Columns[nombreColumna] != null)
+            {
+                dgv.Columns[nombreColumna].HeaderText = texto;
+            }
         }
 
         private void btnImprimirRemito_Click(object sender, EventArgs e)

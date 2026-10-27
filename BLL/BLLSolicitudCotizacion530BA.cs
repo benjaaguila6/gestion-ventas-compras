@@ -82,9 +82,6 @@ namespace BLL
             return lista;
         }
 
-        /// <summary>
-        /// Arma el texto que se muestra en el ComboBox de solicitudes, usando el idioma activo.
-        /// </summary>
         public string DescribirSolicitud(SolicitudCotizacion530BA solicitud)
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;
@@ -120,11 +117,6 @@ namespace BLL
             return MapearSolicitud(dt.Rows[0]);
         }
 
-        /// <summary>
-        /// Elimina la solicitud porque ya fue convertida en orden de compra.
-        /// Debe llamarse después de persistir la orden: si la solicitud ya no
-        /// existe, se informa para no duplicar órdenes por un doble clic.
-        /// </summary>
         public void EliminarSolicitud(int idSolicitud)
         {
             var idioma = ServiceSessionManager530BA.getIntancia().Idioma;

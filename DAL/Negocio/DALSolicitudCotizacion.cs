@@ -40,15 +40,15 @@ namespace DAL.Negocio
                     foreach (ProductoCotizacion530BA item in items)
                     {
                         int idDetalle;
-
                         using (SqlCommand cmd = new SqlCommand(@"
-                            INSERT INTO ProductoCotizacion (IdSolicitud, codProducto, Cantidad, DVH)
-                            VALUES (@idSolicitud, @codProducto, @cantidad, NULL);
-                            SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tran))
+                        INSERT INTO ProductoCotizacion (IdSolicitud, codProducto, Cantidad, PrecioUnitario, DVH)
+                        VALUES (@idSolicitud, @codProducto, @cantidad, @precioUnitario, NULL);
+                        SELECT CAST(SCOPE_IDENTITY() AS INT);", conn, tran))
                         {
                             cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
                             cmd.Parameters.AddWithValue("@codProducto", item.codProducto);
                             cmd.Parameters.AddWithValue("@cantidad", item.Cantidad);
+                            cmd.Parameters.AddWithValue("@precioUnitario", item.PrecioUnitario);
                             idDetalle = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
@@ -78,11 +78,12 @@ namespace DAL.Negocio
 
         public DataTable ObtenerProductosPorSolicitud(int idSolicitud)
         {
-            string query = @"SELECT pc.Id, pc.IdSolicitud, pc.codProducto, pc.Cantidad, pc.DVH, pr.Nombre as NombreProducto,
-                                    pr.PrecioUnitario as PrecioUnitario
-                             FROM ProductoCotizacion pc
-                             INNER JOIN Producto pr ON pc.codProducto = pr.codProducto
-                             WHERE pc.IdSolicitud = @IdSolicitud";
+            string query = @"SELECT pc.Id, pc.IdSolicitud, pc.codProducto, pc.Cantidad, pc.DVH, 
+                            pr.Nombre as NombreProducto, 
+                            pc.PrecioUnitario as PrecioUnitario 
+                     FROM ProductoCotizacion pc
+                     INNER JOIN Producto pr ON pc.codProducto = pr.codProducto
+                     WHERE pc.IdSolicitud = @IdSolicitud";
 
             var parametros = new Dictionary<string, object>
             {
